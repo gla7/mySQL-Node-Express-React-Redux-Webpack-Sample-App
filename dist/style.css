@@ -241,6 +241,11 @@ a:hover {
 
 .nav-bar {
 	margin: 0 1rem;
+	border-top:0.3rem solid transparent;
+}
+
+.nav-bar:hover {
+	border-top:0.3rem solid #FF5770;
 }
 
 /*.client-platform-class 
