@@ -180,10 +180,11 @@ class GeneralInfo extends Component {
 					numStrArr.splice(i, 0, ",")
 				}
 			}
-			if(num === programInfo.budget) {
-				numStrArr.splice(0, 0, '$')
-			}
 			return numStrArr.join("")
+		}
+
+		let percent = function (current,total) {
+			return Math.round((current/total)*100)
 		}
 		let reach = numStr(programInfo.estimated_total_reach)
 		let budget = numStr(programInfo.budget)
@@ -212,6 +213,11 @@ class GeneralInfo extends Component {
 			color: "gray"
 		}
 
+		let percentageClass = function (current,outOf) {
+			var percentage = percent(current,outOf).toString()
+			return "c100 p" + percentage + " small orange"
+		}
+
 		// let programStart = this.props.wholeState.role === "cst" ?  <StarRatingComponent renderStarIcon={() => <span>☆</span>} starColor={"#FF5770"} display={ratingDisplay} editing={true} name="rate1" starCount={5} onStarClick={this.onStarClick.bind(this)} />
 		// : <div></div>
 
@@ -227,7 +233,7 @@ class GeneralInfo extends Component {
 							<div className="text-align-center">
 								<div className="clearfix">
 									<div className="c100 p46 small orange">
-										<span>46%</span>
+										<span>{this.props.wholeState.programInfo.total_program_roi}%</span>
 										<div className="slice">
 											<div className="bar"></div>
 											<div className="fill"></div>
@@ -240,7 +246,7 @@ class GeneralInfo extends Component {
 							<h5>SPEND</h5>
 							<div className="clearfix">
 								<div className="c100 p33 small orange">
-									<span>33%</span>
+									<span>{percent(this.props.wholeState.programInfo.spend_current,this.props.wholeState.programInfo.spend_projected)}%</span>
 									<div className="slice">
 										<div className="bar"></div>
 										<div className="fill"></div>
@@ -249,16 +255,16 @@ class GeneralInfo extends Component {
 							</div>
 							<div>
 								<span className="program-feedback-text">current</span><br/>
-								<span className="projected">$5,000</span><br/>
+								<span className="projected">${numStr(this.props.wholeState.programInfo.spend_current)}</span><br/>
 								<span className="program-feedback-text">projected</span><br/>
-								<span className="projected">$15,000</span>
+								<span className="projected">${numStr(this.props.wholeState.programInfo.spend_projected)}</span>
 							</div>
 						</div>
 						<div className="width-twenty-percent display-inline-block program-header">
 							<h5>TIME</h5>
 							<div className="clearfix">
 								<div className="c100 p50 small orange">
-									<span>14 days</span>
+									<span>{this.props.wholeState.programInfo.time_current} days</span>
 									<div className="slice">
 										<div className="bar"></div>
 										<div className="fill"></div>
@@ -267,7 +273,7 @@ class GeneralInfo extends Component {
 							</div>
 							<div>
 								<span className="program-feedback-text">projected</span><br/>
-								<span className="projected">30</span><br/>
+								<span className="projected">{this.props.wholeState.programInfo.time_projected}</span><br/>
 								<span className="program-feedback-text">days</span>
 							</div>
 						</div>
@@ -275,7 +281,7 @@ class GeneralInfo extends Component {
 							<h5>POSTS</h5>
 							<div className="clearfix">
 								<div className="c100 p25 small orange">
-									<span>6</span>
+									<span>{this.props.wholeState.programInfo.posts_current}</span>
 									<div className="slice">
 										<div className="bar"></div>
 										<div className="fill"></div>
@@ -284,7 +290,7 @@ class GeneralInfo extends Component {
 							</div>
 							<div>
 								<span className="program-feedback-text">estimated</span><br/>
-								<span className="projected">24</span><br/>
+								<span className="projected">{this.props.wholeState.programInfo.posts_projected}</span><br/>
 								<span className="program-feedback-text">posts</span>
 							</div>
 						</div>

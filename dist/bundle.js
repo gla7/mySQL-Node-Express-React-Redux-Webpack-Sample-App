@@ -20284,10 +20284,11 @@
 							numStrArr.splice(i, 0, ",");
 						}
 					}
-					if (num === programInfo.budget) {
-						numStrArr.splice(0, 0, '$');
-					}
 					return numStrArr.join("");
+				};
+
+				var percent = function percent(current, total) {
+					return Math.round(current / total * 100);
 				};
 				var reach = numStr(programInfo.estimated_total_reach);
 				var budget = numStr(programInfo.budget);
@@ -20314,6 +20315,11 @@
 
 				var color = {
 					color: "gray"
+				};
+
+				var percentageClass = function percentageClass(current, outOf) {
+					var percentage = percent(current, outOf).toString();
+					return "c100 p" + percentage + " small orange";
 				};
 
 				// let programStart = this.props.wholeState.role === "cst" ?  <StarRatingComponent renderStarIcon={() => <span>☆</span>} starColor={"#FF5770"} display={ratingDisplay} editing={true} name="rate1" starCount={5} onStarClick={this.onStarClick.bind(this)} />
@@ -20353,7 +20359,8 @@
 										_react2.default.createElement(
 											'span',
 											null,
-											'46%'
+											this.props.wholeState.programInfo.total_program_roi,
+											'%'
 										),
 										_react2.default.createElement(
 											'div',
@@ -20382,7 +20389,8 @@
 									_react2.default.createElement(
 										'span',
 										null,
-										'33%'
+										percent(this.props.wholeState.programInfo.spend_current, this.props.wholeState.programInfo.spend_projected),
+										'%'
 									),
 									_react2.default.createElement(
 										'div',
@@ -20404,7 +20412,8 @@
 								_react2.default.createElement(
 									'span',
 									{ className: 'projected' },
-									'$5,000'
+									'$',
+									numStr(this.props.wholeState.programInfo.spend_current)
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
@@ -20416,7 +20425,8 @@
 								_react2.default.createElement(
 									'span',
 									{ className: 'projected' },
-									'$15,000'
+									'$',
+									numStr(this.props.wholeState.programInfo.spend_projected)
 								)
 							)
 						),
@@ -20437,7 +20447,8 @@
 									_react2.default.createElement(
 										'span',
 										null,
-										'14 days'
+										this.props.wholeState.programInfo.time_current,
+										' days'
 									),
 									_react2.default.createElement(
 										'div',
@@ -20459,7 +20470,7 @@
 								_react2.default.createElement(
 									'span',
 									{ className: 'projected' },
-									'30'
+									this.props.wholeState.programInfo.time_projected
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
@@ -20486,7 +20497,7 @@
 									_react2.default.createElement(
 										'span',
 										null,
-										'6'
+										this.props.wholeState.programInfo.posts_current
 									),
 									_react2.default.createElement(
 										'div',
@@ -20508,7 +20519,7 @@
 								_react2.default.createElement(
 									'span',
 									{ className: 'projected' },
-									'24'
+									this.props.wholeState.programInfo.posts_projected
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
@@ -24068,9 +24079,18 @@
 	});
 	var programInfo = {
 		"title": "Jimmy Dean Sausage at Meijer Tapfire #1",
+		//may not need
 		"budget": 15000,
 		"estimated_total_reach": 3225000,
-		"photo_url": "http://divinelifestyle.com/wp-content/uploads/2014/08/Jimmy-Dean-Logo.jpg"
+		"photo_url": "http://divinelifestyle.com/wp-content/uploads/2014/08/Jimmy-Dean-Logo.jpg",
+		//may not need
+		"total_program_roi": 46,
+		"spend_current": 5000,
+		"spend_projected": 15000,
+		"time_current": 14,
+		"time_projected": 30,
+		"posts_current": 6,
+		"posts_projected": 24
 	};
 
 	exports.default = programInfo;
