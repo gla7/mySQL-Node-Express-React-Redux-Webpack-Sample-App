@@ -20257,19 +20257,23 @@
 
 				//new star rating stuff
 
-				var buttonRun = "";
+				// let buttonRun = ""
 
-				if (this.props.wholeState.role === "cst") {
-					if (this.state.rating === 0) {
-						buttonRun = "A Rating Must Be Entered";
-					} else if (this.state.rating > 0 && this.state.rating < 3) {
-						buttonRun = "Cancel Program";
-					} else {
-						buttonRun = "Send Program To Customer";
-					}
-				} else {
-					buttonRun = "Run This Program";
-				}
+				// if(this.props.wholeState.role === "cst") {
+				// 	if(this.state.rating === 0) {
+				// 		buttonRun = "A Rating Must Be Entered"
+				// 	} else if(this.state.rating > 0 && this.state.rating < 3) {
+				// 		buttonRun = "Cancel Program"
+				// 	} else {
+				// 		buttonRun = "Send Program To Customer"
+				// 	}
+				// } else {
+				// 	buttonRun = "Run This Program"
+				// }
+
+				var moreAnalytics = function moreAnalytics() {
+					console.log("More Analytics!");
+				};
 
 				var programInfo = this.props.wholeState.programInfo;
 
@@ -20393,26 +20397,26 @@
 								null,
 								_react2.default.createElement(
 									'span',
-									null,
+									{ className: 'program-feedback-text' },
 									'current'
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									'span',
-									null,
-									'$5000'
+									{ className: 'projected' },
+									'$5,000'
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									'span',
-									null,
+									{ className: 'program-feedback-text' },
 									'projected'
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									'span',
-									null,
-									'$15000'
+									{ className: 'projected' },
+									'$15,000'
 								)
 							)
 						),
@@ -20448,19 +20452,19 @@
 								null,
 								_react2.default.createElement(
 									'span',
-									null,
+									{ className: 'program-feedback-text' },
 									'projected'
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									'span',
-									null,
+									{ className: 'projected' },
 									'30'
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									'span',
-									null,
+									{ className: 'program-feedback-text' },
 									'days'
 								)
 							)
@@ -20497,19 +20501,19 @@
 								null,
 								_react2.default.createElement(
 									'span',
-									null,
+									{ className: 'program-feedback-text' },
 									'estimated'
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									'span',
-									null,
+									{ className: 'projected' },
 									'24'
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									'span',
-									null,
+									{ className: 'program-feedback-text' },
 									'posts'
 								)
 							)
@@ -20529,12 +20533,10 @@
 							),
 							programStart,
 							_react2.default.createElement('br', null),
-							_react2.default.createElement('textarea', { rows: '4', className: 'textbox-width', style: cancelDisplay, placeholder: 'List your reasons here...', onChange: this.handleChange.bind(this) }),
-							_react2.default.createElement('br', null),
 							_react2.default.createElement(
 								'button',
-								{ onClick: this.runProgram.bind(this), disabled: disabled, className: 'big-button big-red-button-no-expand text-align-center display-inline-block' },
-								buttonRun
+								{ className: 'remove-border font-color-pink font-weight-bolder', onClick: moreAnalytics.bind(this) },
+								'view more analytics'
 							)
 						)
 					),
@@ -20933,7 +20935,7 @@
 			value: function render() {
 				var _this2 = this;
 
-				var textAboveDividerLine = this.props.wholeState.role != "cst" ? "POSSIBLE INFLUENCERS WE'VE CHOSEN FOR YOUR PROGRAM" : "INFLUENCER REVIEW";
+				// let textAboveDividerLine = (this.props.wholeState.role != "cst") ? "POSSIBLE INFLUENCERS WE'VE CHOSEN FOR YOUR PROGRAM" : "INFLUENCER REVIEW"
 
 				return _react2.default.createElement(
 					'div',
@@ -20941,7 +20943,7 @@
 					_react2.default.createElement(
 						'h5',
 						{ className: 'color-gray' },
-						textAboveDividerLine
+						'TOP PERFORMING CONTENT'
 					),
 					_react2.default.createElement(
 						'ul',

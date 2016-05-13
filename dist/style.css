@@ -464,6 +464,12 @@ a:hover {
 	width:100%;
 }
 
+.client-platform-class 
+.projected {
+	font-size:1.5rem;
+	font-weight: bolder;
+}
+
 @media only screen and (max-width: 1000px){
 
 	.client-platform-class 

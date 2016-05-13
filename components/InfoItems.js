@@ -22,10 +22,10 @@ class InfoItems extends Component {
 
 	render() {
 
-		let textAboveDividerLine = (this.props.wholeState.role != "cst") ? "POSSIBLE INFLUENCERS WE'VE CHOSEN FOR YOUR PROGRAM" : "INFLUENCER REVIEW"
+		// let textAboveDividerLine = (this.props.wholeState.role != "cst") ? "POSSIBLE INFLUENCERS WE'VE CHOSEN FOR YOUR PROGRAM" : "INFLUENCER REVIEW"
 
 		return  <div className="margin-bottom-some">
-					<h5 className="color-gray">{textAboveDividerLine}</h5>
+					<h5 className="color-gray">TOP PERFORMING CONTENT</h5>
 					<ul className="influencer-list">
 						{
 							this.props.wholeState.influencers.map((person) => {

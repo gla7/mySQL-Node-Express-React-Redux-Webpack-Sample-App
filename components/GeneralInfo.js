@@ -152,19 +152,23 @@ class GeneralInfo extends Component {
 		//new star rating stuff
 		
 
-		let buttonRun = ""
+		// let buttonRun = ""
 
 
-		if(this.props.wholeState.role === "cst") {
-			if(this.state.rating === 0) {
-				buttonRun = "A Rating Must Be Entered"
-			} else if(this.state.rating > 0 && this.state.rating < 3) {
-				buttonRun = "Cancel Program"
-			} else {
-				buttonRun = "Send Program To Customer"
-			}
-		} else {
-			buttonRun = "Run This Program"
+		// if(this.props.wholeState.role === "cst") {
+		// 	if(this.state.rating === 0) {
+		// 		buttonRun = "A Rating Must Be Entered"
+		// 	} else if(this.state.rating > 0 && this.state.rating < 3) {
+		// 		buttonRun = "Cancel Program"
+		// 	} else {
+		// 		buttonRun = "Send Program To Customer"
+		// 	}
+		// } else {
+		// 	buttonRun = "Run This Program"
+		// }
+
+		let moreAnalytics = function () {
+			console.log("More Analytics!")
 		}
 		
 		let programInfo = this.props.wholeState.programInfo
@@ -244,10 +248,10 @@ class GeneralInfo extends Component {
 								</div>
 							</div>
 							<div>
-								<span>current</span><br/>
-								<span>$5000</span><br/>
-								<span>projected</span><br/>
-								<span>$15000</span>
+								<span className="program-feedback-text">current</span><br/>
+								<span className="projected">$5,000</span><br/>
+								<span className="program-feedback-text">projected</span><br/>
+								<span className="projected">$15,000</span>
 							</div>
 						</div>
 						<div className="width-twenty-percent display-inline-block program-header">
@@ -262,9 +266,9 @@ class GeneralInfo extends Component {
 								</div>
 							</div>
 							<div>
-								<span>projected</span><br/>
-								<span>30</span><br/>
-								<span>days</span>
+								<span className="program-feedback-text">projected</span><br/>
+								<span className="projected">30</span><br/>
+								<span className="program-feedback-text">days</span>
 							</div>
 						</div>
 						<div className="width-twenty-percent display-inline-block program-header">
@@ -279,9 +283,9 @@ class GeneralInfo extends Component {
 								</div>
 							</div>
 							<div>
-								<span>estimated</span><br/>
-								<span>24</span><br/>
-								<span>posts</span>
+								<span className="program-feedback-text">estimated</span><br/>
+								<span className="projected">24</span><br/>
+								<span className="program-feedback-text">posts</span>
 							</div>
 						</div>
 						<div className="width-twenty-percent display-inline-block program-header">
@@ -289,8 +293,7 @@ class GeneralInfo extends Component {
 							<p className="program-feedback-text">How happy are you with the process of creating this project?</p>
 							{programStart}
 							<br/>
-							<textarea rows="4" className="textbox-width" style={cancelDisplay} placeholder="List your reasons here..." onChange={this.handleChange.bind(this)}></textarea><br/>
-						    <button onClick={this.runProgram.bind(this)} disabled={disabled} className="big-button big-red-button-no-expand text-align-center display-inline-block">{buttonRun}</button>
+							<button className="remove-border font-color-pink font-weight-bolder" onClick={moreAnalytics.bind(this)}>view more analytics</button>
 						</div>
 					</div>
 					
