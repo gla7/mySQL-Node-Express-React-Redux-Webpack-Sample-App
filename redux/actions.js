@@ -19,6 +19,13 @@ let actions = {
 			type : 'CHANGE_PAGE',
 			value : value
 		}
+	},
+
+	rated: function() {
+		return {
+			type : 'RATED',
+
+		}
 	}
 }
 

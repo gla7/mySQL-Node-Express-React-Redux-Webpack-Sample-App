@@ -15,7 +15,8 @@ let initialState = {
 	programInfo : programInfo,
 	isModalOpen : false,
 	numberRemoved : 0,
-	currentPage : "Overview"
+	currentPage : "Overview",
+	rated :false,
 }
 
 // $.get("/getInfluencers",function (response) {

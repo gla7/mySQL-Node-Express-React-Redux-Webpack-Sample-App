@@ -18,6 +18,11 @@ let reducer = function(state, action) {
 			return Object.assign({}, state, {
 				currentPage : action.value
 			})
+
+		case 'RATED':
+			return Object.assign({}, state, {
+				rated : true
+			})
 		
 
 		default: return state;

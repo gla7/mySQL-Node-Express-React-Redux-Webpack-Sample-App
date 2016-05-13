@@ -3,7 +3,7 @@ import Person from './Person'
 import classNames from 'classnames'
 
 
-
+// IMPORTANT!!!!! IMPLEMENT THIS FOR SORTING FIRST THING MONDAY: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
 class InfoItems extends Component {
 

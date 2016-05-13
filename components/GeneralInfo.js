@@ -28,17 +28,25 @@ class GeneralInfo extends Component {
 
 	//new star rating stuff
 	handleMouseOver(idx, evt){
-    	this.state.hoverAt = idx + 1;
-        this.forceUpdate();
+		if (!this.props.wholeState.rated) {
+	    	this.state.hoverAt = idx + 1;
+	        this.forceUpdate();
+    	}
     }
     handleMouseOut(idx, evt){
-    	this.state.hoverAt = null;
-        this.forceUpdate();
+    	if (!this.props.wholeState.rated) {
+	    	this.state.hoverAt = null;
+	        this.forceUpdate();
+	    }
     }
     handleClick(idx, evt){
-        this.state.rating = idx + 1;
-        this.forceUpdate();
-        console.log('clicked');
+    	if (!this.props.wholeState.rated) {
+	    	this.props.allActions.rated()
+	        this.state.rating = idx + 1;
+	        this.forceUpdate();
+	        console.log('clicked');
+	        // call to back end
+	    }
     }
 	//new star rating stuff
 
@@ -141,8 +149,9 @@ class GeneralInfo extends Component {
           let style = {
           	color:"#FF5770",
           }
+          console.log(this.state.rating)
         	stars.push(
-            <Star style={style} key={i} selected={selected}
+            <Star wholeState={this.props.wholeState} style={style} key={i} selected={selected}
             	  onMouseOver={this.handleMouseOver.bind(this, i)}
               	  onMouseOut={this.handleMouseOut.bind(this, i)}
                   onClick={this.handleClick.bind(this, i)}/>
@@ -218,6 +227,10 @@ class GeneralInfo extends Component {
 			return "c100 p" + percentage + " small orange"
 		}
 
+		let percentageClassStatic = function (percentage) {
+			return "c100 p" + percentage + " small orange"
+		}
+
 		// let programStart = this.props.wholeState.role === "cst" ?  <StarRatingComponent renderStarIcon={() => <span>☆</span>} starColor={"#FF5770"} display={ratingDisplay} editing={true} name="rate1" starCount={5} onStarClick={this.onStarClick.bind(this)} />
 		// : <div></div>
 
@@ -232,7 +245,7 @@ class GeneralInfo extends Component {
 						<h5>TOTAL PROGRAM ROI</h5>
 							<div className="text-align-center">
 								<div className="clearfix">
-									<div className="c100 p46 small orange">
+									<div className={percentageClassStatic(this.props.wholeState.programInfo.total_program_roi)}>
 										<span>{this.props.wholeState.programInfo.total_program_roi}%</span>
 										<div className="slice">
 											<div className="bar"></div>
@@ -245,7 +258,7 @@ class GeneralInfo extends Component {
 						<div className="width-twenty-percent display-inline-block program-header">
 							<h5>SPEND</h5>
 							<div className="clearfix">
-								<div className="c100 p33 small orange">
+								<div className={percentageClass(this.props.wholeState.programInfo.spend_current,this.props.wholeState.programInfo.spend_projected)}>
 									<span>{percent(this.props.wholeState.programInfo.spend_current,this.props.wholeState.programInfo.spend_projected)}%</span>
 									<div className="slice">
 										<div className="bar"></div>
@@ -263,7 +276,7 @@ class GeneralInfo extends Component {
 						<div className="width-twenty-percent display-inline-block program-header">
 							<h5>TIME</h5>
 							<div className="clearfix">
-								<div className="c100 p50 small orange">
+								<div className={percentageClass(this.props.wholeState.programInfo.time_current,this.props.wholeState.programInfo.time_projected)}>
 									<span>{this.props.wholeState.programInfo.time_current} days</span>
 									<div className="slice">
 										<div className="bar"></div>
@@ -280,7 +293,7 @@ class GeneralInfo extends Component {
 						<div className="width-twenty-percent display-inline-block program-header">
 							<h5>POSTS</h5>
 							<div className="clearfix">
-								<div className="c100 p25 small orange">
+								<div className={percentageClass(this.props.wholeState.programInfo.posts_current,this.props.wholeState.programInfo.posts_projected)}>
 									<span>{this.props.wholeState.programInfo.posts_current}</span>
 									<div className="slice">
 										<div className="bar"></div>

@@ -86,7 +86,8 @@
 		programInfo: _programInfo2.default,
 		isModalOpen: false,
 		numberRemoved: 0,
-		currentPage: "Overview"
+		currentPage: "Overview",
+		rated: false
 	};
 
 	// $.get("/getInfluencers",function (response) {
@@ -20125,21 +20126,29 @@
 		_createClass(GeneralInfo, [{
 			key: 'handleMouseOver',
 			value: function handleMouseOver(idx, evt) {
-				this.state.hoverAt = idx + 1;
-				this.forceUpdate();
+				if (!this.props.wholeState.rated) {
+					this.state.hoverAt = idx + 1;
+					this.forceUpdate();
+				}
 			}
 		}, {
 			key: 'handleMouseOut',
 			value: function handleMouseOut(idx, evt) {
-				this.state.hoverAt = null;
-				this.forceUpdate();
+				if (!this.props.wholeState.rated) {
+					this.state.hoverAt = null;
+					this.forceUpdate();
+				}
 			}
 		}, {
 			key: 'handleClick',
 			value: function handleClick(idx, evt) {
-				this.state.rating = idx + 1;
-				this.forceUpdate();
-				console.log('clicked');
+				if (!this.props.wholeState.rated) {
+					this.props.allActions.rated();
+					this.state.rating = idx + 1;
+					this.forceUpdate();
+					console.log('clicked');
+					// call to back end
+				}
 			}
 			//new star rating stuff
 
@@ -20249,7 +20258,8 @@
 					var style = {
 						color: "#FF5770"
 					};
-					stars.push(_react2.default.createElement(_Star2.default, { style: style, key: i, selected: selected,
+					console.log(this.state.rating);
+					stars.push(_react2.default.createElement(_Star2.default, { wholeState: this.props.wholeState, style: style, key: i, selected: selected,
 						onMouseOver: this.handleMouseOver.bind(this, i),
 						onMouseOut: this.handleMouseOut.bind(this, i),
 						onClick: this.handleClick.bind(this, i) }));
@@ -20322,6 +20332,10 @@
 					return "c100 p" + percentage + " small orange";
 				};
 
+				var percentageClassStatic = function percentageClassStatic(percentage) {
+					return "c100 p" + percentage + " small orange";
+				};
+
 				// let programStart = this.props.wholeState.role === "cst" ?  <StarRatingComponent renderStarIcon={() => <span>☆</span>} starColor={"#FF5770"} display={ratingDisplay} editing={true} name="rate1" starCount={5} onStarClick={this.onStarClick.bind(this)} />
 				// : <div></div>
 
@@ -20355,7 +20369,7 @@
 									{ className: 'clearfix' },
 									_react2.default.createElement(
 										'div',
-										{ className: 'c100 p46 small orange' },
+										{ className: percentageClassStatic(this.props.wholeState.programInfo.total_program_roi) },
 										_react2.default.createElement(
 											'span',
 											null,
@@ -20385,7 +20399,7 @@
 								{ className: 'clearfix' },
 								_react2.default.createElement(
 									'div',
-									{ className: 'c100 p33 small orange' },
+									{ className: percentageClass(this.props.wholeState.programInfo.spend_current, this.props.wholeState.programInfo.spend_projected) },
 									_react2.default.createElement(
 										'span',
 										null,
@@ -20443,7 +20457,7 @@
 								{ className: 'clearfix' },
 								_react2.default.createElement(
 									'div',
-									{ className: 'c100 p50 small orange' },
+									{ className: percentageClass(this.props.wholeState.programInfo.time_current, this.props.wholeState.programInfo.time_projected) },
 									_react2.default.createElement(
 										'span',
 										null,
@@ -20493,7 +20507,7 @@
 								{ className: 'clearfix' },
 								_react2.default.createElement(
 									'div',
-									{ className: 'c100 p25 small orange' },
+									{ className: percentageClass(this.props.wholeState.programInfo.posts_current, this.props.wholeState.programInfo.posts_projected) },
 									_react2.default.createElement(
 										'span',
 										null,
@@ -20919,6 +20933,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// IMPORTANT!!!!! IMPLEMENT THIS FOR SORTING FIRST THING MONDAY: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
 	var InfoItems = function (_Component) {
 		_inherits(InfoItems, _Component);
@@ -23092,6 +23108,13 @@
 				type: 'CHANGE_PAGE',
 				value: value
 			};
+		},
+
+		rated: function rated() {
+			return {
+				type: 'RATED'
+
+			};
 		}
 	};
 
@@ -23231,6 +23254,11 @@
 			case 'CHANGE_PAGE':
 				return Object.assign({}, state, {
 					currentPage: action.value
+				});
+
+			case 'RATED':
+				return Object.assign({}, state, {
+					rated: true
 				});
 
 			default:
