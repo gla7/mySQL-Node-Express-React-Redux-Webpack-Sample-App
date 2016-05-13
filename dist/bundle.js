@@ -63,24 +63,24 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _store = __webpack_require__(194);
+	var _store = __webpack_require__(196);
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _reactRedux = __webpack_require__(166);
+	var _reactRedux = __webpack_require__(168);
 
-	var _influencers = __webpack_require__(197);
+	var _influencers = __webpack_require__(199);
 
 	var _influencers2 = _interopRequireDefault(_influencers);
 
-	var _programInfo = __webpack_require__(198);
+	var _programInfo = __webpack_require__(200);
 
 	var _programInfo2 = _interopRequireDefault(_programInfo);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var initialState = {
-		role: "marketer",
+		role: "cst",
 		budget: 450000,
 		influencers: _influencers2.default,
 		programInfo: _programInfo2.default,
@@ -19731,19 +19731,19 @@
 
 	var _GeneralInfo2 = _interopRequireDefault(_GeneralInfo);
 
-	var _InfoItems = __webpack_require__(163);
+	var _InfoItems = __webpack_require__(165);
 
 	var _InfoItems2 = _interopRequireDefault(_InfoItems);
 
-	var _Person = __webpack_require__(164);
+	var _Person = __webpack_require__(166);
 
 	var _Person2 = _interopRequireDefault(_Person);
 
-	var _reactRedux = __webpack_require__(166);
+	var _reactRedux = __webpack_require__(168);
 
-	var _redux = __webpack_require__(173);
+	var _redux = __webpack_require__(175);
 
-	var _actions = __webpack_require__(192);
+	var _actions = __webpack_require__(194);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
@@ -19751,7 +19751,7 @@
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Overview = __webpack_require__(193);
+	var _Overview = __webpack_require__(195);
 
 	var _Overview2 = _interopRequireDefault(_Overview);
 
@@ -19766,17 +19766,72 @@
 	var App = function (_Component) {
 		_inherits(App, _Component);
 
-		function App() {
+		function App(props, context) {
 			_classCallCheck(this, App);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props, context));
+
+			_this.state = {
+				isModal: false,
+				confirmModal: false,
+				className: "big-button big-red-button",
+				cancelReason: ""
+			};
+			return _this;
 		}
 
 		_createClass(App, [{
+			key: 'handleOpenModal',
+			value: function handleOpenModal() {
+				this.props.actions.modalIsOpen();
+				this.setState({
+					isModal: !this.state.isModal,
+					confirmModal: false,
+					className: "big-button big-red-button"
+				});
+			}
+		}, {
+			key: 'handleKeep',
+			value: function handleKeep() {
+				this.setState({
+					isModal: false,
+					confirmModal: false,
+					className: "big-button big-red-button"
+				});
+			}
+		}, {
+			key: 'confirmRemove',
+			value: function confirmRemove() {
+				this.setState({
+					confirmModal: true,
+					className: "big-button confirmed-red-button"
+				});
+			}
+		}, {
+			key: 'handleChange',
+			value: function handleChange(event) {
+				event.preventDefault();
+				this.setState({
+					cancelReason: event.target.value
+				});
+			}
+		}, {
 			key: 'handleClick',
 			value: function handleClick(event) {
 				event.preventDefault();
 				this.props.actions.changePage(event.target.value);
+			}
+		}, {
+			key: 'handleSubmit',
+			value: function handleSubmit(event) {
+				event.preventDefault();
+				if (this.state.cancelReason !== "") {
+					this.handleOpenModal();
+					console.log('Program Cancelled!');
+					//back end call here
+				} else {
+						alert("You must list a reason for cancelling this program.");
+					}
 			}
 		}, {
 			key: 'render',
@@ -19811,12 +19866,59 @@
 					currentPage = _react2.default.createElement(_Overview2.default, { wholeState: this.props.wholeStatus, allActions: this.props.actions });
 				}
 
+				var display = this.state.isModal ? "" : "none";
+
+				var secondaryDisplay = this.state.confirmModal ? {
+					display: ""
+				} : {
+					display: "none"
+				};
+
+				console.log(this);
+
+				var overviewStyle = {};
+				var configStyle = {};
+				var contentStyle = {};
+				var analyticsStyle = {};
+
+				var activeStyle = {
+					borderTop: "3px solid #FF5770"
+				};
+
+				var inactiveStyle = {
+					color: "#999A9B !important"
+				};
+
+				var currentLocation = this.props.wholeStatus.currentPage;
+
+				if (currentLocation === "Overview") {
+					overviewStyle = activeStyle;
+					// configStyle = inactiveStyle
+					// contentStyle = inactiveStyle
+					// analyticsStyle = inactiveStyle
+				} else if (currentLocation === "Configuration") {
+						configStyle = activeStyle;
+						// overviewStyle = inactiveStyle
+						// contentStyle = inactiveStyle
+						// analyticsStyle = inactiveStyle
+					} else if (currentLocation === "Content") {
+							contentStyle = activeStyle;
+							// configStyle = inactiveStyle
+							// overviewStyle = inactiveStyle
+							// analyticsStyle = inactiveStyle
+						} else if (currentLocation === "Analytics") {
+								analyticsStyle = activeStyle;
+								// configStyle = inactiveStyle
+								// contentStyle = inactiveStyle
+								// overviewStyle = inactiveStyle
+							}
+
 				return _react2.default.createElement(
 					'div',
 					{ className: 'client-platform-class' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'display-inline-block program-info' },
+						{ className: 'display-inline-block program-info logo' },
 						_react2.default.createElement('img', { style: imgStyle, src: programInfo.photo_url })
 					),
 					_react2.default.createElement(
@@ -19832,7 +19934,7 @@
 							{ className: 'text-align-left no-padding-left' },
 							_react2.default.createElement(
 								'li',
-								{ className: 'display-inline-block nav-bar' },
+								{ className: 'display-inline-block nav-bar', style: overviewStyle },
 								_react2.default.createElement(
 									'button',
 									{ onClick: this.handleClick.bind(this), value: 'Overview', className: 'remove-border' },
@@ -19841,7 +19943,7 @@
 							),
 							_react2.default.createElement(
 								'li',
-								{ className: 'display-inline-block nav-bar' },
+								{ className: 'display-inline-block nav-bar', style: configStyle },
 								_react2.default.createElement(
 									'button',
 									{ onClick: this.handleClick.bind(this), value: 'Configuration', className: 'remove-border' },
@@ -19850,7 +19952,7 @@
 							),
 							_react2.default.createElement(
 								'li',
-								{ className: 'display-inline-block nav-bar' },
+								{ className: 'display-inline-block nav-bar', style: contentStyle },
 								_react2.default.createElement(
 									'button',
 									{ onClick: this.handleClick.bind(this), value: 'Content', className: 'remove-border' },
@@ -19859,7 +19961,7 @@
 							),
 							_react2.default.createElement(
 								'li',
-								{ className: 'display-inline-block nav-bar' },
+								{ className: 'display-inline-block nav-bar', style: analyticsStyle },
 								_react2.default.createElement(
 									'button',
 									{ onClick: this.handleClick.bind(this), value: 'Analytics', className: 'remove-border' },
@@ -19869,7 +19971,7 @@
 						),
 						_react2.default.createElement(
 							'button',
-							{ className: 'cancel-button' },
+							{ onClick: this.handleOpenModal.bind(this), className: 'cancel-button color-gray' },
 							'Cancel Program ',
 							_react2.default.createElement(
 								'span',
@@ -19878,7 +19980,66 @@
 							)
 						)
 					),
-					currentPage
+					currentPage,
+					_react2.default.createElement(
+						'div',
+						{ className: 'app-modal-outer', style: { display: display } },
+						_react2.default.createElement(
+							'div',
+							{ className: 'app-modal-inner' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'modal-top' },
+								_react2.default.createElement(
+									'p',
+									{ className: 'display-inline-block' },
+									'Cancel Program'
+								),
+								_react2.default.createElement(
+									'button',
+									{ className: 'position-absolute top-1-rem right-1-rem remove-border text-align-right', onClick: this.handleOpenModal.bind(this) },
+									'X'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'modal-padding text-align-center' },
+								_react2.default.createElement(
+									'h3',
+									null,
+									'Are you sure you want to cancel this program?'
+								),
+								_react2.default.createElement(
+									'button',
+									{ className: 'big-button big-red-button margin-right-little', onClick: this.handleOpenModal.bind(this) },
+									'No, do not cancel!'
+								),
+								_react2.default.createElement('br', { className: 'display-none-when-large' }),
+								_react2.default.createElement('br', { className: 'display-none-when-large' }),
+								_react2.default.createElement(
+									'button',
+									{ className: this.state.className, onClick: this.confirmRemove.bind(this) },
+									'Yes, cancel this program'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'form',
+									{ className: 'modal-form', style: secondaryDisplay, onSubmit: this.handleSubmit.bind(this) },
+									_react2.default.createElement(
+										'p',
+										null,
+										'Why would you like to cancel this program?'
+									),
+									_react2.default.createElement('textarea', { rows: '4', className: 'textbox-width', placeholder: 'List your reasons here...', onChange: this.handleChange.bind(this) }),
+									_react2.default.createElement('br', null),
+									_react2.default.createElement('input', { className: 'big-button big-red-button', type: 'submit', value: 'Submit' })
+								)
+							)
+						)
+					)
 				);
 			}
 		}]);
@@ -19920,6 +20081,14 @@
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
+	var _reactStarRatingComponent = __webpack_require__(163);
+
+	var _reactStarRatingComponent2 = _interopRequireDefault(_reactStarRatingComponent);
+
+	var _Star = __webpack_require__(164);
+
+	var _Star2 = _interopRequireDefault(_Star);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19940,12 +20109,41 @@
 				isModal: false,
 				confirmModal: false,
 				inputText: "",
-				className: "big-button big-red-button"
+				className: "big-button big-red-button",
+				rating: 0,
+				cancelReason: "",
+
+				//new stuff
+				hoverAt: null
 			};
 			return _this;
 		}
 
+		//new star rating stuff
+
+
 		_createClass(GeneralInfo, [{
+			key: 'handleMouseOver',
+			value: function handleMouseOver(idx, evt) {
+				this.state.hoverAt = idx + 1;
+				this.forceUpdate();
+			}
+		}, {
+			key: 'handleMouseOut',
+			value: function handleMouseOut(idx, evt) {
+				this.state.hoverAt = null;
+				this.forceUpdate();
+			}
+		}, {
+			key: 'handleClick',
+			value: function handleClick(idx, evt) {
+				this.state.rating = idx + 1;
+				this.forceUpdate();
+				console.log('clicked');
+			}
+			//new star rating stuff
+
+		}, {
 			key: 'handleOpenModal',
 			value: function handleOpenModal() {
 				this.props.allActions.modalIsOpen();
@@ -19977,13 +20175,30 @@
 			value: function handleChange(event) {
 				event.preventDefault();
 				this.setState({
-					inputText: event.target.value
+					cancelReason: event.target.value
 				});
 			}
+
+			// onStarClick(event) {
+			// 	this.setState({
+			// 		rating : event
+			// 	})
+
+			// }
+
 		}, {
 			key: 'handleSubmit',
 			value: function handleSubmit(event) {
 				event.preventDefault();
+				if (this.state.rating < 3) {
+					if (this.state.cancelReason.length < 1) {
+						alert("You must provide a reason for cancelling this program");
+					} else {
+						console.log('Program Cancelled');
+					}
+				} else {
+					console.log('Program Sent to Customer');
+				}
 				if (this.state.inputText !== "") {
 					this.handleOpenModal();
 					//back end call here
@@ -20001,28 +20216,23 @@
 		}, {
 			key: 'runProgram',
 			value: function runProgram() {
-				if (this.props.wholeState.role === "marketer") {
-					console.log("Start: Marketer");
-				} else if (this.props.wholeState.role === "customer") {
-					console.log('Start: Customer');
+				if (this.state.rating < 3) {
+					if (this.state.cancelReason.length < 1) {
+						alert("You must provide a reason for cancelling this program");
+					} else {
+						console.log('Program Cancelled');
+					}
 				} else {
-					console.log('Start: Other');
+					console.log('Program Sent to Customer');
 				}
+				// if(this.props.wholeState.role === "cst"){
+				// 	console.log("Start: Customer Success")
+				// } else if (this.props.wholeState.role === "customer"){
+				// 	console.log('Start: Customer')
+				// } else {
+				// 	console.log('Start: Other')
+				// }
 				// $.get("/runProgram",function (response) {
-				// 	console.log(response.data)
-				// })
-			}
-		}, {
-			key: 'cancelProgram',
-			value: function cancelProgram() {
-				if (this.props.wholeState.role === "marketer") {
-					console.log("Cancel: Marketer");
-				} else if (this.props.wholeState.role === "customer") {
-					console.log('Cancel: Customer');
-				} else {
-					console.log('Cancel: Other');
-				}
-				// $.get("/cancelProgram",function (response) {
 				// 	console.log(response.data)
 				// })
 			}
@@ -20030,9 +20240,36 @@
 			key: 'render',
 			value: function render() {
 
-				var buttonRun = this.props.wholeState.role === "marketer" ? "Run This Program" : "Run Program: Customer";
+				//new star rating stuff
 
-				var buttonCancel = this.props.wholeState.role === "marketer" ? "Cancel This Program" : "Cancel Program: Customer";
+				var stars = [];
+				for (var i = 0; i < 5; i++) {
+					var rating = this.state.hoverAt != null ? this.state.hoverAt : this.state.rating;
+					var selected = i < rating;
+					var style = {
+						color: "#FF5770"
+					};
+					stars.push(_react2.default.createElement(_Star2.default, { style: style, key: i, selected: selected,
+						onMouseOver: this.handleMouseOver.bind(this, i),
+						onMouseOut: this.handleMouseOut.bind(this, i),
+						onClick: this.handleClick.bind(this, i) }));
+				}
+
+				//new star rating stuff
+
+				var buttonRun = "";
+
+				if (this.props.wholeState.role === "cst") {
+					if (this.state.rating === 0) {
+						buttonRun = "A Rating Must Be Entered";
+					} else if (this.state.rating > 0 && this.state.rating < 3) {
+						buttonRun = "Cancel Program";
+					} else {
+						buttonRun = "Send Program To Customer";
+					}
+				} else {
+					buttonRun = "Run This Program";
+				}
 
 				var programInfo = this.props.wholeState.programInfo;
 
@@ -20059,52 +20296,244 @@
 					display: "none"
 				};
 
+				var cancelDisplay = this.state.rating > 0 && this.state.rating < 3 ? {
+					display: ""
+				} : {
+					display: "none"
+				};
+
+				var ratingDisplay = this.props.wholeState.role === "cst" ? {
+					display: ""
+				} : {
+					display: "none"
+				};
+
+				var color = {
+					color: "gray"
+				};
+
+				// let programStart = this.props.wholeState.role === "cst" ?  <StarRatingComponent renderStarIcon={() => <span>☆</span>} starColor={"#FF5770"} display={ratingDisplay} editing={true} name="rate1" starCount={5} onStarClick={this.onStarClick.bind(this)} />
+				// : <div></div>
+
+				var programStart = this.props.wholeState.role === "cst" ? _react2.default.createElement(
+					'div',
+					null,
+					stars
+				) : _react2.default.createElement('div', null);
+
+				var disabled = this.state.rating === 0 ? true : false;
+
 				return _react2.default.createElement(
 					'div',
 					{ className: 'text-align-center margin-bottom-someMore vertical-align-top' },
 					_react2.default.createElement(
 						'div',
-						null,
-						_react2.default.createElement('div', { className: 'width-twenty-five-percent display-inline-block program-header' }),
+						{ className: 'margin-top' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'width-twenty-five-percent display-inline-block program-header' },
+							{ className: 'width-twenty-percent display-inline-block program-header' },
 							_react2.default.createElement(
 								'h5',
 								null,
-								'Program Budget'
+								'TOTAL PROGRAM ROI'
 							),
 							_react2.default.createElement(
-								'h1',
-								{ className: 'make-smaller-font-when-small' },
-								budget
+								'div',
+								{ className: 'text-align-center' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'clearfix' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'c100 p46 small orange' },
+										_react2.default.createElement(
+											'span',
+											null,
+											'46%'
+										),
+										_react2.default.createElement(
+											'div',
+											{ className: 'slice' },
+											_react2.default.createElement('div', { className: 'bar' }),
+											_react2.default.createElement('div', { className: 'fill' })
+										)
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'width-twenty-percent display-inline-block program-header' },
+							_react2.default.createElement(
+								'h5',
+								null,
+								'SPEND'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'clearfix' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'c100 p33 small orange' },
+									_react2.default.createElement(
+										'span',
+										null,
+										'33%'
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'slice' },
+										_react2.default.createElement('div', { className: 'bar' }),
+										_react2.default.createElement('div', { className: 'fill' })
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'span',
+									null,
+									'current'
+								),
+								_react2.default.createElement('br', null),
+								_react2.default.createElement(
+									'span',
+									null,
+									'$5000'
+								),
+								_react2.default.createElement('br', null),
+								_react2.default.createElement(
+									'span',
+									null,
+									'projected'
+								),
+								_react2.default.createElement('br', null),
+								_react2.default.createElement(
+									'span',
+									null,
+									'$15000'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'width-twenty-percent display-inline-block program-header' },
+							_react2.default.createElement(
+								'h5',
+								null,
+								'TIME'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'clearfix' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'c100 p50 small orange' },
+									_react2.default.createElement(
+										'span',
+										null,
+										'14 days'
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'slice' },
+										_react2.default.createElement('div', { className: 'bar' }),
+										_react2.default.createElement('div', { className: 'fill' })
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'span',
+									null,
+									'projected'
+								),
+								_react2.default.createElement('br', null),
+								_react2.default.createElement(
+									'span',
+									null,
+									'30'
+								),
+								_react2.default.createElement('br', null),
+								_react2.default.createElement(
+									'span',
+									null,
+									'days'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'width-twenty-percent display-inline-block program-header' },
+							_react2.default.createElement(
+								'h5',
+								null,
+								'POSTS'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'clearfix' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'c100 p25 small orange' },
+									_react2.default.createElement(
+										'span',
+										null,
+										'6'
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'slice' },
+										_react2.default.createElement('div', { className: 'bar' }),
+										_react2.default.createElement('div', { className: 'fill' })
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'span',
+									null,
+									'estimated'
+								),
+								_react2.default.createElement('br', null),
+								_react2.default.createElement(
+									'span',
+									null,
+									'24'
+								),
+								_react2.default.createElement('br', null),
+								_react2.default.createElement(
+									'span',
+									null,
+									'posts'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'width-twenty-percent display-inline-block program-header' },
+							_react2.default.createElement(
+								'h5',
+								{ style: ratingDisplay },
+								'PROGRAM FEEDBACK'
 							),
 							_react2.default.createElement(
 								'p',
-								{ className: 'program-budget-text' },
-								'The actual program may be a little under this amount.'
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'width-twenty-five-percent display-inline-block program-header' },
-							_react2.default.createElement(
-								'h5',
-								null,
-								'Estimated Total Reach'
+								{ className: 'program-feedback-text' },
+								'How happy are you with the process of creating this project?'
 							),
-							_react2.default.createElement(
-								'h1',
-								{ className: 'make-smaller-font-when-small' },
-								reach
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'width-twenty-five-percent display-inline-block program-header' },
+							programStart,
+							_react2.default.createElement('br', null),
+							_react2.default.createElement('textarea', { rows: '4', className: 'textbox-width', style: cancelDisplay, placeholder: 'List your reasons here...', onChange: this.handleChange.bind(this) }),
+							_react2.default.createElement('br', null),
 							_react2.default.createElement(
 								'button',
-								{ onClick: this.runProgram.bind(this), className: 'big-button big-red-button-no-expand text-align-center display-inline-block' },
+								{ onClick: this.runProgram.bind(this), disabled: disabled, className: 'big-button big-red-button-no-expand text-align-center display-inline-block' },
 								buttonRun
 							)
 						)
@@ -20234,6 +20663,225 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(162);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var StarRatingComponent = function (_Component) {
+	    _inherits(StarRatingComponent, _Component);
+
+	    function StarRatingComponent(props) {
+	        _classCallCheck(this, StarRatingComponent);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StarRatingComponent).call(this));
+
+	        _this.state = {
+	            value: props.value
+	        };
+	        return _this;
+	    }
+
+	    _createClass(StarRatingComponent, [{
+	        key: 'onChange',
+	        value: function onChange(value) {
+	            var editing = this.props.editing;
+
+	            if (!editing) {
+	                return;
+	            }
+
+	            this.setState({ value: value });
+	        }
+	    }, {
+	        key: 'onStarClick',
+	        value: function onStarClick(i, value, name) {
+	            var _props = this.props;
+	            var onStarClick = _props.onStarClick;
+	            var editing = _props.editing;
+
+	            if (!editing) {
+	                return;
+	            }
+	            onStarClick && onStarClick(i, value, name);
+	        }
+	    }, {
+	        key: 'renderStars',
+	        value: function renderStars() {
+	            var _props2 = this.props;
+	            var name = _props2.name;
+	            var starCount = _props2.starCount;
+	            var starColor = _props2.starColor;
+	            var editing = _props2.editing;
+	            var renderStarIcon = _props2.renderStarIcon;
+	            var value = this.state.value;
+
+	            var starStyles = {
+	                float: 'right',
+	                cursor: editing ? 'pointer' : 'default'
+	            };
+	            var radioStyles = {
+	                display: 'none',
+	                position: 'absolte',
+	                marginLeft: -9999
+	            };
+
+	            // populate stars
+	            var starNodes = [];
+	            for (var i = starCount; i > 0; i--) {
+	                var id = name + '_' + i;
+	                var starNodeInput = _react2.default.createElement('input', {
+	                    key: 'input_' + id,
+	                    style: radioStyles,
+	                    className: 'dv-star-rating-input',
+	                    type: 'radio',
+	                    name: name,
+	                    id: id,
+	                    value: i,
+	                    checked: value === i,
+	                    onChange: this.onChange.bind(this, i, name)
+	                });
+	                var starNodeLabel = _react2.default.createElement(
+	                    'label',
+	                    {
+	                        key: 'label_' + id,
+	                        style: value >= i ? { float: starStyles.float, cursor: starStyles.cursor, color: starColor } : starStyles,
+	                        className: 'dv-star-rating-star',
+	                        htmlFor: id,
+	                        onClick: this.onStarClick.bind(this, i, value, name)
+	                    },
+	                    typeof renderStarIcon === 'function' ? renderStarIcon(i, value, name) : _react2.default.createElement(
+	                        'i',
+	                        { style: { fontStyle: 'normal' } },
+	                        '★'
+	                    )
+	                );
+	                starNodes.push(starNodeInput);
+	                starNodes.push(starNodeLabel);
+	            }
+
+	            return starNodes;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _props3 = this.props;
+	            var editing = _props3.editing;
+	            var className = _props3.className;
+
+	            var classes = (0, _classnames2.default)('dv-star-rating', {
+	                'dv-star-rating-non-editable': !editing
+	            }, className);
+
+	            return _react2.default.createElement(
+	                'div',
+	                { style: { display: 'inline-block', position: 'relative' }, className: classes },
+	                this.renderStars()
+	            );
+	        }
+	    }]);
+
+	    return StarRatingComponent;
+	}(_react.Component);
+
+	StarRatingComponent.propTypes = {
+	    name: _react.PropTypes.string.isRequired,
+	    value: _react.PropTypes.number,
+	    editing: _react.PropTypes.bool,
+	    starCount: _react.PropTypes.number,
+	    starColor: _react.PropTypes.string,
+	    onStarClick: _react.PropTypes.func,
+	    renderStarIcon: _react.PropTypes.func
+	};
+	StarRatingComponent.defaultProps = {
+	    starCount: 5,
+	    value: 0,
+	    editing: true,
+	    starColor: '#ffb400'
+	};
+	exports.default = StarRatingComponent;
+	module.exports = exports['default'];
+
+
+/***/ },
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(162);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Star = function (_Component) {
+	  _inherits(Star, _Component);
+
+	  function Star() {
+	    _classCallCheck(this, Star);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Star).apply(this, arguments));
+	  }
+
+	  _createClass(Star, [{
+	    key: 'render',
+	    value: function render() {
+
+	      var r = 'fa fa-star';
+	      if (!this.props.selected) {
+	        r += '-o';
+	      }
+	      return _react2.default.createElement('i', _extends({}, this.props, { className: r }));
+	    }
+	  }]);
+
+	  return Star;
+	}(_react.Component);
+
+	exports.default = Star;
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
@@ -20243,7 +20891,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Person = __webpack_require__(164);
+	var _Person = __webpack_require__(166);
 
 	var _Person2 = _interopRequireDefault(_Person);
 
@@ -20285,13 +20933,15 @@
 			value: function render() {
 				var _this2 = this;
 
+				var textAboveDividerLine = this.props.wholeState.role != "cst" ? "POSSIBLE INFLUENCERS WE'VE CHOSEN FOR YOUR PROGRAM" : "INFLUENCER REVIEW";
+
 				return _react2.default.createElement(
 					'div',
 					{ className: 'margin-bottom-some' },
 					_react2.default.createElement(
 						'h5',
 						{ className: 'color-gray' },
-						'Possible influencers we\'ve chosen for your program'
+						textAboveDividerLine
 					),
 					_react2.default.createElement(
 						'ul',
@@ -20310,7 +20960,7 @@
 	exports.default = InfoItems;
 
 /***/ },
-/* 164 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20329,7 +20979,7 @@
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Modal = __webpack_require__(165);
+	var _Modal = __webpack_require__(167);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -20354,10 +21004,15 @@
 			key: 'render',
 			value: function render() {
 				var picStyle = {
-					top: "2.5rem",
-					left: "0.25rem",
-					height: "80px",
-					width: "80px",
+					backgroundImage: "url(" + this.props.person.influencer_photo_url + ")",
+					backgroundSize: "cover",
+					backgroundPosition: "center center",
+					margin: "auto",
+					border: "2px solid white",
+					top: "4rem",
+					left: "0.45rem",
+					height: "120px",
+					width: "120px",
 					borderRadius: "50%",
 					position: "relative",
 					backgroundColor: "white",
@@ -20368,7 +21023,8 @@
 
 				var test = {
 					backgroundImage: "url(" + backgroundPhoto + ")",
-					backgroundSize: "100% 100%",
+					backgroundSize: "cover",
+					backgroundPosition: "center center",
 					textAlign: "center",
 					display: "block",
 					verticalAlign: "top",
@@ -20376,7 +21032,9 @@
 					paddingRight: "1rem",
 					margin: "auto",
 					marginBottom: "2rem",
-					width: "80%"
+					width: "80%",
+					borderTopRightRadius: "0.2rem",
+					borderTopLeftRadius: "0.2rem"
 				};
 
 				var whatFlavicon = function whatFlavicon(socialMediaType) {
@@ -20416,8 +21074,18 @@
 				};
 
 				var followersDisplay = function followersDisplay(followers) {
-					if (followers >= 1000) {
-						return (followers / 1000).toString() + "K";
+					if (followers >= 1000000) {
+						if ((followers / 1000000).toFixed(1).toString()[(followers / 1000000).toFixed(1).toString().length - 1] === "0") {
+							return Math.round(followers / 1000000).toString() + "M";
+						} else {
+							return (followers / 1000000).toFixed(1).toString() + "M";
+						}
+					} else if (followers >= 1000 && followers < 1000000) {
+						if ((followers / 1000).toFixed(1).toString()[(followers / 1000).toFixed(1).toString().length - 1] === "0") {
+							return Math.round(followers / 1000).toString() + "K";
+						} else {
+							return (followers / 1000).toFixed(1).toString() + "K";
+						}
 					} else {
 						return followers;
 					}
@@ -20432,7 +21100,7 @@
 						_react2.default.createElement(
 							'div',
 							{ style: test },
-							_react2.default.createElement('img', { style: picStyle, src: this.props.person.influencer_photo_url })
+							_react2.default.createElement('div', { style: picStyle })
 						),
 						_react2.default.createElement(
 							'div',
@@ -20484,7 +21152,7 @@
 	exports.default = Person;
 
 /***/ },
-/* 165 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20595,23 +21263,49 @@
 				var count = 0;
 				var modalText = this.props.wholeState.numberRemoved < 3 ? _react2.default.createElement(
 					'div',
-					{ className: 'modal-padding text-align-center' },
+					{ className: 'modal-inner' },
 					_react2.default.createElement(
-						'h3',
-						null,
-						'Are you sure you want to remove this person?'
+						'form',
+						{ className: 'modal-form', onSubmit: this.handleSubmit.bind(this) },
+						_react2.default.createElement(
+							'p',
+							null,
+							'Why would you like to remove ',
+							this.props.person.influencer_full_name,
+							'?'
+						),
+						_react2.default.createElement(
+							'select',
+							{ className: 'margin-bottom-some width-twenty-five-percent', value: selection, onChange: this.handleChange.bind(this) },
+							_react2.default.createElement(
+								'option',
+								{ value: 'default' },
+								'---'
+							),
+							_react2.default.createElement(
+								'option',
+								{ value: '1' },
+								'Reason 1'
+							),
+							_react2.default.createElement(
+								'option',
+								{ value: '2' },
+								'Reason 2'
+							),
+							_react2.default.createElement(
+								'option',
+								{ value: '3' },
+								'Reason 3'
+							)
+						),
+						_react2.default.createElement('br', null),
+						_react2.default.createElement('input', { className: 'big-button big-red-button width-all', type: 'submit', value: 'Remove' })
 					),
+					_react2.default.createElement('br', null),
 					_react2.default.createElement(
 						'button',
-						{ className: 'big-button big-red-button margin-right-little', onClick: this.handleOpenModal.bind(this) },
-						'No, keep this person'
-					),
-					_react2.default.createElement('br', { className: 'display-none-when-large' }),
-					_react2.default.createElement('br', { className: 'display-none-when-large' }),
-					_react2.default.createElement(
-						'button',
-						{ className: this.state.className, onClick: this.confirmRemove.bind(this) },
-						'Yes, remove this person'
+						{ className: 'big-button big-red-button width-all', onClick: this.handleOpenModal.bind(this) },
+						'Keep'
 					)
 				) : _react2.default.createElement(
 					'div',
@@ -20623,7 +21317,7 @@
 					),
 					_react2.default.createElement(
 						'button',
-						{ className: 'big-button big-red-button margin-right-little', onClick: this.handleOpenModal.bind(this) },
+						{ className: 'big-button big-red-button width-all', onClick: this.handleOpenModal.bind(this) },
 						'Close This Box'
 					)
 				);
@@ -20635,53 +21329,14 @@
 						{ className: 'remove-influencer' },
 						_react2.default.createElement(
 							'button',
-							{ className: 'remove-border font-color-pink', disabled: this.props.wholeState.isModalOpen, onClick: this.handleOpenModal.bind(this) },
+							{ className: 'remove-border font-color-pink font-weight-bolder', disabled: this.props.wholeState.isModalOpen, onClick: this.handleOpenModal.bind(this) },
 							'Remove influencer X'
 						)
 					),
 					_react2.default.createElement(
 						'div',
 						{ className: 'modal-outer', style: { display: display } },
-						_react2.default.createElement(
-							'div',
-							{ className: 'modal-inner' },
-							modalText,
-							_react2.default.createElement(
-								'form',
-								{ className: 'modal-form', style: secondaryDisplay, onSubmit: this.handleSubmit.bind(this) },
-								_react2.default.createElement(
-									'p',
-									null,
-									'Why would you like to remove this person?'
-								),
-								_react2.default.createElement(
-									'select',
-									{ className: 'margin-bottom-some width-twenty-five-percent', value: selection, onChange: this.handleChange.bind(this) },
-									_react2.default.createElement(
-										'option',
-										{ value: 'default' },
-										'---'
-									),
-									_react2.default.createElement(
-										'option',
-										{ value: '1' },
-										'Reason 1'
-									),
-									_react2.default.createElement(
-										'option',
-										{ value: '2' },
-										'Reason 2'
-									),
-									_react2.default.createElement(
-										'option',
-										{ value: '3' },
-										'Reason 3'
-									)
-								),
-								_react2.default.createElement('br', null),
-								_react2.default.createElement('input', { className: 'big-button big-red-button', type: 'submit', value: 'Submit' })
-							)
-						)
+						modalText
 					)
 				);
 			}
@@ -20693,7 +21348,7 @@
 	exports.default = Modal;
 
 /***/ },
-/* 166 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20701,11 +21356,11 @@
 	exports.__esModule = true;
 	exports.connect = exports.Provider = undefined;
 
-	var _Provider = __webpack_require__(167);
+	var _Provider = __webpack_require__(169);
 
 	var _Provider2 = _interopRequireDefault(_Provider);
 
-	var _connect = __webpack_require__(170);
+	var _connect = __webpack_require__(172);
 
 	var _connect2 = _interopRequireDefault(_connect);
 
@@ -20715,7 +21370,7 @@
 	exports.connect = _connect2["default"];
 
 /***/ },
-/* 167 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -20725,11 +21380,11 @@
 
 	var _react = __webpack_require__(2);
 
-	var _storeShape = __webpack_require__(168);
+	var _storeShape = __webpack_require__(170);
 
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 
-	var _warning = __webpack_require__(169);
+	var _warning = __webpack_require__(171);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -20799,7 +21454,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 168 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20815,7 +21470,7 @@
 	});
 
 /***/ },
-/* 169 */
+/* 171 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20844,7 +21499,7 @@
 	}
 
 /***/ },
-/* 170 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -20856,31 +21511,31 @@
 
 	var _react = __webpack_require__(2);
 
-	var _storeShape = __webpack_require__(168);
+	var _storeShape = __webpack_require__(170);
 
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 
-	var _shallowEqual = __webpack_require__(171);
+	var _shallowEqual = __webpack_require__(173);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _wrapActionCreators = __webpack_require__(172);
+	var _wrapActionCreators = __webpack_require__(174);
 
 	var _wrapActionCreators2 = _interopRequireDefault(_wrapActionCreators);
 
-	var _warning = __webpack_require__(169);
+	var _warning = __webpack_require__(171);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _isPlainObject = __webpack_require__(186);
+	var _isPlainObject = __webpack_require__(188);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _hoistNonReactStatics = __webpack_require__(190);
+	var _hoistNonReactStatics = __webpack_require__(192);
 
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-	var _invariant = __webpack_require__(191);
+	var _invariant = __webpack_require__(193);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -21243,7 +21898,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 171 */
+/* 173 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21274,7 +21929,7 @@
 	}
 
 /***/ },
-/* 172 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21282,7 +21937,7 @@
 	exports.__esModule = true;
 	exports["default"] = wrapActionCreators;
 
-	var _redux = __webpack_require__(173);
+	var _redux = __webpack_require__(175);
 
 	function wrapActionCreators(actionCreators) {
 	  return function (dispatch) {
@@ -21291,7 +21946,7 @@
 	}
 
 /***/ },
-/* 173 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -21299,27 +21954,27 @@
 	exports.__esModule = true;
 	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
 
-	var _createStore = __webpack_require__(174);
+	var _createStore = __webpack_require__(176);
 
 	var _createStore2 = _interopRequireDefault(_createStore);
 
-	var _combineReducers = __webpack_require__(181);
+	var _combineReducers = __webpack_require__(183);
 
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 
-	var _bindActionCreators = __webpack_require__(183);
+	var _bindActionCreators = __webpack_require__(185);
 
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 
-	var _applyMiddleware = __webpack_require__(184);
+	var _applyMiddleware = __webpack_require__(186);
 
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 
-	var _compose = __webpack_require__(185);
+	var _compose = __webpack_require__(187);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
-	var _warning = __webpack_require__(182);
+	var _warning = __webpack_require__(184);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -21343,7 +21998,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 174 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21352,11 +22007,11 @@
 	exports.ActionTypes = undefined;
 	exports["default"] = createStore;
 
-	var _isPlainObject = __webpack_require__(175);
+	var _isPlainObject = __webpack_require__(177);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _symbolObservable = __webpack_require__(179);
+	var _symbolObservable = __webpack_require__(181);
 
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
@@ -21610,12 +22265,12 @@
 	}
 
 /***/ },
-/* 175 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(176),
-	    isHostObject = __webpack_require__(177),
-	    isObjectLike = __webpack_require__(178);
+	var getPrototype = __webpack_require__(178),
+	    isHostObject = __webpack_require__(179),
+	    isObjectLike = __webpack_require__(180);
 
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -21686,7 +22341,7 @@
 
 
 /***/ },
-/* 176 */
+/* 178 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -21707,7 +22362,7 @@
 
 
 /***/ },
-/* 177 */
+/* 179 */
 /***/ function(module, exports) {
 
 	/**
@@ -21733,7 +22388,7 @@
 
 
 /***/ },
-/* 178 */
+/* 180 */
 /***/ function(module, exports) {
 
 	/**
@@ -21768,18 +22423,18 @@
 
 
 /***/ },
-/* 179 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/* global window */
 	'use strict';
 
-	module.exports = __webpack_require__(180)(global || window || this);
+	module.exports = __webpack_require__(182)(global || window || this);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 180 */
+/* 182 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21804,7 +22459,7 @@
 
 
 /***/ },
-/* 181 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -21812,13 +22467,13 @@
 	exports.__esModule = true;
 	exports["default"] = combineReducers;
 
-	var _createStore = __webpack_require__(174);
+	var _createStore = __webpack_require__(176);
 
-	var _isPlainObject = __webpack_require__(175);
+	var _isPlainObject = __webpack_require__(177);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _warning = __webpack_require__(182);
+	var _warning = __webpack_require__(184);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -21937,7 +22592,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 182 */
+/* 184 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21967,7 +22622,7 @@
 	}
 
 /***/ },
-/* 183 */
+/* 185 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22023,7 +22678,7 @@
 	}
 
 /***/ },
-/* 184 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22034,7 +22689,7 @@
 
 	exports["default"] = applyMiddleware;
 
-	var _compose = __webpack_require__(185);
+	var _compose = __webpack_require__(187);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
@@ -22086,7 +22741,7 @@
 	}
 
 /***/ },
-/* 185 */
+/* 187 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -22131,12 +22786,12 @@
 	}
 
 /***/ },
-/* 186 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(187),
-	    isHostObject = __webpack_require__(188),
-	    isObjectLike = __webpack_require__(189);
+	var getPrototype = __webpack_require__(189),
+	    isHostObject = __webpack_require__(190),
+	    isObjectLike = __webpack_require__(191);
 
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -22207,7 +22862,7 @@
 
 
 /***/ },
-/* 187 */
+/* 189 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -22228,7 +22883,7 @@
 
 
 /***/ },
-/* 188 */
+/* 190 */
 /***/ function(module, exports) {
 
 	/**
@@ -22254,7 +22909,7 @@
 
 
 /***/ },
-/* 189 */
+/* 191 */
 /***/ function(module, exports) {
 
 	/**
@@ -22289,7 +22944,7 @@
 
 
 /***/ },
-/* 190 */
+/* 192 */
 /***/ function(module, exports) {
 
 	/**
@@ -22337,7 +22992,7 @@
 
 
 /***/ },
-/* 191 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -22395,7 +23050,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 192 */
+/* 194 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22430,7 +23085,7 @@
 	exports.default = actions;
 
 /***/ },
-/* 193 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22449,19 +23104,19 @@
 
 	var _GeneralInfo2 = _interopRequireDefault(_GeneralInfo);
 
-	var _InfoItems = __webpack_require__(163);
+	var _InfoItems = __webpack_require__(165);
 
 	var _InfoItems2 = _interopRequireDefault(_InfoItems);
 
-	var _Person = __webpack_require__(164);
+	var _Person = __webpack_require__(166);
 
 	var _Person2 = _interopRequireDefault(_Person);
 
-	var _reactRedux = __webpack_require__(166);
+	var _reactRedux = __webpack_require__(168);
 
-	var _redux = __webpack_require__(173);
+	var _redux = __webpack_require__(175);
 
-	var _actions = __webpack_require__(192);
+	var _actions = __webpack_require__(194);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
@@ -22505,7 +23160,7 @@
 	exports.default = Overview;
 
 /***/ },
-/* 194 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22515,13 +23170,13 @@
 	});
 	exports.default = configureStore;
 
-	var _redux = __webpack_require__(173);
+	var _redux = __webpack_require__(175);
 
-	var _reducer = __webpack_require__(195);
+	var _reducer = __webpack_require__(197);
 
 	var _reducer2 = _interopRequireDefault(_reducer);
 
-	var _reduxLogger = __webpack_require__(196);
+	var _reduxLogger = __webpack_require__(198);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
@@ -22536,7 +23191,7 @@
 	}
 
 /***/ },
-/* 195 */
+/* 197 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22573,7 +23228,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 196 */
+/* 198 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -22806,7 +23461,7 @@
 	module.exports = createLogger;
 
 /***/ },
-/* 197 */
+/* 199 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -22820,7 +23475,7 @@
 		"influencer_title": "My Blog",
 		"influencer_twitter_followers": 7501,
 		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://i.telegraph.co.uk/multimedia/archive/02001/sausage_2001253a.jpg",
+		"influencer_last_post_photo_url": "https://static.pexels.com/photos/6555/nature-sunset-person-woman.jpg",
 		"path_name": "social-shares-by-my-blog",
 		"posted_at": "2016-05-07T21:49:38Z",
 		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
@@ -22828,54 +23483,54 @@
 
 			"social_network_type": "Facebook",
 			"social_network_url": "https://facebook.com",
-			"followers": 10000,
+			"followers": 999,
 			"platform_id": 0
 
 		}, {
 
 			"social_network_type": "Twitter",
 			"social_network_url": "https://twitter.com",
-			"followers": 10000,
+			"followers": 11532,
 			"platform_id": 1
 		}, {
 
 			"social_network_type": "Pinterest",
 			"social_network_url": "https://pinterest.com",
-			"followers": 10000,
+			"followers": 21501,
 			"platform_id": 2
 		}, {
 
 			"social_network_type": "Instagram",
 			"social_network_url": "https://instagram.com",
-			"followers": 10000,
+			"followers": 6321,
 			"platform_id": 3
 
 		}, {
 
 			"social_network_type": "Google+",
 			"social_network_url": "https://plus.google.com",
-			"followers": 10000,
+			"followers": 4789,
 			"platform_id": 4
 
 		}, {
 
 			"social_network_type": "YouTube",
 			"social_network_url": "https://youtube.com",
-			"followers": 10000,
+			"followers": 652,
 			"platform_id": 5
 
 		}, {
 
 			"social_network_type": "Vine",
 			"social_network_url": "https://vine.com",
-			"followers": 10000,
+			"followers": 10000000,
 			"platform_id": 6
 
 		}, {
 
 			"social_network_type": "Blog",
 			"social_network_url": "https://blogspot.com",
-			"followers": 10000,
+			"followers": 11500000,
 			"platform_id": 7
 
 		}],
@@ -22895,54 +23550,54 @@
 
 			"social_network_type": "Facebook",
 			"social_network_url": "https://facebook.com",
-			"followers": 10000,
+			"followers": 5231,
 			"platform_id": 0
 
 		}, {
 
 			"social_network_type": "Twitter",
 			"social_network_url": "https://twitter.com",
-			"followers": 10000,
+			"followers": 15789,
 			"platform_id": 1
 		}, {
 
 			"social_network_type": "Pinterest",
 			"social_network_url": "https://pinterest.com",
-			"followers": 10000,
+			"followers": 45554,
 			"platform_id": 2
 		}, {
 
 			"social_network_type": "Instagram",
 			"social_network_url": "https://instagram.com",
-			"followers": 10000,
+			"followers": 2409,
 			"platform_id": 3
 
 		}, {
 
 			"social_network_type": "Google+",
 			"social_network_url": "https://plus.google.com",
-			"followers": 10000,
+			"followers": 7800,
 			"platform_id": 4
 
 		}, {
 
 			"social_network_type": "YouTube",
 			"social_network_url": "https://youtube.com",
-			"followers": 10000,
+			"followers": 10001,
 			"platform_id": 5
 
 		}, {
 
 			"social_network_type": "Vine",
 			"social_network_url": "https://vine.com",
-			"followers": 10000,
+			"followers": 10021,
 			"platform_id": 6
 
 		}, {
 
 			"social_network_type": "Blog",
 			"social_network_url": "https://blogspot.com",
-			"followers": 10000,
+			"followers": 11092,
 			"platform_id": 7
 
 		}],
@@ -22955,7 +23610,7 @@
 		"influencer_title": "My Blog",
 		"influencer_twitter_followers": 9000,
 		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://discovermagazine.com/~/media/import/images/2/1/5/sausage.jpghttp://static1.squarespace.com/static/535b6e9ee4b0482b3e2815fe/535d8332e4b05d1feab61583/53706334e4b04a1fdc1e7319/1399874357965/cumberland.jpg",
+		"influencer_last_post_photo_url": "http://static4.gamespot.com/uploads/scale_super/1179/11799911/3016941-1.jpg",
 		"path_name": "social-shares-by-my-blog",
 		"posted_at": "2016-05-07T21:49:38Z",
 		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
@@ -23023,7 +23678,7 @@
 		"influencer_title": "My Blog",
 		"influencer_twitter_followers": 9000,
 		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://discovermagazine.com/~/media/import/images/2/1/5/sausage.jpg",
+		"influencer_last_post_photo_url": "http://image.slidesharecdn.com/somebreathtakingimages-the2016sonyworldphotographyawards-151031032143-lva1-app6892/95/some-breathtaking-images-the-2016-sony-world-photography-awards-12-638.jpg?cb=1446484857",
 		"path_name": "social-shares-by-my-blog",
 		"posted_at": "2016-05-07T21:49:38Z",
 		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
@@ -23077,7 +23732,7 @@
 		"influencer_title": "My Blog",
 		"influencer_twitter_followers": 9000,
 		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://discovermagazine.com/~/media/import/images/2/1/5/sausage.jpg",
+		"influencer_last_post_photo_url": "http://www.gettyimages.com/gi-resources/images/Embed/GettyImages-183134862.jpg",
 		"path_name": "social-shares-by-my-blog",
 		"posted_at": "2016-05-07T21:49:38Z",
 		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
@@ -23219,7 +23874,7 @@
 		"influencer_title": "My Blog",
 		"influencer_twitter_followers": 9000,
 		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://exmoorpet.com/wp-content/uploads/2012/08/cat.png",
+		"influencer_last_post_photo_url": "http://im.rediff.com/news/2016/feb/23sony12a.jpg",
 		"path_name": "social-shares-by-my-blog",
 		"posted_at": "2016-05-07T21:49:38Z",
 		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
@@ -23401,7 +24056,7 @@
 	exports.default = influencers;
 
 /***/ },
-/* 198 */
+/* 200 */
 /***/ function(module, exports) {
 
 	"use strict";

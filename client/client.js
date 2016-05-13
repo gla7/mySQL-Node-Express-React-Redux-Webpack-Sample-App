@@ -9,7 +9,7 @@ import programInfo from '../data/programInfo'
 
 
 let initialState = {
-	role : "marketer",
+	role : "cst",
 	budget : 450000,
 	influencers : influencers,
 	programInfo : programInfo,

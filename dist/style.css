@@ -1,8 +1,10 @@
 html, body {
-	margin           : 0;
+	margin           : 1rem;
 	padding          : 0;
 	font-family      : sans-serif;
 }
+
+button:focus {outline:0;}
 
 .client-platform-class 
 a {
@@ -39,11 +41,6 @@ a:hover {
 	text-align: center;
 }
 
-/*.client-platform-class 
-.text-align-left {
-	text-align: left;
-}*/
-
 .client-platform-class 
 .text-align-right {
 	text-align: right;
@@ -53,11 +50,6 @@ a:hover {
 .no-padding-left {
 	padding-left: 0;
 }
-
-/*.client-platform-class 
-.border-bottom-thin-line {
-	border-bottom: 0.5px solid #D2D3D4;
-}*/
 
 .client-platform-class 
 .margin-right-little {
@@ -85,14 +77,14 @@ a:hover {
 }
 
 .client-platform-class 
+.width-twenty-percent {
+	width:20%;
+}
+
+.client-platform-class 
 .width-twenty-five-percent {
 	width:25%;
 }
-
-/*.client-platform-class 
-.width-most {
-	width:97%;
-}*/
 
 .client-platform-class 
 .width-fifty-percent {
@@ -187,19 +179,21 @@ a:hover {
 }
 
 
-.client-platform-class .cancel-button {
+.client-platform-class 
+.cancel-button {
 	position:absolute;
 	top:1rem;
 	right: 1rem;
 	padding:0;
 	text-align: center;
 	background-color:white;
-	color:black;
+	/*color:black;*/
 	border: none;
 	outline: none;
 }
 
-.client-platform-class .xButton {
+.client-platform-class 
+.xButton {
 	color:#FF0013;
 	border: 1px solid #FF0013;
 	border-radius: 50%;
@@ -224,6 +218,11 @@ a:hover {
 }
 
 .client-platform-class 
+.font-weight-bolder {
+	font-weight: bolder;
+}
+
+.client-platform-class 
 .program-info {
 	margin-left: 6rem;
 }
@@ -239,17 +238,57 @@ a:hover {
 	margin-top: 0;
 }
 
+.client-platform-class 
+.margin-top {
+	margin-top: 2rem;
+}
+
+.client-platform-class 
 .nav-bar {
 	margin: 0 1rem;
-	border-top:0.3rem solid transparent;
+	border-top:3px solid transparent;
 }
 
+.client-platform-class 
 .nav-bar:hover {
-	border-top:0.3rem solid #FF5770;
+	margin: 0 1rem;
+	border-top:3px solid #FF5770;
 }
 
-/*.client-platform-class 
+.rating {
+      overflow: hidden;
+      display: inline-block;
+}
+.rating-input {
+      float: right;
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      margin: 0 0 0 -16px;
+      opacity: 0;
+}
+.rating-star {
+      display: block;
+      width: 16px;
+      height: 16px;
+      background: url('star.png') 0 -16px;
+}
+.rating-star:hover {
+      background-position: 0 0;
+}
+
+.client-platform-class 
 .modal-outer {
+	background-color: #f0f0f0;
+	padding: 1rem;
+	border-radius: .3rem;
+	min-height: 23.5rem;
+	min-width: 92%;
+	margin-top:-26.7rem;
+}
+
+.client-platform-class 
+.app-modal-outer {
 	width: 100vw;
 	height: 100vh;
 	position: fixed;
@@ -258,16 +297,28 @@ a:hover {
 	left:0;
 	bottom:0;
 	background-color: rgba(0,0,0,0.5);
+	z-index:170;
+}
+
+.client-platform-class 
+.app-modal-inner {
+	width: 40%;
+	min-height: 20%;
+	top: 50%;
+	transform: translateY(-51%);
+	background-color: #f0f0f0;
+	position: relative;
+	margin: auto;
+	z-index:20;
+	padding-bottom: 1.5rem;
 	z-index:10;
-}*/
+	background-color: #F0F0F0;
+	border-radius:0.3rem;
+	
+}
 
 .client-platform-class 
 .modal-inner {
-	/*width: 40%;*/
-	/*min-height: 20%;*/
-	/*top: 50%;*/
-	/*transform: translateY(-51%);*/
-	/*background-color: #f0f0f0;*/
 	position: relative;
 	margin: auto;
 	z-index:20;
@@ -292,14 +343,15 @@ a:hover {
 
 .client-platform-class 
 .textbox-width {
-	width:60%;
+	width:50%;
 }
 
 .client-platform-class
 .social-networks-info {
 	color:#999A9B;
-	font-size: 2rem;
-	padding-right:0.3rem;
+	font-size: 2.25rem;
+	padding-right:0.15rem;
+	padding-left:0.15rem;
 	display: block;
 
 }
@@ -314,12 +366,22 @@ a:hover {
 }
 
 .client-platform-class 
+.program-feedback-text {
+	display:inline-block;
+	font-size: 9px;
+	width:50%;
+	text-align: center;
+	color:#999A9B;
+}
+
+.client-platform-class 
 .profile-info-influencer {
 	text-align:left;
 	display:inline-block; 
 	line-height:0.8rem;
-	min-height:13rem;
+	min-height:11rem;
 	width:100%;
+	padding-top:1rem;
 }
 
 .client-platform-class 
@@ -333,8 +395,10 @@ a:hover {
 
 .client-platform-class 
 .modal {
+	position:absolute;
 	display:block;
 	width:95%;
+	z-index:150;
 }
 
 .client-platform-class 
@@ -346,6 +410,7 @@ a:hover {
 
 .client-platform-class 
 .influencer {
+	position:relative;
 	display:inline-block;
 	text-align: center;
 	width:20%;
@@ -369,14 +434,15 @@ a:hover {
 
 .client-platform-class 
 .flavicon-div {
-	width:16%;
+	width:25%;
 	display: inline-block;
+	text-align: center;
 }
 
 .client-platform-class 
 .followers {
 	margin-top:0;
-	font-size: 0.7rem;
+	font-size: 0.55rem;
 	margin-bottom:0;
 }
 
@@ -393,11 +459,26 @@ a:hover {
 	border-bottom:0.5px solid #999A9B;
 }
 
+.client-platform-class 
+.width-all {
+	width:100%;
+}
+
 @media only screen and (max-width: 1000px){
 
 	.client-platform-class 
 	.influencer {
 		width:33%;
+	}
+
+	.client-platform-class 
+	.program-info {
+		display: block;
+	}
+
+	.client-platform-class 
+	.empty-space {
+		display: none;
 	}
 
 }
@@ -482,10 +563,14 @@ a:hover {
 }
 
 @media only screen and (min-device-width : 0px) and (max-device-width : 480px) and (orientation : portrait) { 
+	.client-platform-class 
+	.program-info {
+		margin-left: 1rem;
+	}
 
 	.client-platform-class 
-	.cancel-button {
-		top:17.5vh;
+	.empty-space {
+		display: none;
 	}
 
 	.client-platform-class 

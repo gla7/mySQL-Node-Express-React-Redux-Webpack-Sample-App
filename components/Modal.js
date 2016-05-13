@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 
 
-
 class Modal extends Component {
 
 	constructor(props, context) {
@@ -75,27 +74,29 @@ class Modal extends Component {
 		let selection = this.state.inputSelection
 		let count = 0
 		let modalText = this.props.wholeState.numberRemoved < 3 ? 
-		(	<div className="modal-padding text-align-center"><h3>Are you sure you want to remove this person?</h3>
-			<button className="big-button big-red-button margin-right-little" onClick={this.handleOpenModal.bind(this)}>No, keep this person</button><br className="display-none-when-large"/><br className="display-none-when-large"/><button  className={this.state.className} onClick={this.confirmRemove.bind(this)}>Yes, remove this person</button></div>)
-		: 	(<div className="modal-padding text-align-center"><h3>You can only remove 3 people</h3>
-					<button className="big-button big-red-button margin-right-little" onClick={this.handleOpenModal.bind(this)}>Close This Box</button></div>)
-		return  <div className="modal">
-					<div className="remove-influencer"><button className="remove-border font-color-pink" disabled={this.props.wholeState.isModalOpen} onClick={this.handleOpenModal.bind(this)}>Remove influencer X</button></div>
-					<div className="modal-outer"  style={{display}}>
-						<div className="modal-inner">
-							
-							{modalText}
-							<form className="modal-form" style={secondaryDisplay} onSubmit={this.handleSubmit.bind(this)}>
-								<p>Why would you like to remove this person?</p>
+		(	<div className="modal-inner">
+							<form className="modal-form" onSubmit={this.handleSubmit.bind(this)}>
+								<p>Why would you like to remove {this.props.person.influencer_full_name}?</p>
 								<select className="margin-bottom-some width-twenty-five-percent" value={selection} onChange={this.handleChange.bind(this)}>
 									<option value="default">---</option>
 									<option value="1">Reason 1</option>
 									<option value="2">Reason 2</option>
 									<option value="3">Reason 3</option>
 								</select><br/>
-								<input className="big-button big-red-button" type="submit" value="Submit"/>
+								<input className="big-button big-red-button width-all" type="submit" value="Remove"/>
 							</form>
+							<br/>
+							<button className="big-button big-red-button width-all" onClick={this.handleOpenModal.bind(this)}>Keep</button>
 						</div>
+		)
+		: 	(<div className="modal-padding text-align-center"><h3>You can only remove 3 people</h3>
+					<button className="big-button big-red-button width-all" onClick={this.handleOpenModal.bind(this)}>Close This Box</button></div>
+			)
+		return  <div className="modal">
+					<div className="remove-influencer"><button className="remove-border font-color-pink font-weight-bolder" disabled={this.props.wholeState.isModalOpen} onClick={this.handleOpenModal.bind(this)}>Remove influencer X</button></div>
+					<div className="modal-outer"  style={{display}}>
+						{modalText}
+						
 					</div>
 				</div>
 

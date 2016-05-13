@@ -5,7 +5,7 @@ let influencers = [
 	"influencer_title" : "My Blog",
 	"influencer_twitter_followers" : 7501,
 	"influencer_facebook_followers" : 9000,
-	"influencer_last_post_photo_url" : "http://i.telegraph.co.uk/multimedia/archive/02001/sausage_2001253a.jpg",
+	"influencer_last_post_photo_url" : "https://static.pexels.com/photos/6555/nature-sunset-person-woman.jpg",
 	"path_name" : "social-shares-by-my-blog",
 	"posted_at" : "2016-05-07T21:49:38Z",
 	"assignment_name" : "Jimmy Dean Sausage at Meijer Tapfire #1",
@@ -14,7 +14,7 @@ let influencers = [
 			
 			"social_network_type" : "Facebook",
 			"social_network_url"  :"https://facebook.com",
-			"followers" : 10000,
+			"followers" : 999,
 			"platform_id" : 0
 
 		},
@@ -22,21 +22,21 @@ let influencers = [
 			
 			"social_network_type" : "Twitter",
 			"social_network_url"  :"https://twitter.com",
-			"followers" : 10000,
+			"followers" : 11532,
 			"platform_id" : 1
 		},
 		{
 			
 			"social_network_type" : "Pinterest",
 			"social_network_url"  :"https://pinterest.com",
-			"followers" : 10000,
+			"followers" : 21501,
 			"platform_id" : 2
 		},
 		{
 			
 			"social_network_type" : "Instagram",
 			"social_network_url"  :"https://instagram.com",
-			"followers" : 10000,
+			"followers" : 6321,
 			"platform_id" : 3
 
 		},
@@ -44,7 +44,7 @@ let influencers = [
 			
 			"social_network_type" : "Google+",
 			"social_network_url"  :"https://plus.google.com",
-			"followers" : 10000,
+			"followers" : 4789,
 			"platform_id" : 4
 
 		},
@@ -52,7 +52,7 @@ let influencers = [
 			
 			"social_network_type" : "YouTube",
 			"social_network_url"  :"https://youtube.com",
-			"followers" : 10000,
+			"followers" : 652,
 			"platform_id" : 5
 
 		},
@@ -60,7 +60,7 @@ let influencers = [
 			
 			"social_network_type" : "Vine",
 			"social_network_url"  :"https://vine.com",
-			"followers" : 10000,
+			"followers" : 10000000,
 			"platform_id" : 6
 
 		},
@@ -68,7 +68,7 @@ let influencers = [
 			
 			"social_network_type" : "Blog",
 			"social_network_url"  :"https://blogspot.com",
-			"followers" : 10000,
+			"followers" : 11500000,
 			"platform_id" : 7
 
 		}
@@ -91,7 +91,7 @@ let influencers = [
 			
 			"social_network_type" : "Facebook",
 			"social_network_url"  :"https://facebook.com",
-			"followers" : 10000,
+			"followers" : 5231,
 			"platform_id" : 0
 
 		},
@@ -99,21 +99,21 @@ let influencers = [
 			
 			"social_network_type" : "Twitter",
 			"social_network_url"  :"https://twitter.com",
-			"followers" : 10000,
+			"followers" : 15789,
 			"platform_id" : 1
 		},
 		{
 			
 			"social_network_type" : "Pinterest",
 			"social_network_url"  :"https://pinterest.com",
-			"followers" : 10000,
+			"followers" : 45554,
 			"platform_id" : 2
 		},
 		{
 			
 			"social_network_type" : "Instagram",
 			"social_network_url"  :"https://instagram.com",
-			"followers" : 10000,
+			"followers" : 2409,
 			"platform_id" : 3
 
 		},
@@ -121,7 +121,7 @@ let influencers = [
 			
 			"social_network_type" : "Google+",
 			"social_network_url"  :"https://plus.google.com",
-			"followers" : 10000,
+			"followers" : 7800,
 			"platform_id" : 4
 
 		},
@@ -129,7 +129,7 @@ let influencers = [
 			
 			"social_network_type" : "YouTube",
 			"social_network_url"  :"https://youtube.com",
-			"followers" : 10000,
+			"followers" : 10001,
 			"platform_id" : 5
 
 		},
@@ -137,7 +137,7 @@ let influencers = [
 			
 			"social_network_type" : "Vine",
 			"social_network_url"  :"https://vine.com",
-			"followers" : 10000,
+			"followers" : 10021,
 			"platform_id" : 6
 
 		},
@@ -145,7 +145,7 @@ let influencers = [
 			
 			"social_network_type" : "Blog",
 			"social_network_url"  :"https://blogspot.com",
-			"followers" : 10000,
+			"followers" : 11092,
 			"platform_id" : 7
 
 		}
@@ -160,7 +160,7 @@ let influencers = [
 	"influencer_title" : "My Blog",
 	"influencer_twitter_followers" : 9000,
 	"influencer_facebook_followers" : 9000,
-	"influencer_last_post_photo_url" : "http://discovermagazine.com/~/media/import/images/2/1/5/sausage.jpghttp://static1.squarespace.com/static/535b6e9ee4b0482b3e2815fe/535d8332e4b05d1feab61583/53706334e4b04a1fdc1e7319/1399874357965/cumberland.jpg",
+	"influencer_last_post_photo_url" : "http://static4.gamespot.com/uploads/scale_super/1179/11799911/3016941-1.jpg",
 	"path_name" : "social-shares-by-my-blog",
 	"posted_at" : "2016-05-07T21:49:38Z",
 	"assignment_name" : "Jimmy Dean Sausage at Meijer Tapfire #1",
@@ -238,7 +238,7 @@ let influencers = [
 	"influencer_title" : "My Blog",
 	"influencer_twitter_followers" : 9000,
 	"influencer_facebook_followers" : 9000,
-	"influencer_last_post_photo_url" : "http://discovermagazine.com/~/media/import/images/2/1/5/sausage.jpg",
+	"influencer_last_post_photo_url" : "http://image.slidesharecdn.com/somebreathtakingimages-the2016sonyworldphotographyawards-151031032143-lva1-app6892/95/some-breathtaking-images-the-2016-sony-world-photography-awards-12-638.jpg?cb=1446484857",
 	"path_name" : "social-shares-by-my-blog",
 	"posted_at" : "2016-05-07T21:49:38Z",
 	"assignment_name" : "Jimmy Dean Sausage at Meijer Tapfire #1",
@@ -300,7 +300,7 @@ let influencers = [
 	"influencer_title" : "My Blog",
 	"influencer_twitter_followers" : 9000,
 	"influencer_facebook_followers" : 9000,
-	"influencer_last_post_photo_url" : "http://discovermagazine.com/~/media/import/images/2/1/5/sausage.jpg",
+	"influencer_last_post_photo_url" : "http://www.gettyimages.com/gi-resources/images/Embed/GettyImages-183134862.jpg",
 	"path_name" : "social-shares-by-my-blog",
 	"posted_at" : "2016-05-07T21:49:38Z",
 	"assignment_name" : "Jimmy Dean Sausage at Meijer Tapfire #1",
@@ -464,7 +464,7 @@ let influencers = [
 	"influencer_title" : "My Blog",
 	"influencer_twitter_followers" : 9000,
 	"influencer_facebook_followers" : 9000,
-	"influencer_last_post_photo_url" : "http://exmoorpet.com/wp-content/uploads/2012/08/cat.png",
+	"influencer_last_post_photo_url" : "http://im.rediff.com/news/2016/feb/23sony12a.jpg",
 	"path_name" : "social-shares-by-my-blog",
 	"posted_at" : "2016-05-07T21:49:38Z",
 	"assignment_name" : "Jimmy Dean Sausage at Meijer Tapfire #1",

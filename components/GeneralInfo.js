@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import StarRatingComponent from 'react-star-rating-component'
+import Star from "./Star"
 
 
 
@@ -11,9 +13,36 @@ class GeneralInfo extends Component {
 			isModal : false,
 			confirmModal : false,
 			inputText : "",
-			className : "big-button big-red-button"
+			className : "big-button big-red-button",
+			rating : 0,
+			cancelReason : "",
+
+
+
+			//new stuff
+			hoverAt: null,
 		}
 	}
+
+
+
+	//new star rating stuff
+	handleMouseOver(idx, evt){
+    	this.state.hoverAt = idx + 1;
+        this.forceUpdate();
+    }
+    handleMouseOut(idx, evt){
+    	this.state.hoverAt = null;
+        this.forceUpdate();
+    }
+    handleClick(idx, evt){
+        this.state.rating = idx + 1;
+        this.forceUpdate();
+        console.log('clicked');
+    }
+	//new star rating stuff
+
+
 
 	handleOpenModal() {
 		this.props.allActions.modalIsOpen()
@@ -42,12 +71,28 @@ class GeneralInfo extends Component {
 	handleChange(event) {
 		event.preventDefault()
 		this.setState({
-			inputText : event.target.value
+			cancelReason : event.target.value
 		})
 	}
 
+	// onStarClick(event) {
+	// 	this.setState({
+	// 		rating : event
+	// 	})
+		
+	// }
+
 	handleSubmit (event) {
 		event.preventDefault()
+		if(this.state.rating < 3) {
+			if(this.state.cancelReason.length < 1) {
+				alert("You must provide a reason for cancelling this program")
+			} else {
+				console.log('Program Cancelled')
+			}
+		} else {
+			console.log('Program Sent to Customer')
+		}
 		if(this.state.inputText !== "") {
 			this.handleOpenModal()
 			//back end call here
@@ -64,37 +109,63 @@ class GeneralInfo extends Component {
 	}
 
 	runProgram() {
-		if(this.props.wholeState.role === "marketer"){
-			console.log("Start: Marketer")
-		} else if (this.props.wholeState.role === "customer"){
-			console.log('Start: Customer')
+		if(this.state.rating < 3) {
+			if(this.state.cancelReason.length < 1) {
+				alert("You must provide a reason for cancelling this program")
+			} else {
+				console.log('Program Cancelled')
+			}
 		} else {
-			console.log('Start: Other')
+			console.log('Program Sent to Customer')
 		}
+		// if(this.props.wholeState.role === "cst"){
+		// 	console.log("Start: Customer Success")
+		// } else if (this.props.wholeState.role === "customer"){
+		// 	console.log('Start: Customer')
+		// } else {
+		// 	console.log('Start: Other')
+		// }
 		// $.get("/runProgram",function (response) {
 		// 	console.log(response.data)
 		// })
 	}
 
-	cancelProgram() {
-		if(this.props.wholeState.role === "marketer"){
-			console.log("Cancel: Marketer")
-		} else if (this.props.wholeState.role === "customer"){
-			console.log('Cancel: Customer')
-		} else {
-			console.log('Cancel: Other')
-		}
-		// $.get("/cancelProgram",function (response) {
-		// 	console.log(response.data)
-		// })
-	}
-
-
 	render() {
 
-		let buttonRun = this.props.wholeState.role === "marketer" ? "Run This Program" : "Run Program: Customer"
+		//new star rating stuff
 
-		let buttonCancel = this.props.wholeState.role === "marketer" ? "Cancel This Program" : "Cancel Program: Customer"
+		let stars = [];
+        for (var i = 0 ; i < 5; i++){
+        	var rating = this.state.hoverAt != null ? this.state.hoverAt : this.state.rating;
+        	var selected = (i < rating);
+          let style = {
+          	color:"#FF5770",
+          }
+        	stars.push(
+            <Star style={style} key={i} selected={selected}
+            	  onMouseOver={this.handleMouseOver.bind(this, i)}
+              	  onMouseOut={this.handleMouseOut.bind(this, i)}
+                  onClick={this.handleClick.bind(this, i)}/>
+                  );
+        }
+
+		//new star rating stuff
+		
+
+		let buttonRun = ""
+
+
+		if(this.props.wholeState.role === "cst") {
+			if(this.state.rating === 0) {
+				buttonRun = "A Rating Must Be Entered"
+			} else if(this.state.rating > 0 && this.state.rating < 3) {
+				buttonRun = "Cancel Program"
+			} else {
+				buttonRun = "Send Program To Customer"
+			}
+		} else {
+			buttonRun = "Run This Program"
+		}
 		
 		let programInfo = this.props.wholeState.programInfo
 
@@ -116,27 +187,110 @@ class GeneralInfo extends Component {
 		let display = this.state.isModal ? "" : "none"
 
 		let secondaryDisplay = this.state.confirmModal ? {
-				display : "",
-			} : {
-				display : "none",
-			}
+			display : "",
+		} : {
+			display : "none",
+		}
 
-		
+		let cancelDisplay = this.state.rating > 0 && this.state.rating < 3 ? {
+			display : ""
+		} : {
+			display : "none"
+		}
+
+		let ratingDisplay = this.props.wholeState.role === "cst" ? {
+			display : ""
+		} : {
+			display : "none"
+		}
+
+		let color = {
+			color: "gray"
+		}
+
+		// let programStart = this.props.wholeState.role === "cst" ?  <StarRatingComponent renderStarIcon={() => <span>☆</span>} starColor={"#FF5770"} display={ratingDisplay} editing={true} name="rate1" starCount={5} onStarClick={this.onStarClick.bind(this)} />
+		// : <div></div>
+
+		let programStart = this.props.wholeState.role === "cst" ?  <div>{stars}</div>
+		: <div></div>
+
+		let disabled = this.state.rating === 0 ? true : false
 
 		return  <div className="text-align-center margin-bottom-someMore vertical-align-top">
-					<div>
-						<div className="width-twenty-five-percent display-inline-block program-header"></div>
-						<div className="width-twenty-five-percent display-inline-block program-header">
-							<h5>Program Budget</h5>
-							<h1 className="make-smaller-font-when-small">{budget}</h1>
-							<p className="program-budget-text">The actual program may be a little under this amount.</p>
+					<div className="margin-top">
+						<div className="width-twenty-percent display-inline-block program-header">
+						<h5>TOTAL PROGRAM ROI</h5>
+							<div className="text-align-center">
+								<div className="clearfix">
+									<div className="c100 p46 small orange">
+										<span>46%</span>
+										<div className="slice">
+											<div className="bar"></div>
+											<div className="fill"></div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div className="width-twenty-five-percent display-inline-block program-header">
-							<h5>Estimated Total Reach</h5>
-							<h1 className="make-smaller-font-when-small">{reach}</h1>
+						<div className="width-twenty-percent display-inline-block program-header">
+							<h5>SPEND</h5>
+							<div className="clearfix">
+								<div className="c100 p33 small orange">
+									<span>33%</span>
+									<div className="slice">
+										<div className="bar"></div>
+										<div className="fill"></div>
+									</div>
+								</div>
+							</div>
+							<div>
+								<span>current</span><br/>
+								<span>$5000</span><br/>
+								<span>projected</span><br/>
+								<span>$15000</span>
+							</div>
 						</div>
-						<div className="width-twenty-five-percent display-inline-block program-header">
-							<button onClick={this.runProgram.bind(this)} className="big-button big-red-button-no-expand text-align-center display-inline-block">{buttonRun}</button>
+						<div className="width-twenty-percent display-inline-block program-header">
+							<h5>TIME</h5>
+							<div className="clearfix">
+								<div className="c100 p50 small orange">
+									<span>14 days</span>
+									<div className="slice">
+										<div className="bar"></div>
+										<div className="fill"></div>
+									</div>
+								</div>
+							</div>
+							<div>
+								<span>projected</span><br/>
+								<span>30</span><br/>
+								<span>days</span>
+							</div>
+						</div>
+						<div className="width-twenty-percent display-inline-block program-header">
+							<h5>POSTS</h5>
+							<div className="clearfix">
+								<div className="c100 p25 small orange">
+									<span>6</span>
+									<div className="slice">
+										<div className="bar"></div>
+										<div className="fill"></div>
+									</div>
+								</div>
+							</div>
+							<div>
+								<span>estimated</span><br/>
+								<span>24</span><br/>
+								<span>posts</span>
+							</div>
+						</div>
+						<div className="width-twenty-percent display-inline-block program-header">
+							<h5 style={ratingDisplay}>PROGRAM FEEDBACK</h5>
+							<p className="program-feedback-text">How happy are you with the process of creating this project?</p>
+							{programStart}
+							<br/>
+							<textarea rows="4" className="textbox-width" style={cancelDisplay} placeholder="List your reasons here..." onChange={this.handleChange.bind(this)}></textarea><br/>
+						    <button onClick={this.runProgram.bind(this)} disabled={disabled} className="big-button big-red-button-no-expand text-align-center display-inline-block">{buttonRun}</button>
 						</div>
 					</div>
 					
