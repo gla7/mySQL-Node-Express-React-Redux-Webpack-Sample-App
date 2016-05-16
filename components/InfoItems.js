@@ -24,6 +24,17 @@ class InfoItems extends Component {
 
 		// let textAboveDividerLine = (this.props.wholeState.role != "cst") ? "POSSIBLE INFLUENCERS WE'VE CHOSEN FOR YOUR PROGRAM" : "INFLUENCER REVIEW"
 
+		let sorted = this.props.wholeState.influencers.sort(function (a, b) {
+		  	if (a.influencer_total_reach > b.influencer_total_reach) {
+		    return 1;
+		}
+		  	if (a.influencer_total_reach < b.influencer_total_reach) {
+		    return -1;
+	    }
+		    // a must be equal to b
+		    return 0;
+		})
+
 		return  <div className="margin-bottom-some">
 					<h5 className="color-gray">TOP PERFORMING CONTENT</h5>
 					<ul className="influencer-list">

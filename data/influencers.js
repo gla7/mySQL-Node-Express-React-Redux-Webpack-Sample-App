@@ -75,7 +75,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 0,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322510
 },
 {
 	"influencer_full_name" : "Shari Rios",
@@ -152,7 +152,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 1,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322501
 },
 {
 	"influencer_full_name" : "Lillian Ortiz",
@@ -230,7 +230,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 2,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322512
 },
 {
 	"influencer_full_name" : "Armando Bates",
@@ -292,7 +292,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 3,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322503
 },
 {
 	"influencer_full_name" : "Grady Sullivan",
@@ -324,7 +324,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 4,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322514
 },
 {
 	"influencer_full_name" : "Flora Bailey",
@@ -402,7 +402,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 5,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322505
 },
 {
 	"influencer_full_name" : "Ron Vargas",
@@ -456,7 +456,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 6,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322516
 },
 {
 	"influencer_full_name" : "Daisy Swanson",
@@ -518,7 +518,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 7,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322507
 },
 {
 	"influencer_full_name" : "Toby Ruiz",
@@ -596,7 +596,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 8,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322518
 },
 {
 	"influencer_full_name" : "Evan Howard",
@@ -666,7 +666,7 @@ let influencers = [
 	],
 	"website_url" : "https://myspace.com",
 	"id" : 9,
-	"influencer_total_reach" : 322500
+	"influencer_total_reach" : 322509
 }]
 
 
