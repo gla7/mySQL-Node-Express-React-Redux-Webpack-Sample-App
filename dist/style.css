@@ -52,6 +52,11 @@ a:hover {
 }
 
 .client-platform-class 
+.little-padding-left {
+	padding-left: 0.3rem;
+}
+
+.client-platform-class 
 .margin-right-little {
 	margin-right:2rem;
 }
@@ -102,8 +107,18 @@ a:hover {
 }
 
 .client-platform-class 
+.font-size-1-rem {
+	font-size: 1rem;
+}
+
+.client-platform-class 
 .font-size-2-rem {
 	font-size: 1.2rem;
+}
+
+.client-platform-class 
+.font-size-tiny {
+	font-size: 0.6rem;
 }
 
 .client-platform-class 
@@ -379,9 +394,24 @@ a:hover {
 	text-align:left;
 	display:inline-block; 
 	line-height:0.8rem;
-	min-height:11rem;
-	width:100%;
-	padding-top:1rem;
+	min-height:7rem;
+	/*width:86.5%;*/
+	/*padding-top:1rem;*/
+
+	/*testing*/
+	background-color:#F2F2F2;
+	margin: auto;
+	margin-top:-1.98rem;
+	/*background-size  : cover;*/
+	/*background-position : center center;*/
+	/*text-align:center;*/
+	/*display: block;*/
+	/*vertical-align:top; */
+	padding-top:3rem; 
+	padding-right:1rem;
+	/*padding-left:1rem;*/
+	/*margin-bottom : 2rem;*/
+	width: 80%;
 }
 
 .client-platform-class 
@@ -448,7 +478,7 @@ a:hover {
 
 .client-platform-class 
 .blog-name {
-	font-size: 1.1rem;
+	font-size: 0.8rem;
 	font-weight: lighter;
 	padding:0;
 	padding-bottom:0.5rem;

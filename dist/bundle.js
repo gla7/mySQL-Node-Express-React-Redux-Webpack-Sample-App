@@ -20989,6 +20989,15 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	//took this out:
+	// <ul className="influencer-list">
+	// 	{
+	// 		this.props.wholeState.influencers.map((person) => {
+	// 			return <Person allActions={this.props.allActions} key={person.id} person={person} wholeState={this.props.wholeState}/>
+	// 		})
+	// 	}
+	// </ul>
+
 	var InfoItems = function (_Component) {
 		_inherits(InfoItems, _Component);
 
@@ -21017,16 +21026,18 @@
 
 				// let textAboveDividerLine = (this.props.wholeState.role != "cst") ? "POSSIBLE INFLUENCERS WE'VE CHOSEN FOR YOUR PROGRAM" : "INFLUENCER REVIEW"
 
-				var sorted = this.props.wholeState.influencers.sort(function (a, b) {
-					if (a.influencer_total_reach > b.influencer_total_reach) {
-						return 1;
-					}
-					if (a.influencer_total_reach < b.influencer_total_reach) {
+				var sorted = this.props.wholeState.roi.roi.influencers.sort(function (a, b) {
+					if (a.engagement > b.engagement) {
 						return -1;
+					}
+					if (a.engagement < b.engagement) {
+						return 1;
 					}
 					// a must be equal to b
 					return 0;
 				});
+
+				console.log(sorted[0]);
 
 				return _react2.default.createElement(
 					'div',
@@ -21039,8 +21050,13 @@
 					_react2.default.createElement(
 						'ul',
 						{ className: 'influencer-list' },
-						this.props.wholeState.influencers.map(function (person) {
-							return _react2.default.createElement(_Person2.default, { allActions: _this2.props.allActions, key: person.id, person: person, wholeState: _this2.props.wholeState });
+						_react2.default.createElement(
+							'li',
+							null,
+							sorted[0].blog_name
+						),
+						this.props.wholeState.roi.roi.influencers.map(function (person) {
+							return _react2.default.createElement(_Person2.default, { allActions: _this2.props.allActions, key: person.influencer_uuid, person: person, wholeState: _this2.props.wholeState });
 						})
 					)
 				);
@@ -21084,6 +21100,17 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	//removed this:
+	// <h6 className="blog-name"><a href={this.props.person.website_url}>{blogNameDisplay(this.props.person.influencer_title)}</a></h6>
+	// 		{
+	// 			this.props.person.platforms.map((platform) => {
+	// 				return (<div className="flavicon-div" key={platform.platform_id}><a href={platform.social_network_url} className="social-networks-info"><i className={whatFlavicon(platform.social_network_type)}></i><p className="followers">{followersDisplay(platform.followers)}</p></a></div>)
+
+	// 			})
+	// 		}
+	//also removed
+	// <Modal person={this.props.person} allActions={this.props.allActions} wholeState={this.props.wholeState}/>
+
 	var Person = function (_Component) {
 		_inherits(Person, _Component);
 
@@ -21097,7 +21124,7 @@
 			key: 'render',
 			value: function render() {
 				var picStyle = {
-					backgroundImage: "url(" + this.props.person.influencer_photo_url + ")",
+					backgroundImage: "url(" + this.props.person.picture_url + ")",
 					backgroundSize: "cover",
 					backgroundPosition: "center center",
 					margin: "auto",
@@ -21184,6 +21211,16 @@
 					}
 				};
 
+				var numStr = function numStr(num) {
+					var numStrArr = num.toString().split("");
+					for (var i = numStrArr.length; i >= 0; i -= 3) {
+						if (numStrArr[i + 1] && i !== 0) {
+							numStrArr.splice(i, 0, ",");
+						}
+					}
+					return numStrArr.join("");
+				};
+
 				return _react2.default.createElement(
 					'li',
 					{ className: 'influencer' },
@@ -21200,10 +21237,10 @@
 							{ className: 'profile-info-influencer' },
 							_react2.default.createElement(
 								'h5',
-								{ className: 'padding-bottom-tiny font-size-2-rem' },
+								{ className: 'padding-bottom-tiny font-size-1-rem' },
 								_react2.default.createElement(
 									'a',
-									{ className: 'color-black', href: this.props.person.website_url },
+									{ className: 'little-padding-left color-black', href: this.props.person.website_url },
 									nameDisplay(this.props.person.influencer_full_name)
 								)
 							),
@@ -21212,29 +21249,26 @@
 								{ className: 'blog-name' },
 								_react2.default.createElement(
 									'a',
-									{ href: this.props.person.website_url },
-									blogNameDisplay(this.props.person.influencer_title)
+									{ className: 'little-padding-left', href: this.props.person.blog_url },
+									blogNameDisplay(this.props.person.blog_name)
 								)
 							),
-							this.props.person.platforms.map(function (platform) {
-								return _react2.default.createElement(
-									'div',
-									{ className: 'flavicon-div', key: platform.platform_id },
-									_react2.default.createElement(
-										'a',
-										{ href: platform.social_network_url, className: 'social-networks-info' },
-										_react2.default.createElement('i', { className: whatFlavicon(platform.social_network_type) }),
-										_react2.default.createElement(
-											'p',
-											{ className: 'followers' },
-											followersDisplay(platform.followers)
-										)
-									)
-								);
-							})
+							_react2.default.createElement('i', { className: 'little-padding-left fa fa-eye color-gray', 'aria-hidden': 'true' }),
+							_react2.default.createElement(
+								'span',
+								{ className: 'font-size-tiny' },
+								' ',
+								numStr(this.props.person.views)
+							),
+							_react2.default.createElement('i', { className: 'little-padding-left fa fa-thumbs-up color-gray', 'aria-hidden': 'true' }),
+							_react2.default.createElement(
+								'span',
+								{ className: 'font-size-tiny' },
+								' ',
+								numStr(this.props.person.engagement)
+							)
 						)
-					),
-					_react2.default.createElement(_Modal2.default, { person: this.props.person, allActions: this.props.allActions, wholeState: this.props.wholeState })
+					)
 				);
 			}
 		}]);
@@ -24208,6 +24242,7 @@
 				"influencer_full_name": "Yolanda Reynolds",
 				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
 				"picture_url": "http://mediad.publicbroadcasting.net/p/wclk/files/201501/YolandaReynolds1934488_111480873609_7267241_ncropped.jpg",
+				"influencer_last_post_photo_url": "https://static.pexels.com/photos/6555/nature-sunset-person-woman.jpg",
 				"post_dates": [{
 					"post_date": "2016-04-09T00:00:00Z",
 					"url": null
@@ -24229,8 +24264,9 @@
 				"blog_visitors": 5467890,
 				"engagement": 53200,
 				"influencer_full_name": "Shari Rios",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c667",
 				"picture_url": "http://teamleads.s3.amazonaws.com/avatar_1706_335/1447271019_shaririosheadshot2015.jpg",
+				"influencer_last_post_photo_url": "http://static1.squarespace.com/static/535b6e9ee4b0482b3e2815fe/535d8332e4b05d1feab61583/53706334e4b04a1fdc1e7319/1399874357965/cumberland.jpghttp://marel.com/images/products/qx-ring-sausage-product.jpg",
 				"post_dates": [{
 					"post_date": "2016-05-09T00:00:00Z",
 					"url": null
@@ -24246,8 +24282,9 @@
 				"blog_visitors": 67890,
 				"engagement": 3200,
 				"influencer_full_name": "Lillian Ortiz",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c668",
 				"picture_url": "http://leg.wa.gov/House/Representatives/PublishingImages/ortiz-self.jpg",
+				"influencer_last_post_photo_url": "http://static4.gamespot.com/uploads/scale_super/1179/11799911/3016941-1.jpg",
 				"post_dates": [{
 					"post_date": "2016-05-09T00:00:00Z",
 					"url": null
@@ -24263,8 +24300,9 @@
 				"blog_visitors": 2567890,
 				"engagement": 230200,
 				"influencer_full_name": "Armando Bates",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c669",
 				"picture_url": "https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/2/000/038/0f6/1c680e9.jpg",
+				"influencer_last_post_photo_url": "http://image.slidesharecdn.com/somebreathtakingimages-the2016sonyworldphotographyawards-151031032143-lva1-app6892/95/some-breathtaking-images-the-2016-sony-world-photography-awards-12-638.jpg?cb=1446484857",
 				"post_dates": [{
 					"post_date": "2016-05-09T00:00:00Z",
 					"url": null
@@ -24280,8 +24318,9 @@
 				"blog_visitors": 567890,
 				"engagement": 1200,
 				"influencer_full_name": "Grady Sullivan",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c670",
 				"picture_url": "http://s3media.247sports.com/Uploads/Assets/661/280/4_1280661.jpg",
+				"influencer_last_post_photo_url": "http://www.gettyimages.com/gi-resources/images/Embed/GettyImages-183134862.jpg",
 				"post_dates": [{
 					"post_date": "2016-05-09T00:00:00Z",
 					"url": null
@@ -24297,8 +24336,9 @@
 				"blog_visitors": 6890,
 				"engagement": 5000,
 				"influencer_full_name": "Flora Bailey",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c671",
 				"picture_url": "http://www.yourlifemoments.ca/images/moments/2013/1/PLPR6272057.jpg",
+				"influencer_last_post_photo_url": "https://www.petfinder.com/wp-content/uploads/2012/11/140272627-grooming-needs-senior-cat-632x475.jpg",
 				"post_dates": [{
 					"post_date": "2016-05-09T00:00:00Z",
 					"url": null
@@ -24314,8 +24354,9 @@
 				"blog_visitors": 9567890,
 				"engagement": 235200,
 				"influencer_full_name": "Ron Vargas",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c672",
 				"picture_url": "https://i.vimeocdn.com/portrait/992191_300x300.jpg",
+				"influencer_last_post_photo_url": "",
 				"post_dates": [{
 					"post_date": "2016-05-09T00:00:00Z",
 					"url": null
@@ -24334,8 +24375,9 @@
 				"blog_visitors": 4567890,
 				"engagement": 23200,
 				"influencer_full_name": "Daisy Swanson",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c673",
 				"picture_url": "https://a2-images.myspacecdn.com/images03/25/1ee776f87a9c46168b4f19d06ad4de05/300x300.jpg",
+				"influencer_last_post_photo_url": "http://im.rediff.com/news/2016/feb/23sony12a.jpg",
 				"post_dates": [{
 					"post_date": "2016-05-09T00:00:00Z",
 					"url": null
@@ -24351,8 +24393,9 @@
 				"blog_visitors": 77890,
 				"engagement": 23200,
 				"influencer_full_name": "Toby Ruiz",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c674",
 				"picture_url": "https://lh3.googleusercontent.com/-56xHwXXNqO8/U8wdK1TKNpI/AAAAAAAAKx0/uf_uPyXXWUQ/s630-fcrop64=1,000017ffffffa7ff/fecc7d9d-90dc-4a54-8945-e5d1f0e4c508",
+				"influencer_last_post_photo_url": "",
 				"post_dates": [{
 					"post_date": "2016-05-09T00:00:00Z",
 					"url": null
@@ -24368,8 +24411,9 @@
 				"blog_visitors": 10000000,
 				"engagement": 1000000,
 				"influencer_full_name": "Evan Howard",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c675",
 				"picture_url": "https://pbs.twimg.com/profile_images/541792304646733825/M0ZyMk9M.jpeg",
+				"influencer_last_post_photo_url": "https://s-media-cache-ak0.pinimg.com/736x/a5/53/92/a553925dc362367fe4b49a248480f7a9.jpg",
 				"post_dates": [{
 					"post_date": "2016-04-09T00:00:00Z",
 					"url": null

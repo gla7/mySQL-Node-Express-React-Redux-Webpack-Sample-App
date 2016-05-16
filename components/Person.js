@@ -2,11 +2,22 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import Modal from './Modal'
 
+//removed this:
+// <h6 className="blog-name"><a href={this.props.person.website_url}>{blogNameDisplay(this.props.person.influencer_title)}</a></h6>
+// 		{
+// 			this.props.person.platforms.map((platform) => {
+// 				return (<div className="flavicon-div" key={platform.platform_id}><a href={platform.social_network_url} className="social-networks-info"><i className={whatFlavicon(platform.social_network_type)}></i><p className="followers">{followersDisplay(platform.followers)}</p></a></div>)
+
+// 			})
+// 		}
+//also removed
+// <Modal person={this.props.person} allActions={this.props.allActions} wholeState={this.props.wholeState}/>
+
 class Person extends Component {
 
 	render() {
 		let picStyle = {
-			backgroundImage : "url(" + this.props.person.influencer_photo_url + ")",
+			backgroundImage : "url(" + this.props.person.picture_url + ")",
 			backgroundSize  : "cover",
 			backgroundPosition : "center center",
 			margin:"auto",
@@ -93,6 +104,16 @@ class Person extends Component {
 			}
 		}
 
+		let numStr = function (num) {
+			var numStrArr = num.toString().split("")
+			for(var i = numStrArr.length; i >=0; i -= 3) {
+				if(numStrArr[i+1] && i !== 0) {
+					numStrArr.splice(i, 0, ",")
+				}
+			}
+			return numStrArr.join("")
+		}
+
 		return  <li className="influencer">
 					<div className="influencer-info">
 						<div style={test}>
@@ -100,18 +121,12 @@ class Person extends Component {
 							</div>
 						</div>
 						<div className="profile-info-influencer">
-							<h5 className="padding-bottom-tiny font-size-2-rem"><a className="color-black" href={this.props.person.website_url}>{nameDisplay(this.props.person.influencer_full_name)}</a></h5>
-							<h6 className="blog-name"><a href={this.props.person.website_url}>{blogNameDisplay(this.props.person.influencer_title)}</a></h6>
-									{
-										this.props.person.platforms.map((platform) => {
-											return (<div className="flavicon-div" key={platform.platform_id}><a href={platform.social_network_url} className="social-networks-info"><i className={whatFlavicon(platform.social_network_type)}></i><p className="followers">{followersDisplay(platform.followers)}</p></a></div>)
-
-										})
-									}
-
+							<h5 className="padding-bottom-tiny font-size-1-rem"><a className="little-padding-left color-black" href={this.props.person.website_url}>{nameDisplay(this.props.person.influencer_full_name)}</a></h5>
+							<h6 className="blog-name"><a className="little-padding-left" href={this.props.person.blog_url}>{blogNameDisplay(this.props.person.blog_name)}</a></h6>
+							<i className="little-padding-left fa fa-eye color-gray" aria-hidden="true"></i><span className="font-size-tiny">&nbsp;{numStr(this.props.person.views)}</span>
+							<i className="little-padding-left fa fa-thumbs-up color-gray" aria-hidden="true"></i><span className="font-size-tiny">&nbsp;{numStr(this.props.person.engagement)}</span>
 						</div>
 					</div>
-					<Modal person={this.props.person} allActions={this.props.allActions} wholeState={this.props.wholeState}/>
 				</li>
 
 	} 
