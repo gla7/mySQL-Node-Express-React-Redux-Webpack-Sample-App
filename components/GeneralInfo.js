@@ -231,8 +231,58 @@ class GeneralInfo extends Component {
 			return "c100 p" + percentage + " small orange"
 		}
 
-		// let programStart = this.props.wholeState.role === "cst" ?  <StarRatingComponent renderStarIcon={() => <span>☆</span>} starColor={"#FF5770"} display={ratingDisplay} editing={true} name="rate1" starCount={5} onStarClick={this.onStarClick.bind(this)} />
-		// : <div></div>
+		let calculateROI = function (obj) {
+			var roiSum   = 0
+			var roiItems = 0
+			for ( var i = 0; i < obj.influencers.length; i++ ) {
+				roiSum = roiSum + obj.influencers[i].roi
+				roiItems++
+			}
+			return roiSum/roiItems
+		}
+
+		let roi = Math.round(calculateROI(this.props.wholeState.roi.roi))
+
+		let calculateSpend = function (obj) {
+			var spendSum   = 0
+			for ( var i = 0; i < obj.influencers.length; i++ ) {
+				spendSum = spendSum + (Number(obj.influencers[i].transaction_rate)*obj.influencers[i].post_dates.length)
+			}
+			return spendSum
+		}
+
+		let spend = calculateSpend(this.props.wholeState.roi.roi)
+
+		let calculateDays = function (dateStart,dateEnd) {
+			var start = new Date(dateStart)
+			var end   = new Date(dateEnd)
+			return Math.round((end-start)/(1000*3600*24))
+		}
+
+		let today = new Date().toString()
+
+		let daysTotal = calculateDays(this.props.wholeState.roi.start_date,this.props.wholeState.roi.end_date)
+
+		let daysRemaining = calculateDays(today,this.props.wholeState.roi.end_date)
+
+		let daysElapsed = daysTotal-daysRemaining
+
+		let calculatePosts = function (obj) {
+			var postsSoFar   = 0
+			for ( var i = 0; i < obj.influencers.length; i++ ) {
+				postsSoFar = postsSoFar + obj.influencers[i].post_dates.length
+			}
+			var postsPerDay = postsSoFar/daysElapsed
+			var estPosts    = postsSoFar + Math.round(postsPerDay*daysRemaining)
+			return {
+				postsSoFar : postsSoFar,
+				estPosts   : estPosts, // this estimation will probably change
+			}
+		}
+
+		let postObj = calculatePosts(this.props.wholeState.roi.roi)
+
+		console.log(postObj)
 
 		let programStart = this.props.wholeState.role === "cst" ?  <div>{stars}</div>
 		: <div></div>
@@ -245,8 +295,8 @@ class GeneralInfo extends Component {
 						<h5>TOTAL PROGRAM ROI</h5>
 							<div className="text-align-center">
 								<div className="clearfix">
-									<div className={percentageClassStatic(this.props.wholeState.programInfo.total_program_roi)}>
-										<span>{this.props.wholeState.programInfo.total_program_roi}%</span>
+									<div className={percentageClassStatic(roi.toString())}>
+										<span>{roi}%</span>
 										<div className="slice">
 											<div className="bar"></div>
 											<div className="fill"></div>
@@ -258,8 +308,8 @@ class GeneralInfo extends Component {
 						<div className="width-twenty-percent display-inline-block program-header">
 							<h5>SPEND</h5>
 							<div className="clearfix">
-								<div className={percentageClass(this.props.wholeState.programInfo.spend_current,this.props.wholeState.programInfo.spend_projected)}>
-									<span>{percent(this.props.wholeState.programInfo.spend_current,this.props.wholeState.programInfo.spend_projected)}%</span>
+								<div className={percentageClass(spend,this.props.wholeState.programInfo.spend_projected)}>
+									<span>{percent(spend,this.props.wholeState.programInfo.spend_projected)}%</span>
 									<div className="slice">
 										<div className="bar"></div>
 										<div className="fill"></div>
@@ -268,7 +318,7 @@ class GeneralInfo extends Component {
 							</div>
 							<div>
 								<span className="program-feedback-text">current</span><br/>
-								<span className="projected">${numStr(this.props.wholeState.programInfo.spend_current)}</span><br/>
+								<span className="projected">${numStr(spend)}</span><br/>
 								<span className="program-feedback-text">projected</span><br/>
 								<span className="projected">${numStr(this.props.wholeState.programInfo.spend_projected)}</span>
 							</div>
@@ -276,8 +326,8 @@ class GeneralInfo extends Component {
 						<div className="width-twenty-percent display-inline-block program-header">
 							<h5>TIME</h5>
 							<div className="clearfix">
-								<div className={percentageClass(this.props.wholeState.programInfo.time_current,this.props.wholeState.programInfo.time_projected)}>
-									<span>{this.props.wholeState.programInfo.time_current} days</span>
+								<div className={percentageClass(daysElapsed,daysTotal)}>
+									<span>{daysElapsed} days</span>
 									<div className="slice">
 										<div className="bar"></div>
 										<div className="fill"></div>
@@ -286,15 +336,15 @@ class GeneralInfo extends Component {
 							</div>
 							<div>
 								<span className="program-feedback-text">projected</span><br/>
-								<span className="projected">{this.props.wholeState.programInfo.time_projected}</span><br/>
+								<span className="projected">{daysTotal}</span><br/>
 								<span className="program-feedback-text">days</span>
 							</div>
 						</div>
 						<div className="width-twenty-percent display-inline-block program-header">
 							<h5>POSTS</h5>
 							<div className="clearfix">
-								<div className={percentageClass(this.props.wholeState.programInfo.posts_current,this.props.wholeState.programInfo.posts_projected)}>
-									<span>{this.props.wholeState.programInfo.posts_current}</span>
+								<div className={percentageClass(postObj.postsSoFar,postObj.estPosts)}>
+									<span>{postObj.postsSoFar}</span>
 									<div className="slice">
 										<div className="bar"></div>
 										<div className="fill"></div>
@@ -303,7 +353,7 @@ class GeneralInfo extends Component {
 							</div>
 							<div>
 								<span className="program-feedback-text">estimated</span><br/>
-								<span className="projected">{this.props.wholeState.programInfo.posts_projected}</span><br/>
+								<span className="projected">{postObj.estPosts}</span><br/>
 								<span className="program-feedback-text">posts</span>
 							</div>
 						</div>

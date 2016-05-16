@@ -5,6 +5,7 @@ import configureStore from '../redux/store'
 import { Provider } from 'react-redux'
 import influencers from '../data/influencers'
 import programInfo from '../data/programInfo'
+import roi from '../data/roi'
 
 
 
@@ -13,6 +14,7 @@ let initialState = {
 	budget : 450000,
 	influencers : influencers,
 	programInfo : programInfo,
+	roi: roi,
 	isModalOpen : false,
 	numberRemoved : 0,
 	currentPage : "Overview",

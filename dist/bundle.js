@@ -77,6 +77,10 @@
 
 	var _programInfo2 = _interopRequireDefault(_programInfo);
 
+	var _roi = __webpack_require__(201);
+
+	var _roi2 = _interopRequireDefault(_roi);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var initialState = {
@@ -84,6 +88,7 @@
 		budget: 450000,
 		influencers: _influencers2.default,
 		programInfo: _programInfo2.default,
+		roi: _roi2.default,
 		isModalOpen: false,
 		numberRemoved: 0,
 		currentPage: "Overview",
@@ -20336,8 +20341,58 @@
 					return "c100 p" + percentage + " small orange";
 				};
 
-				// let programStart = this.props.wholeState.role === "cst" ?  <StarRatingComponent renderStarIcon={() => <span>☆</span>} starColor={"#FF5770"} display={ratingDisplay} editing={true} name="rate1" starCount={5} onStarClick={this.onStarClick.bind(this)} />
-				// : <div></div>
+				var calculateROI = function calculateROI(obj) {
+					var roiSum = 0;
+					var roiItems = 0;
+					for (var i = 0; i < obj.influencers.length; i++) {
+						roiSum = roiSum + obj.influencers[i].roi;
+						roiItems++;
+					}
+					return roiSum / roiItems;
+				};
+
+				var roi = Math.round(calculateROI(this.props.wholeState.roi.roi));
+
+				var calculateSpend = function calculateSpend(obj) {
+					var spendSum = 0;
+					for (var i = 0; i < obj.influencers.length; i++) {
+						spendSum = spendSum + Number(obj.influencers[i].transaction_rate) * obj.influencers[i].post_dates.length;
+					}
+					return spendSum;
+				};
+
+				var spend = calculateSpend(this.props.wholeState.roi.roi);
+
+				var calculateDays = function calculateDays(dateStart, dateEnd) {
+					var start = new Date(dateStart);
+					var end = new Date(dateEnd);
+					return Math.round((end - start) / (1000 * 3600 * 24));
+				};
+
+				var today = new Date().toString();
+
+				var daysTotal = calculateDays(this.props.wholeState.roi.start_date, this.props.wholeState.roi.end_date);
+
+				var daysRemaining = calculateDays(today, this.props.wholeState.roi.end_date);
+
+				var daysElapsed = daysTotal - daysRemaining;
+
+				var calculatePosts = function calculatePosts(obj) {
+					var postsSoFar = 0;
+					for (var i = 0; i < obj.influencers.length; i++) {
+						postsSoFar = postsSoFar + obj.influencers[i].post_dates.length;
+					}
+					var postsPerDay = postsSoFar / daysElapsed;
+					var estPosts = postsSoFar + Math.round(postsPerDay * daysRemaining);
+					return {
+						postsSoFar: postsSoFar,
+						estPosts: estPosts };
+				};
+
+				// this estimation will probably change
+				var postObj = calculatePosts(this.props.wholeState.roi.roi);
+
+				console.log(postObj);
 
 				var programStart = this.props.wholeState.role === "cst" ? _react2.default.createElement(
 					'div',
@@ -20369,11 +20424,11 @@
 									{ className: 'clearfix' },
 									_react2.default.createElement(
 										'div',
-										{ className: percentageClassStatic(this.props.wholeState.programInfo.total_program_roi) },
+										{ className: percentageClassStatic(roi.toString()) },
 										_react2.default.createElement(
 											'span',
 											null,
-											this.props.wholeState.programInfo.total_program_roi,
+											roi,
 											'%'
 										),
 										_react2.default.createElement(
@@ -20399,11 +20454,11 @@
 								{ className: 'clearfix' },
 								_react2.default.createElement(
 									'div',
-									{ className: percentageClass(this.props.wholeState.programInfo.spend_current, this.props.wholeState.programInfo.spend_projected) },
+									{ className: percentageClass(spend, this.props.wholeState.programInfo.spend_projected) },
 									_react2.default.createElement(
 										'span',
 										null,
-										percent(this.props.wholeState.programInfo.spend_current, this.props.wholeState.programInfo.spend_projected),
+										percent(spend, this.props.wholeState.programInfo.spend_projected),
 										'%'
 									),
 									_react2.default.createElement(
@@ -20427,7 +20482,7 @@
 									'span',
 									{ className: 'projected' },
 									'$',
-									numStr(this.props.wholeState.programInfo.spend_current)
+									numStr(spend)
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
@@ -20457,11 +20512,11 @@
 								{ className: 'clearfix' },
 								_react2.default.createElement(
 									'div',
-									{ className: percentageClass(this.props.wholeState.programInfo.time_current, this.props.wholeState.programInfo.time_projected) },
+									{ className: percentageClass(daysElapsed, daysTotal) },
 									_react2.default.createElement(
 										'span',
 										null,
-										this.props.wholeState.programInfo.time_current,
+										daysElapsed,
 										' days'
 									),
 									_react2.default.createElement(
@@ -20484,7 +20539,7 @@
 								_react2.default.createElement(
 									'span',
 									{ className: 'projected' },
-									this.props.wholeState.programInfo.time_projected
+									daysTotal
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
@@ -20507,11 +20562,11 @@
 								{ className: 'clearfix' },
 								_react2.default.createElement(
 									'div',
-									{ className: percentageClass(this.props.wholeState.programInfo.posts_current, this.props.wholeState.programInfo.posts_projected) },
+									{ className: percentageClass(postObj.postsSoFar, postObj.estPosts) },
 									_react2.default.createElement(
 										'span',
 										null,
-										this.props.wholeState.programInfo.posts_current
+										postObj.postsSoFar
 									),
 									_react2.default.createElement(
 										'div',
@@ -20533,7 +20588,7 @@
 								_react2.default.createElement(
 									'span',
 									{ className: 'projected' },
-									this.props.wholeState.programInfo.posts_projected
+									postObj.estPosts
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
@@ -20933,8 +20988,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// IMPORTANT!!!!! IMPLEMENT THIS FOR SORTING FIRST THING MONDAY: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
 	var InfoItems = function (_Component) {
 		_inherits(InfoItems, _Component);
@@ -24118,14 +24171,14 @@
 	});
 	var programInfo = {
 		"title": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		//may not need
+		//may not need below
 		"budget": 15000,
 		"estimated_total_reach": 3225000,
 		"photo_url": "http://divinelifestyle.com/wp-content/uploads/2014/08/Jimmy-Dean-Logo.jpg",
-		//may not need
 		"total_program_roi": 46,
 		"spend_current": 5000,
-		"spend_projected": 15000,
+		//may not need above
+		"spend_projected": 50000,
 		"time_current": 14,
 		"time_projected": 30,
 		"posts_current": 6,
@@ -24133,6 +24186,214 @@
 	};
 
 	exports.default = programInfo;
+
+/***/ },
+/* 201 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var roi = {
+		"custom_date_range": false,
+		"end_date": "2016-05-29",
+		"roi": {
+			"influencers": [{
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 4567890,
+				"engagement": 23200,
+				"influencer_full_name": "Yolanda Reynolds",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "http://mediad.publicbroadcasting.net/p/wclk/files/201501/YolandaReynolds1934488_111480873609_7267241_ncropped.jpg",
+				"post_dates": [{
+					"post_date": "2016-04-09T00:00:00Z",
+					"url": null
+				}, {
+					"post_date": "2016-04-09T00:00:00Z",
+					"url": null
+				}, {
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 5000000,
+				"roi": 47,
+				"tmv": "129061.0",
+				"transaction_rate": "1920.0",
+				"views": 4867890
+			}, {
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 5467890,
+				"engagement": 53200,
+				"influencer_full_name": "Shari Rios",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "http://teamleads.s3.amazonaws.com/avatar_1706_335/1447271019_shaririosheadshot2015.jpg",
+				"post_dates": [{
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 6000000,
+				"roi": 25,
+				"tmv": "129061.0",
+				"transaction_rate": "2000.0",
+				"views": 5867890
+			}, {
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 67890,
+				"engagement": 3200,
+				"influencer_full_name": "Lillian Ortiz",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "http://leg.wa.gov/House/Representatives/PublishingImages/ortiz-self.jpg",
+				"post_dates": [{
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 100000,
+				"roi": 56,
+				"tmv": "129061.0",
+				"transaction_rate": "1500.0",
+				"views": 70000
+			}, {
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 2567890,
+				"engagement": 230200,
+				"influencer_full_name": "Armando Bates",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/2/000/038/0f6/1c680e9.jpg",
+				"post_dates": [{
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 3000000,
+				"roi": 477,
+				"tmv": "129061.0",
+				"transaction_rate": "2500.0",
+				"views": 2800000
+			}, {
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 567890,
+				"engagement": 1200,
+				"influencer_full_name": "Grady Sullivan",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "http://s3media.247sports.com/Uploads/Assets/661/280/4_1280661.jpg",
+				"post_dates": [{
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 1000000,
+				"roi": 17,
+				"tmv": "129061.0",
+				"transaction_rate": "1920.0",
+				"views": 600000
+			}, {
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 6890,
+				"engagement": 5000,
+				"influencer_full_name": "Flora Bailey",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "http://www.yourlifemoments.ca/images/moments/2013/1/PLPR6272057.jpg",
+				"post_dates": [{
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 10000,
+				"roi": 65,
+				"tmv": "129061.0",
+				"transaction_rate": "100.0",
+				"views": 8000
+			}, {
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 9567890,
+				"engagement": 235200,
+				"influencer_full_name": "Ron Vargas",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "https://i.vimeocdn.com/portrait/992191_300x300.jpg",
+				"post_dates": [{
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}, {
+					"post_date": "2016-04-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 10000000,
+				"roi": 43,
+				"tmv": "129061.0",
+				"transaction_rate": "1120.0",
+				"views": 4867890
+			}, {
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 4567890,
+				"engagement": 23200,
+				"influencer_full_name": "Daisy Swanson",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "https://a2-images.myspacecdn.com/images03/25/1ee776f87a9c46168b4f19d06ad4de05/300x300.jpg",
+				"post_dates": [{
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 5000000,
+				"roi": 49,
+				"tmv": "129061.0",
+				"transaction_rate": "1120.0",
+				"views": 4867890
+			}, {
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 77890,
+				"engagement": 23200,
+				"influencer_full_name": "Toby Ruiz",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "https://lh3.googleusercontent.com/-56xHwXXNqO8/U8wdK1TKNpI/AAAAAAAAKx0/uf_uPyXXWUQ/s630-fcrop64=1,000017ffffffa7ff/fecc7d9d-90dc-4a54-8945-e5d1f0e4c508",
+				"post_dates": [{
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 100000,
+				"roi": 28,
+				"tmv": "129061.0",
+				"transaction_rate": "320.0",
+				"views": 80000
+			}, {
+				"blog_name": "mYbLOg!!",
+				"blog_url": "http://www.blogger.com",
+				"blog_visitors": 10000000,
+				"engagement": 1000000,
+				"influencer_full_name": "Evan Howard",
+				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
+				"picture_url": "https://pbs.twimg.com/profile_images/541792304646733825/M0ZyMk9M.jpeg",
+				"post_dates": [{
+					"post_date": "2016-04-09T00:00:00Z",
+					"url": null
+				}, {
+					"post_date": "2016-04-09T00:00:00Z",
+					"url": null
+				}, {
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}, {
+					"post_date": "2016-05-09T00:00:00Z",
+					"url": null
+				}],
+				"reach": 20000000,
+				"roi": 87,
+				"tmv": "129061.0",
+				"transaction_rate": "1000.0",
+				"views": 15000000
+			}]
+		},
+		"start_date": "2016-04-19"
+	};
+
+	exports.default = roi;
 
 /***/ }
 /******/ ]);
