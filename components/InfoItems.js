@@ -11,6 +11,23 @@ import classNames from 'classnames'
 // 	}
 // </ul>
 
+// DO SOMETHING LIKE THIS FIRST THING TOMORROW: MAKE TWO CONTAINERS, ONE WHERE YOU PUT YOUR TOP INFLUENCER AND ANOTHER WHERE YOU PUT THE REMAINING 6, I REMOVED THIS:
+// <div className="margin-bottom-some">
+// 					<h5 className="color-gray">TOP PERFORMING CONTENT</h5>
+// 					<div className="top-influencer display-inline-block">
+// 						<p>{sorted[0].blog_name}</p>
+// 					</div>
+// 					<div className="display-inline-block">
+// 						<ul className="influencer-list">
+// 							{
+// 								this.props.wholeState.roi.roi.influencers.map((person) => {
+// 									return <Person allActions={this.props.allActions} key={person.influencer_uuid} person={person} wholeState={this.props.wholeState}/>
+// 								})
+// 							}
+// 						</ul>
+// 					</div>
+// 				</div>
+
 
 
 class InfoItems extends Component {
@@ -43,12 +60,11 @@ class InfoItems extends Component {
 		    return 0;
 		})
 
-		console.log(sorted[0])
+		console.log(sorted[0].blog_name)
 
 		return  <div className="margin-bottom-some">
 					<h5 className="color-gray">TOP PERFORMING CONTENT</h5>
 					<ul className="influencer-list">
-						<li>{sorted[0].blog_name}</li>
 						{
 							this.props.wholeState.roi.roi.influencers.map((person) => {
 								return <Person allActions={this.props.allActions} key={person.influencer_uuid} person={person} wholeState={this.props.wholeState}/>

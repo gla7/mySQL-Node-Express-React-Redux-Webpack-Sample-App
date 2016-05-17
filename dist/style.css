@@ -439,6 +439,16 @@ a:hover {
 }
 
 .client-platform-class 
+.top-influencer {
+	position:relative;
+	display:inline-block;
+	text-align: center;
+	width:40%;
+	vertical-align: top;
+	margin-bottom:3rem;
+}
+
+.client-platform-class 
 .influencer {
 	position:relative;
 	display:inline-block;
