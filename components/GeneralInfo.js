@@ -292,8 +292,8 @@ class GeneralInfo extends Component {
 		return  <div className="text-align-center margin-bottom-someMore vertical-align-top">
 					<div className="margin-top">
 						<div className="width-twenty-percent display-inline-block program-header">
-						<h5>TOTAL PROGRAM ROI</h5>
-							<div className="text-align-center">
+							<h5>TOTAL PROGRAM ROI</h5>
+							<div className="margin-left-30-percent text-align-center">
 								<div className="clearfix">
 									<div className={percentageClassStatic(roi.toString())}>
 										<span>{roi}%</span>
@@ -327,7 +327,7 @@ class GeneralInfo extends Component {
 							<h5>TIME</h5>
 							<div className="clearfix">
 								<div className={percentageClass(daysElapsed,daysTotal)}>
-									<span>{daysElapsed} days</span>
+									<span>{daysElapsed} <span className="font-size-tiny">days</span></span>
 									<div className="slice">
 										<div className="bar"></div>
 										<div className="fill"></div>

@@ -123,8 +123,11 @@ class Person extends Component {
 						<div className="profile-info-influencer">
 							<h5 className="padding-bottom-tiny font-size-1-rem"><a className="little-padding-left color-black" href={this.props.person.website_url}>{nameDisplay(this.props.person.influencer_full_name)}</a></h5>
 							<h6 className="blog-name"><a className="little-padding-left" href={this.props.person.blog_url}>{blogNameDisplay(this.props.person.blog_name)}</a></h6>
-							<i className="little-padding-left fa fa-eye color-gray" aria-hidden="true"></i><span className="font-size-tiny">&nbsp;{numStr(this.props.person.views)}</span>
-							<i className="little-padding-left fa fa-thumbs-up color-gray" aria-hidden="true"></i><span className="font-size-tiny">&nbsp;{numStr(this.props.person.engagement)}</span>
+							<div className="view-and-engagement-wrapper">
+								<hr></hr>
+								<i className="little-padding-left fa fa-eye color-gray" aria-hidden="true"></i><span className="font-size-tiny">&nbsp;{numStr(this.props.person.views)}</span>
+								<i className="little-padding-left fa fa-thumbs-up color-gray" aria-hidden="true"></i><span className="font-size-tiny">&nbsp;{numStr(this.props.person.engagement)}</span>
+							</div>
 						</div>
 					</div>
 				</li>

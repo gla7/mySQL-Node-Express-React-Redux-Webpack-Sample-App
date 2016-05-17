@@ -20418,7 +20418,7 @@
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'text-align-center' },
+								{ className: 'margin-left-30-percent text-align-center' },
 								_react2.default.createElement(
 									'div',
 									{ className: 'clearfix' },
@@ -20517,7 +20517,12 @@
 										'span',
 										null,
 										daysElapsed,
-										' days'
+										' ',
+										_react2.default.createElement(
+											'span',
+											{ className: 'font-size-tiny' },
+											'days'
+										)
 									),
 									_react2.default.createElement(
 										'div',
@@ -21002,7 +21007,7 @@
 	// <div className="margin-bottom-some">
 	// 					<h5 className="color-gray">TOP PERFORMING CONTENT</h5>
 	// 					<div className="top-influencer display-inline-block">
-	// 						<p>{sorted[0].blog_name}</p>
+	// 						<p>{topDog.blog_name}</p>
 	// 					</div>
 	// 					<div className="display-inline-block">
 	// 						<ul className="influencer-list">
@@ -21041,35 +21046,183 @@
 			value: function render() {
 				var _this2 = this;
 
-				// let textAboveDividerLine = (this.props.wholeState.role != "cst") ? "POSSIBLE INFLUENCERS WE'VE CHOSEN FOR YOUR PROGRAM" : "INFLUENCER REVIEW"
-
-				var sorted = this.props.wholeState.roi.roi.influencers.sort(function (a, b) {
+				var allInfluencers = this.props.wholeState.roi.roi.influencers.sort(function (a, b) {
 					if (a.engagement > b.engagement) {
 						return -1;
 					}
 					if (a.engagement < b.engagement) {
 						return 1;
 					}
-					// a must be equal to b
 					return 0;
 				});
 
-				console.log(sorted[0].blog_name);
+				var topDog = allInfluencers[0];
+
+				var rest = [allInfluencers[1], allInfluencers[2], allInfluencers[3], allInfluencers[4], allInfluencers[5], allInfluencers[6]];
+
+				// let spliceTopAndOthersFromRest = function () {
+				// 	rest.splice(0,1)
+				// 	for ( var i = 0; i < rest.length; i++) {
+				// 		if ( i > 5 ) {
+				// 			rest.splice(i,1)
+				// 			i--
+				// 		}
+				// 	}
+				// 	return rest
+				// }
+
+				// console.log(spliceTopAndOthersFromRest())
+
+				var picStyle = {
+					backgroundImage: "url(" + topDog.picture_url + ")",
+					backgroundSize: "cover",
+					backgroundPosition: "center center",
+					margin: "auto",
+					border: "2px solid #FF0076",
+					top: "13rem",
+					left: "0.45rem",
+					height: "150px",
+					width: "150px",
+					borderRadius: "50%",
+					position: "relative",
+					backgroundColor: "white",
+					padding: "1px"
+				};
+
+				var backgroundPhoto = topDog.influencer_last_post_photo_url === "" || !topDog.influencer_last_post_photo_url ? "https://hoursofidleness.files.wordpress.com/2012/06/gray-card.jpg" : topDog.influencer_last_post_photo_url;
+
+				var test = {
+					backgroundImage: "url(" + backgroundPhoto + ")",
+					backgroundSize: "cover",
+					backgroundPosition: "center center",
+					textAlign: "center",
+					display: "block",
+					verticalAlign: "top",
+					paddingTop: "1.8rem",
+					paddingRight: "1rem",
+					margin: "auto",
+					marginBottom: "2rem",
+					width: "80%",
+					borderTopRightRadius: "0.2rem",
+					borderTopLeftRadius: "0.2rem",
+					minHeight: "18rem"
+				};
+
+				var numStr = function numStr(num) {
+					var numStrArr = num.toString().split("");
+					for (var i = numStrArr.length; i >= 0; i -= 3) {
+						if (numStrArr[i + 1] && i !== 0) {
+							numStrArr.splice(i, 0, ",");
+						}
+					}
+					return numStrArr.join("");
+				};
+
+				var nameDisplay = function nameDisplay(name) {
+					if (name.length >= 20) {
+						return name.substring(0, 20) + "...";
+					} else {
+						return name;
+					}
+				};
+
+				var blogNameDisplay = function blogNameDisplay(blogName) {
+					if (blogName.length >= 22) {
+						return blogName.substring(0, 22) + "...";
+					} else {
+						return blogName;
+					}
+				};
+
+				var moreContent = function moreContent() {
+					console.log("More Content!");
+				};
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'margin-bottom-some' },
+					null,
 					_react2.default.createElement(
 						'h5',
 						{ className: 'color-gray' },
 						'TOP PERFORMING CONTENT'
 					),
 					_react2.default.createElement(
-						'ul',
-						{ className: 'influencer-list' },
-						this.props.wholeState.roi.roi.influencers.map(function (person) {
-							return _react2.default.createElement(_Person2.default, { allActions: _this2.props.allActions, key: person.influencer_uuid, person: person, wholeState: _this2.props.wholeState });
-						})
+						'div',
+						{ className: 'border-top-gray-line text-align-center' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'top-influencer' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'influencer-info' },
+								_react2.default.createElement(
+									'div',
+									{ style: test },
+									_react2.default.createElement('div', { style: picStyle })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'profile-info-top-influencer' },
+									_react2.default.createElement(
+										'h5',
+										{ className: 'padding-bottom-tiny font-size-1-rem' },
+										_react2.default.createElement(
+											'a',
+											{ className: 'little-padding-left color-black', href: topDog.website_url },
+											nameDisplay(topDog.influencer_full_name)
+										)
+									),
+									_react2.default.createElement(
+										'h6',
+										{ className: 'blog-name' },
+										_react2.default.createElement(
+											'a',
+											{ className: 'little-padding-left', href: topDog.blog_url },
+											blogNameDisplay(topDog.blog_name)
+										)
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'big-padding-top view-and-engagement-wrapper' },
+										_react2.default.createElement('hr', null),
+										_react2.default.createElement('i', { className: 'little-padding-left fa fa-eye color-gray', 'aria-hidden': 'true' }),
+										_react2.default.createElement(
+											'span',
+											{ className: 'font-size-tiny' },
+											' ',
+											numStr(topDog.views)
+										),
+										_react2.default.createElement('i', { className: 'little-padding-left fa fa-thumbs-up color-gray', 'aria-hidden': 'true' }),
+										_react2.default.createElement(
+											'span',
+											{ className: 'font-size-tiny' },
+											' ',
+											numStr(topDog.engagement)
+										)
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'rest-of-influencers' },
+							_react2.default.createElement(
+								'ul',
+								{ className: 'influencer-list' },
+								rest.map(function (person) {
+									return _react2.default.createElement(_Person2.default, { allActions: _this2.props.allActions, key: person.influencer_uuid, person: person, wholeState: _this2.props.wholeState });
+								})
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'text-align-right' },
+						_react2.default.createElement(
+							'button',
+							{ className: 'remove-border font-color-pink font-weight-bolder', onClick: moreContent.bind(this) },
+							'view all content'
+						)
 					)
 				);
 			}
@@ -21265,19 +21418,24 @@
 									blogNameDisplay(this.props.person.blog_name)
 								)
 							),
-							_react2.default.createElement('i', { className: 'little-padding-left fa fa-eye color-gray', 'aria-hidden': 'true' }),
 							_react2.default.createElement(
-								'span',
-								{ className: 'font-size-tiny' },
-								' ',
-								numStr(this.props.person.views)
-							),
-							_react2.default.createElement('i', { className: 'little-padding-left fa fa-thumbs-up color-gray', 'aria-hidden': 'true' }),
-							_react2.default.createElement(
-								'span',
-								{ className: 'font-size-tiny' },
-								' ',
-								numStr(this.props.person.engagement)
+								'div',
+								{ className: 'view-and-engagement-wrapper' },
+								_react2.default.createElement('hr', null),
+								_react2.default.createElement('i', { className: 'little-padding-left fa fa-eye color-gray', 'aria-hidden': 'true' }),
+								_react2.default.createElement(
+									'span',
+									{ className: 'font-size-tiny' },
+									' ',
+									numStr(this.props.person.views)
+								),
+								_react2.default.createElement('i', { className: 'little-padding-left fa fa-thumbs-up color-gray', 'aria-hidden': 'true' }),
+								_react2.default.createElement(
+									'span',
+									{ className: 'font-size-tiny' },
+									' ',
+									numStr(this.props.person.engagement)
+								)
 							)
 						)
 					)
