@@ -31,10 +31,10 @@ a:hover {
 	position: absolute;
 }
 
-.client-platform-class 
+/*.client-platform-class 
 .position-relative {
 	position: relative;
-}
+}*/
 
 .client-platform-class 
 .text-align-center {
@@ -76,10 +76,10 @@ a:hover {
 	margin-bottom:0.2rem;
 }
 
-.client-platform-class 
+/*.client-platform-class 
 .width-ten-percent {
 	width:10%;
-}
+}*/
 
 .client-platform-class 
 .width-twenty-percent {
@@ -91,20 +91,20 @@ a:hover {
 	width:25%;
 }
 
-.client-platform-class 
+/*.client-platform-class 
 .width-fifty-percent {
 	width:50%;
-}
+}*/
 
 .client-platform-class 
 .display-inline-block {
 	display: inline-block;
 }
 
-.client-platform-class 
+/*.client-platform-class 
 .display-block {
 	display: block;
-}
+}*/
 
 .client-platform-class 
 .margin-left-30-percent {
@@ -121,10 +121,10 @@ a:hover {
 	font-size: 1rem;
 }
 
-.client-platform-class 
+/*.client-platform-class 
 .font-size-2-rem {
 	font-size: 1.2rem;
-}
+}*/
 
 .client-platform-class 
 .font-size-tiny {
@@ -141,17 +141,18 @@ a:hover {
 	color:black;
 }
 
-.client-platform-class 
+/*.client-platform-class 
 .list-style-type-none {
 	list-style-type: none;
-}
+}*/
 
 .client-platform-class 
 .vertical-align-top {
 	vertical-align: top;
 }
 
-.client-platform-class .big-button {
+.client-platform-class 
+.big-button {
 	border: none;
 	outline: none;
 	border-radius:0.2rem;
@@ -166,7 +167,8 @@ a:hover {
 }
 
 
-.client-platform-class .big-button:hover {
+.client-platform-class 
+.big-button:hover {
 	border: 1px solid rgba(255,0,19,1);
 	-webkit-transition:1s;
 	-moz-transition:1s;
@@ -175,7 +177,8 @@ a:hover {
 }
 
 
-.client-platform-class .big-red-button {
+.client-platform-class 
+.big-red-button {
 	background-color:#FF0013;
 	color:white;
 }
@@ -188,7 +191,8 @@ a:hover {
 }
 
 
-.client-platform-class .big-red-button-no-expand {
+/*.client-platform-class 
+.big-red-button-no-expand {
 	color:white;
 	background: rgba(255,175,75,1);
 	background: -moz-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(255,0,19,1) 100%);
@@ -201,7 +205,7 @@ a:hover {
 	position: relative;
 	text-align: center;
 	display: inline-block;
-}
+}*/
 
 
 .client-platform-class 
@@ -284,15 +288,15 @@ a:hover {
       overflow: hidden;
       display: inline-block;
 }
-.rating-input {
+/*.rating-input {
       float: right;
       width: 16px;
       height: 16px;
       padding: 0;
       margin: 0 0 0 -16px;
       opacity: 0;
-}
-.rating-star {
+}*/
+/*.rating-star {
       display: block;
       width: 16px;
       height: 16px;
@@ -300,7 +304,7 @@ a:hover {
 }
 .rating-star:hover {
       background-position: 0 0;
-}
+}*/
 
 .client-platform-class 
 .modal-outer {
@@ -381,14 +385,14 @@ a:hover {
 
 }
 
-.client-platform-class 
+/*.client-platform-class 
 .program-budget-text {
 	display:inline-block;
 	font-size: 9px;
 	width:25%;
 	text-align: left;
 	color:#999A9B;
-}
+}*/
 
 .client-platform-class 
 .program-feedback-text {
@@ -454,14 +458,14 @@ a:hover {
 	padding-top: 11rem;
 }
 
-.client-platform-class 
+/*.client-platform-class 
 .text-in-hr-line {
 	background-color:white; 
 	width:20%; 
 	margin-left:auto; 
 	margin-right:auto; 
 	margin-top:-1rem;
-}
+}*/
 
 .client-platform-class 
 .modal {
@@ -593,10 +597,10 @@ a:hover {
 		display: block;
 	}
 
-	.client-platform-class 
+	/*.client-platform-class 
 	.empty-space {
 		display: none;
-	}
+	}*/
 
 }
 
@@ -646,17 +650,17 @@ a:hover {
 		width:90%;
 	}
 
-	.client-platform-class 
+	/*.client-platform-class 
 	.big-red-button-no-expand {
 		margin-top:1rem;
 		width:90%;
-	}
+	}*/
 
-	.client-platform-class 
+	/*.client-platform-class 
 	.big-red-button-no-expand:hover {
 		margin-top:1rem;
 		width:90%;
-	}
+	}*/
 
 	.client-platform-class 
 	.modal-inner {
@@ -668,15 +672,15 @@ a:hover {
 		width:90%;
 	}
 
-	.client-platform-class 
+	/*.client-platform-class 
 	.make-smaller-font-when-small {
 		font-size: 1rem;
-	}
+	}*/
 
-	.client-platform-class 
+	/*.client-platform-class 
 	.program-budget-text {
 		display:none;
-	}
+	}*/
 
 	.client-platform-class 
 	.display-none-when-large {
@@ -691,10 +695,10 @@ a:hover {
 		margin-left: 1rem;
 	}
 
-	.client-platform-class 
+	/*.client-platform-class 
 	.empty-space {
 		display: none;
-	}
+	}*/
 
 	.client-platform-class 
 	.influencer {
