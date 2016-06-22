@@ -21669,7 +21669,7 @@
 
 				fetch("/addProgram", {
 					method: 'POST',
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
 						program_name: this.state.programName,
 						program_description: this.state.programDescription,

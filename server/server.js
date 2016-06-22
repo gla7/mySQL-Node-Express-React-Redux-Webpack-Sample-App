@@ -102,7 +102,7 @@ app.post('/addProgram', function (req,res) {
 	console.log(req.body)
 	console.log(req.data)
 	// ABOUT MYSQL
-	sqlConnection.query("INSERT INTO mySamplePrograms (program_name,program_description,program_budget) VALUES (" + req.body.program_name + "," + req.body.program_description + "," + req.body.program_budget + ");", function (error, rows, fields) {
+	sqlConnection.query("INSERT INTO mySamplePrograms (program_name,program_description,program_budget) VALUES (?,?,?);", [req.body.program_name,req.body.program_description,req.body.program_budget], function (error, rows, fields) {
 	// sqlConnection.query("INSERT INTO mySamplePrograms (program_name,program_description,program_budget) VALUES (" + "'req.body.program_name'" + "," + "'req.body.program_description'" + "," + '5' + ");", function (error, rows, fields) {
 		// CALLBACK
 		if ( error ) {
