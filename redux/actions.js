@@ -1,32 +1,39 @@
 let actions = {
 
-	removePerson: function(id) {
+	changeTab: function(tab) {
 		return {
-			type : 'REMOVE_PERSON',
-			id : id
+			type : 'CHANGE_TAB',
+			tab : tab
 		}
 	},
 
-	modalIsOpen: function() {
-		return {
-			type : 'MODAL_IS_OPEN',
+	// removePerson: function(id) {
+	// 	return {
+	// 		type : 'REMOVE_PERSON',
+	// 		id : id
+	// 	}
+	// },
+
+	// modalIsOpen: function() {
+	// 	return {
+	// 		type : 'MODAL_IS_OPEN',
 			
-		}
-	},
+	// 	}
+	// },
 
-	changePage: function(value) {
-		return {
-			type : 'CHANGE_PAGE',
-			value : value
-		}
-	},
+	// changePage: function(value) {
+	// 	return {
+	// 		type : 'CHANGE_PAGE',
+	// 		value : value
+	// 	}
+	// },
 
-	rated: function() {
-		return {
-			type : 'RATED',
+	// rated: function() {
+	// 	return {
+	// 		type : 'RATED',
 
-		}
-	}
+	// 	}
+	// }
 }
 
 export default actions

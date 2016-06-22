@@ -63,36 +63,31 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _store = __webpack_require__(196);
+	var _store = __webpack_require__(185);
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _reactRedux = __webpack_require__(168);
-
-	var _influencers = __webpack_require__(199);
-
-	var _influencers2 = _interopRequireDefault(_influencers);
-
-	var _programInfo = __webpack_require__(200);
-
-	var _programInfo2 = _interopRequireDefault(_programInfo);
-
-	var _roi = __webpack_require__(201);
-
-	var _roi2 = _interopRequireDefault(_roi);
+	var _reactRedux = __webpack_require__(161);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// import influencers from '../data/influencers'
+	// import programInfo from '../data/programInfo'
+	// import roi from '../data/roi'
+
 	var initialState = {
-		role: "cst",
-		budget: 450000,
-		influencers: _influencers2.default,
-		programInfo: _programInfo2.default,
-		roi: _roi2.default,
-		isModalOpen: false,
-		numberRemoved: 0,
-		currentPage: "Overview",
-		rated: false
+		// role : "cst",
+		// budget : 450000,
+		// influencers : influencers,
+		// programInfo : programInfo,
+		// roi: roi,
+		// isModalOpen : false,
+		// numberRemoved : 0,
+		// currentPage : "Overview",
+		// rated :false,
+
+		tab: "Programs",
+		program: "none"
 	};
 
 	// $.get("/getInfluencers",function (response) {
@@ -268,6 +263,31 @@
 	// shim for using process in browser
 
 	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -292,7 +312,7 @@
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
 	    draining = true;
 
 	    var len = queue.length;
@@ -309,7 +329,7 @@
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    cachedClearTimeout(timeout);
 	}
 
 	process.nextTick = function (fun) {
@@ -321,7 +341,7 @@
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        cachedSetTimeout(drainQueue, 0);
 	    }
 	};
 
@@ -19733,33 +19753,29 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _GeneralInfo = __webpack_require__(161);
+	var _reactRedux = __webpack_require__(161);
 
-	var _GeneralInfo2 = _interopRequireDefault(_GeneralInfo);
+	var _redux = __webpack_require__(168);
 
-	var _InfoItems = __webpack_require__(165);
-
-	var _InfoItems2 = _interopRequireDefault(_InfoItems);
-
-	var _Person = __webpack_require__(166);
-
-	var _Person2 = _interopRequireDefault(_Person);
-
-	var _reactRedux = __webpack_require__(168);
-
-	var _redux = __webpack_require__(175);
-
-	var _actions = __webpack_require__(194);
+	var _actions = __webpack_require__(183);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
-	var _classnames = __webpack_require__(162);
+	var _classnames = __webpack_require__(184);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Overview = __webpack_require__(195);
+	var _Influencers = __webpack_require__(188);
 
-	var _Overview2 = _interopRequireDefault(_Overview);
+	var _Influencers2 = _interopRequireDefault(_Influencers);
+
+	var _Programs = __webpack_require__(191);
+
+	var _Programs2 = _interopRequireDefault(_Programs);
+
+	var _Analytics = __webpack_require__(192);
+
+	var _Analytics2 = _interopRequireDefault(_Analytics);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19778,274 +19794,118 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props, context));
 
 			_this.state = {
-				isModal: false,
-				confirmModal: false,
-				className: "big-button big-red-button",
-				cancelReason: ""
+				sample: "sample"
 			};
 			return _this;
 		}
 
 		_createClass(App, [{
-			key: 'handleOpenModal',
-			value: function handleOpenModal() {
-				this.props.actions.modalIsOpen();
-				this.setState({
-					isModal: !this.state.isModal,
-					confirmModal: false,
-					className: "big-button big-red-button"
-				});
-			}
-		}, {
-			key: 'handleKeep',
-			value: function handleKeep() {
-				this.setState({
-					isModal: false,
-					confirmModal: false,
-					className: "big-button big-red-button"
-				});
-			}
-		}, {
-			key: 'confirmRemove',
-			value: function confirmRemove() {
-				this.setState({
-					confirmModal: true,
-					className: "big-button confirmed-red-button"
-				});
-			}
-		}, {
-			key: 'handleChange',
-			value: function handleChange(event) {
-				event.preventDefault();
-				this.setState({
-					cancelReason: event.target.value
-				});
-			}
-		}, {
 			key: 'handleClick',
 			value: function handleClick(event) {
 				event.preventDefault();
-				this.props.actions.changePage(event.target.value);
-			}
-		}, {
-			key: 'handleSubmit',
-			value: function handleSubmit(event) {
-				event.preventDefault();
-				if (this.state.cancelReason !== "") {
-					this.handleOpenModal();
-					console.log('Program Cancelled!');
-					//back end call here
+				if (event.target.value === "Analytics") {
+					this.props.actions.changeTab("Analytics");
+				} else if (event.target.value === "Programs") {
+					this.props.actions.changeTab("Programs");
+				} else if (event.target.value === "Influencers") {
+					this.props.actions.changeTab("Influencers");
 				} else {
-						alert("You must list a reason for cancelling this program.");
-					}
+					this.props.actions.changeTab("Something Else");
+				}
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				console.log(this.props);
-				var imgStyle = {
-					width: "150px",
-					height: "auto"
-				};
-				var programInfo = this.props.wholeStatus.programInfo;
-				var currentPage = _react2.default.createElement('div', null);
 
-				if (this.props.wholeStatus.currentPage === "Configuration") {
-					currentPage = _react2.default.createElement(
-						'div',
-						null,
-						'Configuration!'
-					);
-				} else if (this.props.wholeStatus.currentPage === "Content") {
-					currentPage = _react2.default.createElement(
-						'div',
-						null,
-						'Content!'
-					);
-				} else if (this.props.wholeStatus.currentPage === "Analytics") {
-					currentPage = _react2.default.createElement(
-						'div',
-						null,
-						'Analytics!'
-					);
-				} else {
-					currentPage = _react2.default.createElement(_Overview2.default, { wholeState: this.props.wholeStatus, allActions: this.props.actions });
+				var navbarDisplay = {
+					borderBottom: "solid 1px black"
+				};
+
+				var tapDisplay = {
+					display: "inline-block"
+				};
+
+				var ulDisplay = {
+					display: "inline-block",
+					listStyleType: "none",
+					position: "absolute",
+					right: "30%"
+				};
+
+				var liDisplay = {
+					display: "inline-block",
+					padding: "15px"
+				};
+
+				var tabDisplay = {
+					border: "none",
+					backgroundColor: "white",
+					display: "inline-block"
+				};
+
+				var self = this;
+
+				function whatTab(state) {
+					if (state === "Influencers") {
+						return _react2.default.createElement(_Influencers2.default, { wholeState: self.props.wholeState, allActions: self.props.allActions });
+					} else if (state === "Programs") {
+						return _react2.default.createElement(_Programs2.default, { wholeState: self.props.wholeState, allActions: self.props.allActions });
+					} else if (state === "Analytics") {
+						return _react2.default.createElement(_Analytics2.default, { wholeState: self.props.wholeState, allActions: self.props.allActions });
+					} else {
+						return _react2.default.createElement(
+							'h1',
+							null,
+							'SOMETHING ELSE!!!'
+						);
+					}
 				}
 
-				var display = this.state.isModal ? "" : "none";
-
-				var secondaryDisplay = this.state.confirmModal ? {
-					display: ""
-				} : {
-					display: "none"
-				};
-
-				console.log(this);
-
-				var overviewStyle = {};
-				var configStyle = {};
-				var contentStyle = {};
-				var analyticsStyle = {};
-
-				var activeStyle = {
-					borderTop: "3px solid #FF5770"
-				};
-
-				var inactiveStyle = {
-					color: "#999A9B !important"
-				};
-
-				var currentLocation = this.props.wholeStatus.currentPage;
-
-				if (currentLocation === "Overview") {
-					overviewStyle = activeStyle;
-					// configStyle = inactiveStyle
-					// contentStyle = inactiveStyle
-					// analyticsStyle = inactiveStyle
-				} else if (currentLocation === "Configuration") {
-						configStyle = activeStyle;
-						// overviewStyle = inactiveStyle
-						// contentStyle = inactiveStyle
-						// analyticsStyle = inactiveStyle
-					} else if (currentLocation === "Content") {
-							contentStyle = activeStyle;
-							// configStyle = inactiveStyle
-							// overviewStyle = inactiveStyle
-							// analyticsStyle = inactiveStyle
-						} else if (currentLocation === "Analytics") {
-								analyticsStyle = activeStyle;
-								// configStyle = inactiveStyle
-								// contentStyle = inactiveStyle
-								// overviewStyle = inactiveStyle
-							}
+				var tapLogo = "http://www.tapinfluence.com/wp-content/uploads/2015/09/tapinfluence_logo.png";
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'client-platform-class' },
+					null,
 					_react2.default.createElement(
 						'div',
-						{ className: 'display-inline-block program-info logo' },
-						_react2.default.createElement('img', { style: imgStyle, src: programInfo.photo_url })
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'display-inline-block program-info' },
-						_react2.default.createElement(
-							'h2',
-							null,
-							programInfo.title
-						),
+						{ style: navbarDisplay },
+						_react2.default.createElement('img', { style: tapDisplay, src: tapLogo }),
 						_react2.default.createElement(
 							'ul',
-							{ className: 'text-align-left no-padding-left' },
+							{ style: ulDisplay },
 							_react2.default.createElement(
 								'li',
-								{ className: 'display-inline-block nav-bar', style: overviewStyle },
+								{ style: liDisplay },
 								_react2.default.createElement(
 									'button',
-									{ onClick: this.handleClick.bind(this), value: 'Overview', className: 'remove-border' },
-									'Overview'
+									{ onClick: this.handleClick.bind(this), value: 'Influencers', style: tabDisplay },
+									'Influencers'
 								)
 							),
 							_react2.default.createElement(
 								'li',
-								{ className: 'display-inline-block nav-bar', style: configStyle },
+								{ style: liDisplay },
 								_react2.default.createElement(
 									'button',
-									{ onClick: this.handleClick.bind(this), value: 'Configuration', className: 'remove-border' },
-									'Configuration'
+									{ onClick: this.handleClick.bind(this), value: 'Programs', style: tabDisplay },
+									'Programs'
 								)
 							),
 							_react2.default.createElement(
 								'li',
-								{ className: 'display-inline-block nav-bar', style: contentStyle },
+								{ style: liDisplay },
 								_react2.default.createElement(
 									'button',
-									{ onClick: this.handleClick.bind(this), value: 'Content', className: 'remove-border' },
-									'Content'
-								)
-							),
-							_react2.default.createElement(
-								'li',
-								{ className: 'display-inline-block nav-bar', style: analyticsStyle },
-								_react2.default.createElement(
-									'button',
-									{ onClick: this.handleClick.bind(this), value: 'Analytics', className: 'remove-border' },
+									{ onClick: this.handleClick.bind(this), value: 'Analytics', style: tabDisplay },
 									'Analytics'
 								)
 							)
-						),
-						_react2.default.createElement(
-							'button',
-							{ onClick: this.handleOpenModal.bind(this), className: 'cancel-button color-gray' },
-							'Cancel Program ',
-							_react2.default.createElement(
-								'span',
-								{ className: 'xButton' },
-								'X'
-							)
 						)
 					),
-					currentPage,
-					_react2.default.createElement(
-						'div',
-						{ className: 'app-modal-outer', style: { display: display } },
-						_react2.default.createElement(
-							'div',
-							{ className: 'app-modal-inner' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'modal-top' },
-								_react2.default.createElement(
-									'p',
-									{ className: 'display-inline-block' },
-									'Cancel Program'
-								),
-								_react2.default.createElement(
-									'button',
-									{ className: 'position-absolute top-1-rem right-1-rem remove-border text-align-right', onClick: this.handleOpenModal.bind(this) },
-									'X'
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'modal-padding text-align-center' },
-								_react2.default.createElement(
-									'h3',
-									null,
-									'Are you sure you want to cancel this program?'
-								),
-								_react2.default.createElement(
-									'button',
-									{ className: 'big-button big-red-button margin-right-little', onClick: this.handleOpenModal.bind(this) },
-									'No, do not cancel!'
-								),
-								_react2.default.createElement('br', { className: 'display-none-when-large' }),
-								_react2.default.createElement('br', { className: 'display-none-when-large' }),
-								_react2.default.createElement(
-									'button',
-									{ className: this.state.className, onClick: this.confirmRemove.bind(this) },
-									'Yes, cancel this program'
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								null,
-								_react2.default.createElement(
-									'form',
-									{ className: 'modal-form', style: secondaryDisplay, onSubmit: this.handleSubmit.bind(this) },
-									_react2.default.createElement(
-										'p',
-										null,
-										'Why would you like to cancel this program?'
-									),
-									_react2.default.createElement('textarea', { rows: '4', className: 'textbox-width', placeholder: 'List your reasons here...', onChange: this.handleChange.bind(this) }),
-									_react2.default.createElement('br', null),
-									_react2.default.createElement('input', { className: 'big-button big-red-button', type: 'submit', value: 'Submit' })
-								)
-							)
-						)
-					)
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('br', null),
+					whatTab(this.props.wholeStatus.tab)
 				);
 			}
 		}]);
@@ -20073,1591 +19933,14 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(162);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _reactStarRatingComponent = __webpack_require__(163);
-
-	var _reactStarRatingComponent2 = _interopRequireDefault(_reactStarRatingComponent);
-
-	var _Star = __webpack_require__(164);
-
-	var _Star2 = _interopRequireDefault(_Star);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var GeneralInfo = function (_Component) {
-		_inherits(GeneralInfo, _Component);
-
-		function GeneralInfo(props, context) {
-			_classCallCheck(this, GeneralInfo);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(GeneralInfo).call(this, props, context));
-
-			_this.state = {
-				isModal: false,
-				confirmModal: false,
-				inputText: "",
-				className: "big-button big-red-button",
-				rating: 0,
-				cancelReason: "",
-
-				//new stuff
-				hoverAt: null
-			};
-			return _this;
-		}
-
-		//new star rating stuff
-
-
-		_createClass(GeneralInfo, [{
-			key: 'handleMouseOver',
-			value: function handleMouseOver(idx, evt) {
-				if (!this.props.wholeState.rated) {
-					this.state.hoverAt = idx + 1;
-					this.forceUpdate();
-				}
-			}
-		}, {
-			key: 'handleMouseOut',
-			value: function handleMouseOut(idx, evt) {
-				if (!this.props.wholeState.rated) {
-					this.state.hoverAt = null;
-					this.forceUpdate();
-				}
-			}
-		}, {
-			key: 'handleClick',
-			value: function handleClick(idx, evt) {
-				if (!this.props.wholeState.rated) {
-					this.props.allActions.rated();
-					this.state.rating = idx + 1;
-					this.forceUpdate();
-					console.log('clicked');
-					// call to back end
-				}
-			}
-			//new star rating stuff
-
-		}, {
-			key: 'handleOpenModal',
-			value: function handleOpenModal() {
-				this.props.allActions.modalIsOpen();
-				this.setState({
-					isModal: !this.state.isModal,
-					confirmModal: false,
-					className: "big-button big-red-button"
-				});
-			}
-		}, {
-			key: 'handleKeep',
-			value: function handleKeep() {
-				this.setState({
-					isModal: false,
-					confirmModal: false,
-					className: "big-button big-red-button"
-				});
-			}
-		}, {
-			key: 'confirmRemove',
-			value: function confirmRemove() {
-				this.setState({
-					confirmModal: true,
-					className: "big-button confirmed-red-button"
-				});
-			}
-		}, {
-			key: 'handleChange',
-			value: function handleChange(event) {
-				event.preventDefault();
-				this.setState({
-					cancelReason: event.target.value
-				});
-			}
-
-			// onStarClick(event) {
-			// 	this.setState({
-			// 		rating : event
-			// 	})
-
-			// }
-
-		}, {
-			key: 'handleSubmit',
-			value: function handleSubmit(event) {
-				event.preventDefault();
-				if (this.state.rating < 3) {
-					if (this.state.cancelReason.length < 1) {
-						alert("You must provide a reason for cancelling this program");
-					} else {
-						console.log('Program Cancelled');
-					}
-				} else {
-					console.log('Program Sent to Customer');
-				}
-				if (this.state.inputText !== "") {
-					this.handleOpenModal();
-					//back end call here
-				} else {
-						alert("You must list a reason for cancelling this program.");
-					}
-				// var userInfo = {
-				// 	user              : this.props.person,
-				// 	reasonsForRemoval : this.state.inputText,
-				// }
-				// $.post("/removeItem",userInfo,function (response) {
-				// 	console.log(response.data)
-				// })
-			}
-		}, {
-			key: 'runProgram',
-			value: function runProgram() {
-				if (this.state.rating < 3) {
-					if (this.state.cancelReason.length < 1) {
-						alert("You must provide a reason for cancelling this program");
-					} else {
-						console.log('Program Cancelled');
-					}
-				} else {
-					console.log('Program Sent to Customer');
-				}
-				// if(this.props.wholeState.role === "cst"){
-				// 	console.log("Start: Customer Success")
-				// } else if (this.props.wholeState.role === "customer"){
-				// 	console.log('Start: Customer')
-				// } else {
-				// 	console.log('Start: Other')
-				// }
-				// $.get("/runProgram",function (response) {
-				// 	console.log(response.data)
-				// })
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-
-				//new star rating stuff
-
-				var stars = [];
-				for (var i = 0; i < 5; i++) {
-					var rating = this.state.hoverAt != null ? this.state.hoverAt : this.state.rating;
-					var selected = i < rating;
-					var style = {
-						color: "#FF5770"
-					};
-					console.log(this.state.rating);
-					stars.push(_react2.default.createElement(_Star2.default, { wholeState: this.props.wholeState, style: style, key: i, selected: selected,
-						onMouseOver: this.handleMouseOver.bind(this, i),
-						onMouseOut: this.handleMouseOut.bind(this, i),
-						onClick: this.handleClick.bind(this, i) }));
-				}
-
-				//new star rating stuff
-
-				// let buttonRun = ""
-
-				// if(this.props.wholeState.role === "cst") {
-				// 	if(this.state.rating === 0) {
-				// 		buttonRun = "A Rating Must Be Entered"
-				// 	} else if(this.state.rating > 0 && this.state.rating < 3) {
-				// 		buttonRun = "Cancel Program"
-				// 	} else {
-				// 		buttonRun = "Send Program To Customer"
-				// 	}
-				// } else {
-				// 	buttonRun = "Run This Program"
-				// }
-
-				var moreAnalytics = function moreAnalytics() {
-					console.log("More Analytics!");
-				};
-
-				var programInfo = this.props.wholeState.programInfo;
-
-				var numStr = function numStr(num) {
-					var numStrArr = num.toString().split("");
-					for (var i = numStrArr.length; i >= 0; i -= 3) {
-						if (numStrArr[i + 1] && i !== 0) {
-							numStrArr.splice(i, 0, ",");
-						}
-					}
-					return numStrArr.join("");
-				};
-
-				var percent = function percent(current, total) {
-					return Math.round(current / total * 100);
-				};
-				var reach = numStr(programInfo.estimated_total_reach);
-				var budget = numStr(programInfo.budget);
-
-				var display = this.state.isModal ? "" : "none";
-
-				var secondaryDisplay = this.state.confirmModal ? {
-					display: ""
-				} : {
-					display: "none"
-				};
-
-				var cancelDisplay = this.state.rating > 0 && this.state.rating < 3 ? {
-					display: ""
-				} : {
-					display: "none"
-				};
-
-				var ratingDisplay = this.props.wholeState.role === "cst" ? {
-					display: ""
-				} : {
-					display: "none"
-				};
-
-				var color = {
-					color: "gray"
-				};
-
-				var percentageClass = function percentageClass(current, outOf) {
-					var percentage = percent(current, outOf).toString();
-					return "c100 p" + percentage + " small orange";
-				};
-
-				var percentageClassStatic = function percentageClassStatic(percentage) {
-					return "c100 p" + percentage + " small orange";
-				};
-
-				var calculateROI = function calculateROI(obj) {
-					var roiSum = 0;
-					var roiItems = 0;
-					for (var i = 0; i < obj.influencers.length; i++) {
-						roiSum = roiSum + obj.influencers[i].roi;
-						roiItems++;
-					}
-					return roiSum / roiItems;
-				};
-
-				var roi = Math.round(calculateROI(this.props.wholeState.roi.roi));
-
-				var calculateSpend = function calculateSpend(obj) {
-					var spendSum = 0;
-					for (var i = 0; i < obj.influencers.length; i++) {
-						spendSum = spendSum + Number(obj.influencers[i].transaction_rate) * obj.influencers[i].post_dates.length;
-					}
-					return spendSum;
-				};
-
-				var spend = calculateSpend(this.props.wholeState.roi.roi);
-
-				var calculateDays = function calculateDays(dateStart, dateEnd) {
-					var start = new Date(dateStart);
-					var end = new Date(dateEnd);
-					return Math.round((end - start) / (1000 * 3600 * 24));
-				};
-
-				var today = new Date().toString();
-
-				var daysTotal = calculateDays(this.props.wholeState.roi.start_date, this.props.wholeState.roi.end_date);
-
-				var daysRemaining = calculateDays(today, this.props.wholeState.roi.end_date);
-
-				var daysElapsed = daysTotal - daysRemaining;
-
-				var calculatePosts = function calculatePosts(obj) {
-					var postsSoFar = 0;
-					for (var i = 0; i < obj.influencers.length; i++) {
-						postsSoFar = postsSoFar + obj.influencers[i].post_dates.length;
-					}
-					var postsPerDay = postsSoFar / daysElapsed;
-					var estPosts = postsSoFar + Math.round(postsPerDay * daysRemaining);
-					return {
-						postsSoFar: postsSoFar,
-						estPosts: estPosts };
-				};
-
-				// this estimation will probably change
-				var postObj = calculatePosts(this.props.wholeState.roi.roi);
-
-				console.log(postObj);
-
-				var programStart = this.props.wholeState.role === "cst" ? _react2.default.createElement(
-					'div',
-					null,
-					stars
-				) : _react2.default.createElement('div', null);
-
-				var disabled = this.state.rating === 0 ? true : false;
-
-				return _react2.default.createElement(
-					'div',
-					{ className: 'text-align-center margin-bottom-someMore vertical-align-top' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'margin-top' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'width-twenty-percent display-inline-block program-header' },
-							_react2.default.createElement(
-								'h5',
-								null,
-								'TOTAL PROGRAM ROI'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'margin-left-30-percent text-align-center' },
-								_react2.default.createElement(
-									'div',
-									{ className: 'clearfix' },
-									_react2.default.createElement(
-										'div',
-										{ className: percentageClassStatic(roi.toString()) },
-										_react2.default.createElement(
-											'span',
-											null,
-											roi,
-											'%'
-										),
-										_react2.default.createElement(
-											'div',
-											{ className: 'slice' },
-											_react2.default.createElement('div', { className: 'bar' }),
-											_react2.default.createElement('div', { className: 'fill' })
-										)
-									)
-								)
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'width-twenty-percent display-inline-block program-header' },
-							_react2.default.createElement(
-								'h5',
-								null,
-								'SPEND'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'clearfix' },
-								_react2.default.createElement(
-									'div',
-									{ className: percentageClass(spend, this.props.wholeState.programInfo.spend_projected) },
-									_react2.default.createElement(
-										'span',
-										null,
-										percent(spend, this.props.wholeState.programInfo.spend_projected),
-										'%'
-									),
-									_react2.default.createElement(
-										'div',
-										{ className: 'slice' },
-										_react2.default.createElement('div', { className: 'bar' }),
-										_react2.default.createElement('div', { className: 'fill' })
-									)
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								null,
-								_react2.default.createElement(
-									'span',
-									{ className: 'program-feedback-text' },
-									'current'
-								),
-								_react2.default.createElement('br', null),
-								_react2.default.createElement(
-									'span',
-									{ className: 'projected' },
-									'$',
-									numStr(spend)
-								),
-								_react2.default.createElement('br', null),
-								_react2.default.createElement(
-									'span',
-									{ className: 'program-feedback-text' },
-									'projected'
-								),
-								_react2.default.createElement('br', null),
-								_react2.default.createElement(
-									'span',
-									{ className: 'projected' },
-									'$',
-									numStr(this.props.wholeState.programInfo.spend_projected)
-								)
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'width-twenty-percent display-inline-block program-header' },
-							_react2.default.createElement(
-								'h5',
-								null,
-								'TIME'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'clearfix' },
-								_react2.default.createElement(
-									'div',
-									{ className: percentageClass(daysElapsed, daysTotal) },
-									_react2.default.createElement(
-										'span',
-										null,
-										daysElapsed,
-										' ',
-										_react2.default.createElement(
-											'span',
-											{ className: 'font-size-tiny' },
-											'days'
-										)
-									),
-									_react2.default.createElement(
-										'div',
-										{ className: 'slice' },
-										_react2.default.createElement('div', { className: 'bar' }),
-										_react2.default.createElement('div', { className: 'fill' })
-									)
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								null,
-								_react2.default.createElement(
-									'span',
-									{ className: 'program-feedback-text' },
-									'projected'
-								),
-								_react2.default.createElement('br', null),
-								_react2.default.createElement(
-									'span',
-									{ className: 'projected' },
-									daysTotal
-								),
-								_react2.default.createElement('br', null),
-								_react2.default.createElement(
-									'span',
-									{ className: 'program-feedback-text' },
-									'days'
-								)
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'width-twenty-percent display-inline-block program-header' },
-							_react2.default.createElement(
-								'h5',
-								null,
-								'POSTS'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'clearfix' },
-								_react2.default.createElement(
-									'div',
-									{ className: percentageClass(postObj.postsSoFar, postObj.estPosts) },
-									_react2.default.createElement(
-										'span',
-										null,
-										postObj.postsSoFar
-									),
-									_react2.default.createElement(
-										'div',
-										{ className: 'slice' },
-										_react2.default.createElement('div', { className: 'bar' }),
-										_react2.default.createElement('div', { className: 'fill' })
-									)
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								null,
-								_react2.default.createElement(
-									'span',
-									{ className: 'program-feedback-text' },
-									'estimated'
-								),
-								_react2.default.createElement('br', null),
-								_react2.default.createElement(
-									'span',
-									{ className: 'projected' },
-									postObj.estPosts
-								),
-								_react2.default.createElement('br', null),
-								_react2.default.createElement(
-									'span',
-									{ className: 'program-feedback-text' },
-									'posts'
-								)
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'width-twenty-percent display-inline-block program-header' },
-							_react2.default.createElement(
-								'h5',
-								{ style: ratingDisplay },
-								'PROGRAM FEEDBACK'
-							),
-							_react2.default.createElement(
-								'p',
-								{ className: 'program-feedback-text' },
-								'How happy are you with the process of creating this project?'
-							),
-							programStart,
-							_react2.default.createElement('br', null),
-							_react2.default.createElement(
-								'button',
-								{ className: 'remove-border font-color-pink font-weight-bolder', onClick: moreAnalytics.bind(this) },
-								'view more analytics'
-							)
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'modal-outer', style: { display: display } },
-						_react2.default.createElement(
-							'div',
-							{ className: 'modal-inner' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'modal-top' },
-								_react2.default.createElement(
-									'p',
-									{ className: 'display-inline-block' },
-									'Cancel Program'
-								),
-								_react2.default.createElement(
-									'button',
-									{ className: 'position-absolute top-1-rem right-1-rem remove-border text-align-right', onClick: this.handleOpenModal.bind(this) },
-									'X'
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'modal-padding text-align-center' },
-								_react2.default.createElement(
-									'h3',
-									null,
-									'Are you sure you want to cancel this program?'
-								),
-								_react2.default.createElement(
-									'button',
-									{ className: 'big-button big-red-button margin-right-little', onClick: this.handleOpenModal.bind(this) },
-									'No, do not cancel!'
-								),
-								_react2.default.createElement('br', { className: 'display-none-when-large' }),
-								_react2.default.createElement('br', { className: 'display-none-when-large' }),
-								_react2.default.createElement(
-									'button',
-									{ className: this.state.className, onClick: this.confirmRemove.bind(this) },
-									'Yes, cancel this program'
-								)
-							),
-							_react2.default.createElement(
-								'form',
-								{ className: 'modal-form', style: secondaryDisplay, onSubmit: this.handleSubmit.bind(this) },
-								_react2.default.createElement(
-									'p',
-									null,
-									'Why would you like to cancel this program?'
-								),
-								_react2.default.createElement('textarea', { rows: '4', className: 'textbox-width', placeholder: 'List your reasons here...', onChange: this.handleChange.bind(this) }),
-								_react2.default.createElement('br', null),
-								_react2.default.createElement('input', { className: 'big-button big-red-button', type: 'submit', value: 'Submit' })
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return GeneralInfo;
-	}(_react.Component);
-
-	exports.default = GeneralInfo;
-
-/***/ },
-/* 162 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-
-	(function () {
-		'use strict';
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames () {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
-/* 163 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(162);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var StarRatingComponent = function (_Component) {
-	    _inherits(StarRatingComponent, _Component);
-
-	    function StarRatingComponent(props) {
-	        _classCallCheck(this, StarRatingComponent);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StarRatingComponent).call(this));
-
-	        _this.state = {
-	            value: props.value
-	        };
-	        return _this;
-	    }
-
-	    _createClass(StarRatingComponent, [{
-	        key: 'onChange',
-	        value: function onChange(value) {
-	            var editing = this.props.editing;
-
-	            if (!editing) {
-	                return;
-	            }
-
-	            this.setState({ value: value });
-	        }
-	    }, {
-	        key: 'onStarClick',
-	        value: function onStarClick(i, value, name) {
-	            var _props = this.props;
-	            var onStarClick = _props.onStarClick;
-	            var editing = _props.editing;
-
-	            if (!editing) {
-	                return;
-	            }
-	            onStarClick && onStarClick(i, value, name);
-	        }
-	    }, {
-	        key: 'renderStars',
-	        value: function renderStars() {
-	            var _props2 = this.props;
-	            var name = _props2.name;
-	            var starCount = _props2.starCount;
-	            var starColor = _props2.starColor;
-	            var editing = _props2.editing;
-	            var renderStarIcon = _props2.renderStarIcon;
-	            var value = this.state.value;
-
-	            var starStyles = {
-	                float: 'right',
-	                cursor: editing ? 'pointer' : 'default'
-	            };
-	            var radioStyles = {
-	                display: 'none',
-	                position: 'absolte',
-	                marginLeft: -9999
-	            };
-
-	            // populate stars
-	            var starNodes = [];
-	            for (var i = starCount; i > 0; i--) {
-	                var id = name + '_' + i;
-	                var starNodeInput = _react2.default.createElement('input', {
-	                    key: 'input_' + id,
-	                    style: radioStyles,
-	                    className: 'dv-star-rating-input',
-	                    type: 'radio',
-	                    name: name,
-	                    id: id,
-	                    value: i,
-	                    checked: value === i,
-	                    onChange: this.onChange.bind(this, i, name)
-	                });
-	                var starNodeLabel = _react2.default.createElement(
-	                    'label',
-	                    {
-	                        key: 'label_' + id,
-	                        style: value >= i ? { float: starStyles.float, cursor: starStyles.cursor, color: starColor } : starStyles,
-	                        className: 'dv-star-rating-star',
-	                        htmlFor: id,
-	                        onClick: this.onStarClick.bind(this, i, value, name)
-	                    },
-	                    typeof renderStarIcon === 'function' ? renderStarIcon(i, value, name) : _react2.default.createElement(
-	                        'i',
-	                        { style: { fontStyle: 'normal' } },
-	                        '★'
-	                    )
-	                );
-	                starNodes.push(starNodeInput);
-	                starNodes.push(starNodeLabel);
-	            }
-
-	            return starNodes;
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _props3 = this.props;
-	            var editing = _props3.editing;
-	            var className = _props3.className;
-
-	            var classes = (0, _classnames2.default)('dv-star-rating', {
-	                'dv-star-rating-non-editable': !editing
-	            }, className);
-
-	            return _react2.default.createElement(
-	                'div',
-	                { style: { display: 'inline-block', position: 'relative' }, className: classes },
-	                this.renderStars()
-	            );
-	        }
-	    }]);
-
-	    return StarRatingComponent;
-	}(_react.Component);
-
-	StarRatingComponent.propTypes = {
-	    name: _react.PropTypes.string.isRequired,
-	    value: _react.PropTypes.number,
-	    editing: _react.PropTypes.bool,
-	    starCount: _react.PropTypes.number,
-	    starColor: _react.PropTypes.string,
-	    onStarClick: _react.PropTypes.func,
-	    renderStarIcon: _react.PropTypes.func
-	};
-	StarRatingComponent.defaultProps = {
-	    starCount: 5,
-	    value: 0,
-	    editing: true,
-	    starColor: '#ffb400'
-	};
-	exports.default = StarRatingComponent;
-	module.exports = exports['default'];
-
-
-/***/ },
-/* 164 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(162);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Star = function (_Component) {
-	  _inherits(Star, _Component);
-
-	  function Star() {
-	    _classCallCheck(this, Star);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Star).apply(this, arguments));
-	  }
-
-	  _createClass(Star, [{
-	    key: 'render',
-	    value: function render() {
-
-	      var r = 'fa fa-star';
-	      if (!this.props.selected) {
-	        r += '-o';
-	      }
-	      return _react2.default.createElement('i', _extends({}, this.props, { className: r }));
-	    }
-	  }]);
-
-	  return Star;
-	}(_react.Component);
-
-	exports.default = Star;
-
-/***/ },
-/* 165 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Person = __webpack_require__(166);
-
-	var _Person2 = _interopRequireDefault(_Person);
-
-	var _classnames = __webpack_require__(162);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	//took this out:
-	// <ul className="influencer-list">
-	// 	{
-	// 		this.props.wholeState.influencers.map((person) => {
-	// 			return <Person allActions={this.props.allActions} key={person.id} person={person} wholeState={this.props.wholeState}/>
-	// 		})
-	// 	}
-	// </ul>
-
-	// DO SOMETHING LIKE THIS FIRST THING TOMORROW: MAKE TWO CONTAINERS, ONE WHERE YOU PUT YOUR TOP INFLUENCER AND ANOTHER WHERE YOU PUT THE REMAINING 6, I REMOVED THIS:
-	// <div className="margin-bottom-some">
-	// 					<h5 className="color-gray">TOP PERFORMING CONTENT</h5>
-	// 					<div className="top-influencer display-inline-block">
-	// 						<p>{topDog.blog_name}</p>
-	// 					</div>
-	// 					<div className="display-inline-block">
-	// 						<ul className="influencer-list">
-	// 							{
-	// 								this.props.wholeState.roi.roi.influencers.map((person) => {
-	// 									return <Person allActions={this.props.allActions} key={person.influencer_uuid} person={person} wholeState={this.props.wholeState}/>
-	// 								})
-	// 							}
-	// 						</ul>
-	// 					</div>
-	// 				</div>
-
-	var InfoItems = function (_Component) {
-		_inherits(InfoItems, _Component);
-
-		function InfoItems(props, context) {
-			_classCallCheck(this, InfoItems);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InfoItems).call(this, props, context));
-
-			_this.state = {
-				isModal: false
-			};
-			return _this;
-		}
-
-		_createClass(InfoItems, [{
-			key: 'triggerModal',
-			value: function triggerModal() {
-				this.setState({
-					isModal: true
-				});
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this2 = this;
-
-				var allInfluencers = this.props.wholeState.roi.roi.influencers.sort(function (a, b) {
-					if (a.engagement > b.engagement) {
-						return -1;
-					}
-					if (a.engagement < b.engagement) {
-						return 1;
-					}
-					return 0;
-				});
-
-				var topDog = allInfluencers[0];
-
-				var rest = [allInfluencers[1], allInfluencers[2], allInfluencers[3], allInfluencers[4], allInfluencers[5], allInfluencers[6]];
-
-				// let spliceTopAndOthersFromRest = function () {
-				// 	rest.splice(0,1)
-				// 	for ( var i = 0; i < rest.length; i++) {
-				// 		if ( i > 5 ) {
-				// 			rest.splice(i,1)
-				// 			i--
-				// 		}
-				// 	}
-				// 	return rest
-				// }
-
-				// console.log(spliceTopAndOthersFromRest())
-
-				var picStyle = {
-					backgroundImage: "url(" + topDog.picture_url + ")",
-					backgroundSize: "cover",
-					backgroundPosition: "center center",
-					margin: "auto",
-					border: "2px solid #FF0076",
-					top: "13rem",
-					left: "0.45rem",
-					height: "150px",
-					width: "150px",
-					borderRadius: "50%",
-					position: "relative",
-					backgroundColor: "white",
-					padding: "1px"
-				};
-
-				var backgroundPhoto = topDog.influencer_last_post_photo_url === "" || !topDog.influencer_last_post_photo_url ? "https://hoursofidleness.files.wordpress.com/2012/06/gray-card.jpg" : topDog.influencer_last_post_photo_url;
-
-				var test = {
-					backgroundImage: "url(" + backgroundPhoto + ")",
-					backgroundSize: "cover",
-					backgroundPosition: "center center",
-					textAlign: "center",
-					display: "block",
-					verticalAlign: "top",
-					paddingTop: "1.8rem",
-					paddingRight: "1rem",
-					margin: "auto",
-					marginBottom: "2rem",
-					width: "80%",
-					borderTopRightRadius: "0.2rem",
-					borderTopLeftRadius: "0.2rem",
-					minHeight: "18rem"
-				};
-
-				var numStr = function numStr(num) {
-					var numStrArr = num.toString().split("");
-					for (var i = numStrArr.length; i >= 0; i -= 3) {
-						if (numStrArr[i + 1] && i !== 0) {
-							numStrArr.splice(i, 0, ",");
-						}
-					}
-					return numStrArr.join("");
-				};
-
-				var nameDisplay = function nameDisplay(name) {
-					if (name.length >= 20) {
-						return name.substring(0, 20) + "...";
-					} else {
-						return name;
-					}
-				};
-
-				var blogNameDisplay = function blogNameDisplay(blogName) {
-					if (blogName.length >= 22) {
-						return blogName.substring(0, 22) + "...";
-					} else {
-						return blogName;
-					}
-				};
-
-				var moreContent = function moreContent() {
-					console.log("More Content!");
-				};
-
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'h5',
-						{ className: 'color-gray' },
-						'TOP PERFORMING CONTENT'
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'border-top-gray-line text-align-center' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'top-influencer' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'influencer-info' },
-								_react2.default.createElement(
-									'div',
-									{ style: test },
-									_react2.default.createElement('div', { style: picStyle })
-								),
-								_react2.default.createElement(
-									'div',
-									{ className: 'profile-info-top-influencer' },
-									_react2.default.createElement(
-										'h5',
-										{ className: 'padding-bottom-tiny font-size-1-rem' },
-										_react2.default.createElement(
-											'a',
-											{ className: 'little-padding-left color-black', href: topDog.website_url },
-											nameDisplay(topDog.influencer_full_name)
-										)
-									),
-									_react2.default.createElement(
-										'h6',
-										{ className: 'blog-name' },
-										_react2.default.createElement(
-											'a',
-											{ className: 'little-padding-left', href: topDog.blog_url },
-											blogNameDisplay(topDog.blog_name)
-										)
-									),
-									_react2.default.createElement(
-										'div',
-										{ className: 'big-padding-top view-and-engagement-wrapper' },
-										_react2.default.createElement('hr', null),
-										_react2.default.createElement('i', { className: 'little-padding-left fa fa-eye color-gray', 'aria-hidden': 'true' }),
-										_react2.default.createElement(
-											'span',
-											{ className: 'font-size-tiny' },
-											' ',
-											numStr(topDog.views)
-										),
-										_react2.default.createElement('i', { className: 'little-padding-left fa fa-thumbs-up color-gray', 'aria-hidden': 'true' }),
-										_react2.default.createElement(
-											'span',
-											{ className: 'font-size-tiny' },
-											' ',
-											numStr(topDog.engagement)
-										)
-									)
-								)
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'rest-of-influencers' },
-							_react2.default.createElement(
-								'ul',
-								{ className: 'influencer-list' },
-								rest.map(function (person) {
-									return _react2.default.createElement(_Person2.default, { allActions: _this2.props.allActions, key: person.influencer_uuid, person: person, wholeState: _this2.props.wholeState });
-								})
-							)
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'text-align-right' },
-						_react2.default.createElement(
-							'button',
-							{ className: 'remove-border font-color-pink font-weight-bolder', onClick: moreContent.bind(this) },
-							'view all content'
-						)
-					)
-				);
-			}
-		}]);
-
-		return InfoItems;
-	}(_react.Component);
-
-	exports.default = InfoItems;
-
-/***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(162);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _Modal = __webpack_require__(167);
-
-	var _Modal2 = _interopRequireDefault(_Modal);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	//removed this:
-	// <h6 className="blog-name"><a href={this.props.person.website_url}>{blogNameDisplay(this.props.person.influencer_title)}</a></h6>
-	// 		{
-	// 			this.props.person.platforms.map((platform) => {
-	// 				return (<div className="flavicon-div" key={platform.platform_id}><a href={platform.social_network_url} className="social-networks-info"><i className={whatFlavicon(platform.social_network_type)}></i><p className="followers">{followersDisplay(platform.followers)}</p></a></div>)
-
-	// 			})
-	// 		}
-	//also removed
-	// <Modal person={this.props.person} allActions={this.props.allActions} wholeState={this.props.wholeState}/>
-
-	var Person = function (_Component) {
-		_inherits(Person, _Component);
-
-		function Person() {
-			_classCallCheck(this, Person);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Person).apply(this, arguments));
-		}
-
-		_createClass(Person, [{
-			key: 'render',
-			value: function render() {
-				var picStyle = {
-					backgroundImage: "url(" + this.props.person.picture_url + ")",
-					backgroundSize: "cover",
-					backgroundPosition: "center center",
-					margin: "auto",
-					border: "2px solid white",
-					top: "4rem",
-					left: "0.45rem",
-					height: "120px",
-					width: "120px",
-					borderRadius: "50%",
-					position: "relative",
-					backgroundColor: "white",
-					padding: "1px"
-				};
-
-				var backgroundPhoto = this.props.person.influencer_last_post_photo_url === "" || !this.props.person.influencer_last_post_photo_url ? "https://hoursofidleness.files.wordpress.com/2012/06/gray-card.jpg" : this.props.person.influencer_last_post_photo_url;
-
-				var test = {
-					backgroundImage: "url(" + backgroundPhoto + ")",
-					backgroundSize: "cover",
-					backgroundPosition: "center center",
-					textAlign: "center",
-					display: "block",
-					verticalAlign: "top",
-					paddingTop: "1.8rem",
-					paddingRight: "1rem",
-					margin: "auto",
-					marginBottom: "2rem",
-					width: "80%",
-					borderTopRightRadius: "0.2rem",
-					borderTopLeftRadius: "0.2rem"
-				};
-
-				var whatFlavicon = function whatFlavicon(socialMediaType) {
-					if (socialMediaType === "Facebook") {
-						return "fa fa-facebook-square";
-					} else if (socialMediaType === "Twitter") {
-						return "fa fa-twitter-square";
-					} else if (socialMediaType === "Instagram") {
-						return "fa fa-instagram";
-					} else if (socialMediaType === "Pinterest") {
-						return "fa fa-pinterest-square";
-					} else if (socialMediaType === "Google+") {
-						return "fa fa-google-plus-square";
-					} else if (socialMediaType === "YouTube") {
-						return "fa fa-youtube-square";
-					} else if (socialMediaType === "Vine") {
-						return "fa fa-vine";
-					} else if (socialMediaType === "Blog") {
-						return "fa fa-bookmark";
-					}
-				};
-
-				var nameDisplay = function nameDisplay(name) {
-					if (name.length >= 20) {
-						return name.substring(0, 20) + "...";
-					} else {
-						return name;
-					}
-				};
-
-				var blogNameDisplay = function blogNameDisplay(blogName) {
-					if (blogName.length >= 22) {
-						return blogName.substring(0, 22) + "...";
-					} else {
-						return blogName;
-					}
-				};
-
-				var followersDisplay = function followersDisplay(followers) {
-					if (followers >= 1000000) {
-						if ((followers / 1000000).toFixed(1).toString()[(followers / 1000000).toFixed(1).toString().length - 1] === "0") {
-							return Math.round(followers / 1000000).toString() + "M";
-						} else {
-							return (followers / 1000000).toFixed(1).toString() + "M";
-						}
-					} else if (followers >= 1000 && followers < 1000000) {
-						if ((followers / 1000).toFixed(1).toString()[(followers / 1000).toFixed(1).toString().length - 1] === "0") {
-							return Math.round(followers / 1000).toString() + "K";
-						} else {
-							return (followers / 1000).toFixed(1).toString() + "K";
-						}
-					} else {
-						return followers;
-					}
-				};
-
-				var numStr = function numStr(num) {
-					var numStrArr = num.toString().split("");
-					for (var i = numStrArr.length; i >= 0; i -= 3) {
-						if (numStrArr[i + 1] && i !== 0) {
-							numStrArr.splice(i, 0, ",");
-						}
-					}
-					return numStrArr.join("");
-				};
-
-				return _react2.default.createElement(
-					'li',
-					{ className: 'influencer' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'influencer-info' },
-						_react2.default.createElement(
-							'div',
-							{ style: test },
-							_react2.default.createElement('div', { style: picStyle })
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'profile-info-influencer' },
-							_react2.default.createElement(
-								'h5',
-								{ className: 'padding-bottom-tiny font-size-1-rem' },
-								_react2.default.createElement(
-									'a',
-									{ className: 'little-padding-left color-black', href: this.props.person.website_url },
-									nameDisplay(this.props.person.influencer_full_name)
-								)
-							),
-							_react2.default.createElement(
-								'h6',
-								{ className: 'blog-name' },
-								_react2.default.createElement(
-									'a',
-									{ className: 'little-padding-left', href: this.props.person.blog_url },
-									blogNameDisplay(this.props.person.blog_name)
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'view-and-engagement-wrapper' },
-								_react2.default.createElement('hr', null),
-								_react2.default.createElement('i', { className: 'little-padding-left fa fa-eye color-gray', 'aria-hidden': 'true' }),
-								_react2.default.createElement(
-									'span',
-									{ className: 'font-size-tiny' },
-									' ',
-									numStr(this.props.person.views)
-								),
-								_react2.default.createElement('i', { className: 'little-padding-left fa fa-thumbs-up color-gray', 'aria-hidden': 'true' }),
-								_react2.default.createElement(
-									'span',
-									{ className: 'font-size-tiny' },
-									' ',
-									numStr(this.props.person.engagement)
-								)
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return Person;
-	}(_react.Component);
-
-	exports.default = Person;
-
-/***/ },
-/* 167 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(162);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Modal = function (_Component) {
-		_inherits(Modal, _Component);
-
-		function Modal(props, context) {
-			_classCallCheck(this, Modal);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Modal).call(this, props, context));
-
-			_this.state = {
-				isModal: false,
-				confirmModal: false,
-				inputSelection: "default",
-				className: "big-button big-red-button"
-			};
-			return _this;
-		}
-
-		_createClass(Modal, [{
-			key: 'handleOpenModal',
-			value: function handleOpenModal() {
-				console.log(this.props);
-				this.setState({
-					isModal: !this.state.isModal,
-					confirmModal: false,
-					className: "big-button big-red-button"
-				});
-				this.props.allActions.modalIsOpen();
-			}
-		}, {
-			key: 'handleKeep',
-			value: function handleKeep() {
-				this.setState({
-					isModal: false,
-					confirmModal: false,
-					className: "big-button big-red-button"
-				});
-			}
-		}, {
-			key: 'confirmRemove',
-			value: function confirmRemove() {
-				this.setState({
-					confirmModal: true,
-					className: "big-button confirmed-red-button"
-				});
-			}
-		}, {
-			key: 'handleChange',
-			value: function handleChange(event) {
-				event.preventDefault();
-				this.setState({
-					inputSelection: event.target.value
-				});
-			}
-		}, {
-			key: 'handleSubmit',
-			value: function handleSubmit(event) {
-				event.preventDefault();
-				if (this.state.inputSelection !== "default") {
-					this.handleOpenModal();
-					this.props.allActions.removePerson(this.props.person.id);
-				} else {
-					alert("You must list a reason for removing this person");
-				}
-				// var userInfo = {
-				// 	user              : this.props.person,
-				// 	reasonsForRemoval : this.state.inputSelection,
-				// }
-				// $.post("/removeItem",userInfo,function (response) {
-				// 	console.log(response.data)
-				// })
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var display = this.state.isModal ? "" : "none";
-				var secondaryDisplay = this.state.confirmModal ? {
-					display: ""
-				} : {
-					display: "none"
-				};
-				var selection = this.state.inputSelection;
-				var count = 0;
-				var modalText = this.props.wholeState.numberRemoved < 3 ? _react2.default.createElement(
-					'div',
-					{ className: 'modal-inner' },
-					_react2.default.createElement(
-						'form',
-						{ className: 'modal-form', onSubmit: this.handleSubmit.bind(this) },
-						_react2.default.createElement(
-							'p',
-							null,
-							'Why would you like to remove ',
-							this.props.person.influencer_full_name,
-							'?'
-						),
-						_react2.default.createElement(
-							'select',
-							{ className: 'margin-bottom-some width-twenty-five-percent', value: selection, onChange: this.handleChange.bind(this) },
-							_react2.default.createElement(
-								'option',
-								{ value: 'default' },
-								'---'
-							),
-							_react2.default.createElement(
-								'option',
-								{ value: '1' },
-								'Reason 1'
-							),
-							_react2.default.createElement(
-								'option',
-								{ value: '2' },
-								'Reason 2'
-							),
-							_react2.default.createElement(
-								'option',
-								{ value: '3' },
-								'Reason 3'
-							)
-						),
-						_react2.default.createElement('br', null),
-						_react2.default.createElement('input', { className: 'big-button big-red-button width-all', type: 'submit', value: 'Remove' })
-					),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement(
-						'button',
-						{ className: 'big-button big-red-button width-all', onClick: this.handleOpenModal.bind(this) },
-						'Keep'
-					)
-				) : _react2.default.createElement(
-					'div',
-					{ className: 'modal-padding text-align-center' },
-					_react2.default.createElement(
-						'h3',
-						null,
-						'You can only remove 3 people'
-					),
-					_react2.default.createElement(
-						'button',
-						{ className: 'big-button big-red-button width-all', onClick: this.handleOpenModal.bind(this) },
-						'Close This Box'
-					)
-				);
-				return _react2.default.createElement(
-					'div',
-					{ className: 'modal' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'remove-influencer' },
-						_react2.default.createElement(
-							'button',
-							{ className: 'remove-border font-color-pink font-weight-bolder', disabled: this.props.wholeState.isModalOpen, onClick: this.handleOpenModal.bind(this) },
-							'Remove influencer X'
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'modal-outer', style: { display: display } },
-						modalText
-					)
-				);
-			}
-		}]);
-
-		return Modal;
-	}(_react.Component);
-
-	exports.default = Modal;
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
 	exports.__esModule = true;
 	exports.connect = exports.Provider = undefined;
 
-	var _Provider = __webpack_require__(169);
+	var _Provider = __webpack_require__(162);
 
 	var _Provider2 = _interopRequireDefault(_Provider);
 
-	var _connect = __webpack_require__(172);
+	var _connect = __webpack_require__(165);
 
 	var _connect2 = _interopRequireDefault(_connect);
 
@@ -21667,7 +19950,7 @@
 	exports.connect = _connect2["default"];
 
 /***/ },
-/* 169 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -21677,11 +19960,11 @@
 
 	var _react = __webpack_require__(2);
 
-	var _storeShape = __webpack_require__(170);
+	var _storeShape = __webpack_require__(163);
 
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 
-	var _warning = __webpack_require__(171);
+	var _warning = __webpack_require__(164);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -21751,7 +20034,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 170 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21767,7 +20050,7 @@
 	});
 
 /***/ },
-/* 171 */
+/* 164 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21796,7 +20079,7 @@
 	}
 
 /***/ },
-/* 172 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -21808,31 +20091,31 @@
 
 	var _react = __webpack_require__(2);
 
-	var _storeShape = __webpack_require__(170);
+	var _storeShape = __webpack_require__(163);
 
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 
-	var _shallowEqual = __webpack_require__(173);
+	var _shallowEqual = __webpack_require__(166);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _wrapActionCreators = __webpack_require__(174);
+	var _wrapActionCreators = __webpack_require__(167);
 
 	var _wrapActionCreators2 = _interopRequireDefault(_wrapActionCreators);
 
-	var _warning = __webpack_require__(171);
+	var _warning = __webpack_require__(164);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _isPlainObject = __webpack_require__(188);
+	var _isPlainObject = __webpack_require__(170);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _hoistNonReactStatics = __webpack_require__(192);
+	var _hoistNonReactStatics = __webpack_require__(181);
 
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-	var _invariant = __webpack_require__(193);
+	var _invariant = __webpack_require__(182);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -22195,7 +20478,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 173 */
+/* 166 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -22226,7 +20509,7 @@
 	}
 
 /***/ },
-/* 174 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22234,7 +20517,7 @@
 	exports.__esModule = true;
 	exports["default"] = wrapActionCreators;
 
-	var _redux = __webpack_require__(175);
+	var _redux = __webpack_require__(168);
 
 	function wrapActionCreators(actionCreators) {
 	  return function (dispatch) {
@@ -22243,7 +20526,7 @@
 	}
 
 /***/ },
-/* 175 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22251,27 +20534,27 @@
 	exports.__esModule = true;
 	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
 
-	var _createStore = __webpack_require__(176);
+	var _createStore = __webpack_require__(169);
 
 	var _createStore2 = _interopRequireDefault(_createStore);
 
-	var _combineReducers = __webpack_require__(183);
+	var _combineReducers = __webpack_require__(176);
 
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 
-	var _bindActionCreators = __webpack_require__(185);
+	var _bindActionCreators = __webpack_require__(178);
 
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 
-	var _applyMiddleware = __webpack_require__(186);
+	var _applyMiddleware = __webpack_require__(179);
 
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 
-	var _compose = __webpack_require__(187);
+	var _compose = __webpack_require__(180);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
-	var _warning = __webpack_require__(184);
+	var _warning = __webpack_require__(177);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -22295,7 +20578,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 176 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22304,11 +20587,11 @@
 	exports.ActionTypes = undefined;
 	exports["default"] = createStore;
 
-	var _isPlainObject = __webpack_require__(177);
+	var _isPlainObject = __webpack_require__(170);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _symbolObservable = __webpack_require__(181);
+	var _symbolObservable = __webpack_require__(174);
 
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
@@ -22562,12 +20845,12 @@
 	}
 
 /***/ },
-/* 177 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(178),
-	    isHostObject = __webpack_require__(179),
-	    isObjectLike = __webpack_require__(180);
+	var getPrototype = __webpack_require__(171),
+	    isHostObject = __webpack_require__(172),
+	    isObjectLike = __webpack_require__(173);
 
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -22638,7 +20921,7 @@
 
 
 /***/ },
-/* 178 */
+/* 171 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -22659,7 +20942,7 @@
 
 
 /***/ },
-/* 179 */
+/* 172 */
 /***/ function(module, exports) {
 
 	/**
@@ -22685,7 +20968,7 @@
 
 
 /***/ },
-/* 180 */
+/* 173 */
 /***/ function(module, exports) {
 
 	/**
@@ -22720,18 +21003,18 @@
 
 
 /***/ },
-/* 181 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/* global window */
 	'use strict';
 
-	module.exports = __webpack_require__(182)(global || window || this);
+	module.exports = __webpack_require__(175)(global || window || this);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 182 */
+/* 175 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22756,7 +21039,7 @@
 
 
 /***/ },
-/* 183 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22764,13 +21047,13 @@
 	exports.__esModule = true;
 	exports["default"] = combineReducers;
 
-	var _createStore = __webpack_require__(176);
+	var _createStore = __webpack_require__(169);
 
-	var _isPlainObject = __webpack_require__(177);
+	var _isPlainObject = __webpack_require__(170);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _warning = __webpack_require__(184);
+	var _warning = __webpack_require__(177);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -22889,7 +21172,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 184 */
+/* 177 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22919,7 +21202,7 @@
 	}
 
 /***/ },
-/* 185 */
+/* 178 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22975,7 +21258,7 @@
 	}
 
 /***/ },
-/* 186 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22986,7 +21269,7 @@
 
 	exports["default"] = applyMiddleware;
 
-	var _compose = __webpack_require__(187);
+	var _compose = __webpack_require__(180);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
@@ -23038,7 +21321,7 @@
 	}
 
 /***/ },
-/* 187 */
+/* 180 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23083,165 +21366,7 @@
 	}
 
 /***/ },
-/* 188 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getPrototype = __webpack_require__(189),
-	    isHostObject = __webpack_require__(190),
-	    isObjectLike = __webpack_require__(191);
-
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
-
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-
-	/** Used to resolve the decompiled source of functions. */
-	var funcToString = Function.prototype.toString;
-
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-
-	/** Used to infer the `Object` constructor. */
-	var objectCtorString = funcToString.call(Object);
-
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objectToString = objectProto.toString;
-
-	/**
-	 * Checks if `value` is a plain object, that is, an object created by the
-	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.8.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object,
-	 *  else `false`.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 * }
-	 *
-	 * _.isPlainObject(new Foo);
-	 * // => false
-	 *
-	 * _.isPlainObject([1, 2, 3]);
-	 * // => false
-	 *
-	 * _.isPlainObject({ 'x': 0, 'y': 0 });
-	 * // => true
-	 *
-	 * _.isPlainObject(Object.create(null));
-	 * // => true
-	 */
-	function isPlainObject(value) {
-	  if (!isObjectLike(value) ||
-	      objectToString.call(value) != objectTag || isHostObject(value)) {
-	    return false;
-	  }
-	  var proto = getPrototype(value);
-	  if (proto === null) {
-	    return true;
-	  }
-	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-	  return (typeof Ctor == 'function' &&
-	    Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString);
-	}
-
-	module.exports = isPlainObject;
-
-
-/***/ },
-/* 189 */
-/***/ function(module, exports) {
-
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeGetPrototype = Object.getPrototypeOf;
-
-	/**
-	 * Gets the `[[Prototype]]` of `value`.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {null|Object} Returns the `[[Prototype]]`.
-	 */
-	function getPrototype(value) {
-	  return nativeGetPrototype(Object(value));
-	}
-
-	module.exports = getPrototype;
-
-
-/***/ },
-/* 190 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is a host object in IE < 9.
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
-	 */
-	function isHostObject(value) {
-	  // Many host objects are `Object` objects that can coerce to strings
-	  // despite having improperly defined `toString` methods.
-	  var result = false;
-	  if (value != null && typeof value.toString != 'function') {
-	    try {
-	      result = !!(value + '');
-	    } catch (e) {}
-	  }
-	  return result;
-	}
-
-	module.exports = isHostObject;
-
-
-/***/ },
-/* 191 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is object-like. A value is object-like if it's not `null`
-	 * and has a `typeof` result of "object".
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-	 * @example
-	 *
-	 * _.isObjectLike({});
-	 * // => true
-	 *
-	 * _.isObjectLike([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObjectLike(_.noop);
-	 * // => false
-	 *
-	 * _.isObjectLike(null);
-	 * // => false
-	 */
-	function isObjectLike(value) {
-	  return !!value && typeof value == 'object';
-	}
-
-	module.exports = isObjectLike;
-
-
-/***/ },
-/* 192 */
+/* 181 */
 /***/ function(module, exports) {
 
 	/**
@@ -23270,11 +21395,11 @@
 	    arity: true
 	};
 
-	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent) {
+	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
 	    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
 	        var keys = Object.getOwnPropertyNames(sourceComponent);
-	        for (var i=0; i<keys.length; ++i) {
-	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]]) {
+	        for (var i = 0; i < keys.length; ++i) {
+	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
 	                try {
 	                    targetComponent[keys[i]] = sourceComponent[keys[i]];
 	                } catch (error) {
@@ -23289,7 +21414,7 @@
 
 
 /***/ },
-/* 193 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23347,7 +21472,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 194 */
+/* 183 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23357,114 +21482,100 @@
 	});
 	var actions = {
 
-		removePerson: function removePerson(id) {
+		changeTab: function changeTab(tab) {
 			return {
-				type: 'REMOVE_PERSON',
-				id: id
-			};
-		},
-
-		modalIsOpen: function modalIsOpen() {
-			return {
-				type: 'MODAL_IS_OPEN'
-
-			};
-		},
-
-		changePage: function changePage(value) {
-			return {
-				type: 'CHANGE_PAGE',
-				value: value
-			};
-		},
-
-		rated: function rated() {
-			return {
-				type: 'RATED'
-
+				type: 'CHANGE_TAB',
+				tab: tab
 			};
 		}
+
 	};
 
+	// removePerson: function(id) {
+	// 	return {
+	// 		type : 'REMOVE_PERSON',
+	// 		id : id
+	// 	}
+	// },
+
+	// modalIsOpen: function() {
+	// 	return {
+	// 		type : 'MODAL_IS_OPEN',
+
+	// 	}
+	// },
+
+	// changePage: function(value) {
+	// 	return {
+	// 		type : 'CHANGE_PAGE',
+	// 		value : value
+	// 	}
+	// },
+
+	// rated: function() {
+	// 	return {
+	// 		type : 'RATED',
+
+	// 	}
+	// }
 	exports.default = actions;
 
 /***/ },
-/* 195 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
 
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
+	(function () {
+		'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		var hasOwn = {}.hasOwnProperty;
 
-	var _react = __webpack_require__(2);
+		function classNames () {
+			var classes = [];
 
-	var _react2 = _interopRequireDefault(_react);
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
 
-	var _GeneralInfo = __webpack_require__(161);
+				var argType = typeof arg;
 
-	var _GeneralInfo2 = _interopRequireDefault(_GeneralInfo);
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
 
-	var _InfoItems = __webpack_require__(165);
-
-	var _InfoItems2 = _interopRequireDefault(_InfoItems);
-
-	var _Person = __webpack_require__(166);
-
-	var _Person2 = _interopRequireDefault(_Person);
-
-	var _reactRedux = __webpack_require__(168);
-
-	var _redux = __webpack_require__(175);
-
-	var _actions = __webpack_require__(194);
-
-	var _actions2 = _interopRequireDefault(_actions);
-
-	var _classnames = __webpack_require__(162);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Overview = function (_Component) {
-		_inherits(Overview, _Component);
-
-		function Overview() {
-			_classCallCheck(this, Overview);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Overview).apply(this, arguments));
+			return classes.join(' ');
 		}
 
-		_createClass(Overview, [{
-			key: 'render',
-			value: function render() {
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
 
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(_GeneralInfo2.default, { wholeState: this.props.wholeState, allActions: this.props.allActions }),
-					_react2.default.createElement(_InfoItems2.default, { wholeState: this.props.wholeState, allActions: this.props.allActions })
-				);
-			}
-		}]);
-
-		return Overview;
-	}(_react.Component);
-
-	exports.default = Overview;
 
 /***/ },
-/* 196 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23474,13 +21585,13 @@
 	});
 	exports.default = configureStore;
 
-	var _redux = __webpack_require__(175);
+	var _redux = __webpack_require__(168);
 
-	var _reducer = __webpack_require__(197);
+	var _reducer = __webpack_require__(186);
 
 	var _reducer2 = _interopRequireDefault(_reducer);
 
-	var _reduxLogger = __webpack_require__(198);
+	var _reduxLogger = __webpack_require__(187);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
@@ -23495,7 +21606,7 @@
 	}
 
 /***/ },
-/* 197 */
+/* 186 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23506,28 +21617,33 @@
 	var reducer = function reducer(state, action) {
 
 		switch (action.type) {
-			case 'REMOVE_PERSON':
+			case 'CHANGE_TAB':
 				return Object.assign({}, state, {
-					numberRemoved: state.numberRemoved + 1,
-					influencers: state.influencers.filter(function (influencer) {
-						return influencer.id !== action.id;
-					})
+					tab: action.tab
 				});
 
-			case 'MODAL_IS_OPEN':
-				return Object.assign({}, state, {
-					isModalOpen: !state.isModalOpen
-				});
+			// case 'REMOVE_PERSON':
+			// 	return Object.assign({}, state, {
+			// 		numberRemoved : state.numberRemoved + 1,
+			// 		influencers: state.influencers.filter((influencer) => {
+			// 			return influencer.id !== action.id
+			// 		})
+			// 	})
 
-			case 'CHANGE_PAGE':
-				return Object.assign({}, state, {
-					currentPage: action.value
-				});
+			// case 'MODAL_IS_OPEN':
+			// 	return Object.assign({}, state, {
+			// 		isModalOpen : !state.isModalOpen
+			// 	})
 
-			case 'RATED':
-				return Object.assign({}, state, {
-					rated: true
-				});
+			// case 'CHANGE_PAGE':
+			// 	return Object.assign({}, state, {
+			// 		currentPage : action.value
+			// 	})
+
+			// case 'RATED':
+			// 	return Object.assign({}, state, {
+			// 		rated : true
+			// 	})
 
 			default:
 				return state;
@@ -23537,7 +21653,7 @@
 	exports.default = reducer;
 
 /***/ },
-/* 198 */
+/* 187 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23770,844 +21886,195 @@
 	module.exports = createLogger;
 
 /***/ },
-/* 199 */
-/***/ function(module, exports) {
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var influencers = [{
-		"influencer_full_name": "Yolanda Reynolds",
-		"influencer_photo_url": "http://mediad.publicbroadcasting.net/p/wclk/files/201501/YolandaReynolds1934488_111480873609_7267241_ncropped.jpg",
-		"influencer_title": "My Blog",
-		"influencer_twitter_followers": 7501,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "https://static.pexels.com/photos/6555/nature-sunset-person-woman.jpg",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		"platforms": [{
 
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 999,
-			"platform_id": 0
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-		}, {
+	var _react = __webpack_require__(2);
 
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 11532,
-			"platform_id": 1
-		}, {
+	var _react2 = _interopRequireDefault(_react);
 
-			"social_network_type": "Pinterest",
-			"social_network_url": "https://pinterest.com",
-			"followers": 21501,
-			"platform_id": 2
-		}, {
+	var _classnames = __webpack_require__(184);
 
-			"social_network_type": "Instagram",
-			"social_network_url": "https://instagram.com",
-			"followers": 6321,
-			"platform_id": 3
+	var _classnames2 = _interopRequireDefault(_classnames);
 
-		}, {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-			"social_network_type": "Google+",
-			"social_network_url": "https://plus.google.com",
-			"followers": 4789,
-			"platform_id": 4
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-		}, {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-			"social_network_type": "YouTube",
-			"social_network_url": "https://youtube.com",
-			"followers": 652,
-			"platform_id": 5
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-		}, {
+	var Influencers = function (_Component) {
+		_inherits(Influencers, _Component);
 
-			"social_network_type": "Vine",
-			"social_network_url": "https://vine.com",
-			"followers": 10000000,
-			"platform_id": 6
+		function Influencers(props, context) {
+			_classCallCheck(this, Influencers);
 
-		}, {
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Influencers).call(this, props, context));
 
-			"social_network_type": "Blog",
-			"social_network_url": "https://blogspot.com",
-			"followers": 11500000,
-			"platform_id": 7
+			_this.state = {
+				sample: "sample"
+			};
+			return _this;
+		}
 
-		}],
-		"website_url": "https://myspace.com",
-		"id": 0,
-		"influencer_total_reach": 322510
-	}, {
-		"influencer_full_name": "Shari Rios",
-		"influencer_photo_url": "http://teamleads.s3.amazonaws.com/avatar_1706_335/1447271019_shaririosheadshot2015.jpg",
-		"influencer_title": "My Blog title is the longest ever so devs can test this sh*t!",
-		"influencer_twitter_followers": 9000,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://static1.squarespace.com/static/535b6e9ee4b0482b3e2815fe/535d8332e4b05d1feab61583/53706334e4b04a1fdc1e7319/1399874357965/cumberland.jpghttp://marel.com/images/products/qx-ring-sausage-product.jpg",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"platforms": [{
+		_createClass(Influencers, [{
+			key: 'render',
+			value: function render() {
 
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 5231,
-			"platform_id": 0
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h1',
+						null,
+						'INFLUENCERS!!!!!'
+					)
+				);
+			}
+		}]);
 
-		}, {
+		return Influencers;
+	}(_react.Component);
 
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 15789,
-			"platform_id": 1
-		}, {
-
-			"social_network_type": "Pinterest",
-			"social_network_url": "https://pinterest.com",
-			"followers": 45554,
-			"platform_id": 2
-		}, {
-
-			"social_network_type": "Instagram",
-			"social_network_url": "https://instagram.com",
-			"followers": 2409,
-			"platform_id": 3
-
-		}, {
-
-			"social_network_type": "Google+",
-			"social_network_url": "https://plus.google.com",
-			"followers": 7800,
-			"platform_id": 4
-
-		}, {
-
-			"social_network_type": "YouTube",
-			"social_network_url": "https://youtube.com",
-			"followers": 10001,
-			"platform_id": 5
-
-		}, {
-
-			"social_network_type": "Vine",
-			"social_network_url": "https://vine.com",
-			"followers": 10021,
-			"platform_id": 6
-
-		}, {
-
-			"social_network_type": "Blog",
-			"social_network_url": "https://blogspot.com",
-			"followers": 11092,
-			"platform_id": 7
-
-		}],
-		"website_url": "https://myspace.com",
-		"id": 1,
-		"influencer_total_reach": 322501
-	}, {
-		"influencer_full_name": "Lillian Ortiz",
-		"influencer_photo_url": "http://leg.wa.gov/House/Representatives/PublishingImages/ortiz-self.jpg",
-		"influencer_title": "My Blog",
-		"influencer_twitter_followers": 9000,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://static4.gamespot.com/uploads/scale_super/1179/11799911/3016941-1.jpg",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		"platforms": [{
-
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 10000,
-			"platform_id": 0
-
-		}, {
-
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 10000,
-			"platform_id": 1
-		}, {
-
-			"social_network_type": "Pinterest",
-			"social_network_url": "https://pinterest.com",
-			"followers": 10000,
-			"platform_id": 2
-		}, {
-
-			"social_network_type": "Instagram",
-			"social_network_url": "https://instagram.com",
-			"followers": 10000,
-			"platform_id": 3
-
-		}, {
-
-			"social_network_type": "Google+",
-			"social_network_url": "https://plus.google.com",
-			"followers": 10000,
-			"platform_id": 4
-
-		}, {
-
-			"social_network_type": "YouTube",
-			"social_network_url": "https://youtube.com",
-			"followers": 10000,
-			"platform_id": 5
-
-		}, {
-
-			"social_network_type": "Vine",
-			"social_network_url": "https://vine.com",
-			"followers": 10000,
-			"platform_id": 6
-
-		}, {
-
-			"social_network_type": "Blog",
-			"social_network_url": "https://blogspot.com",
-			"followers": 10000,
-			"platform_id": 7
-
-		}],
-		"website_url": "https://myspace.com",
-		"id": 2,
-		"influencer_total_reach": 322512
-	}, {
-		"influencer_full_name": "Armando Bates",
-		"influencer_photo_url": "https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/2/000/038/0f6/1c680e9.jpg",
-		"influencer_title": "My Blog",
-		"influencer_twitter_followers": 9000,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://image.slidesharecdn.com/somebreathtakingimages-the2016sonyworldphotographyawards-151031032143-lva1-app6892/95/some-breathtaking-images-the-2016-sony-world-photography-awards-12-638.jpg?cb=1446484857",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		"platforms": [{
-
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 10000,
-			"platform_id": 0
-
-		}, {
-
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 10000,
-			"platform_id": 1
-		}, {
-
-			"social_network_type": "Pinterest",
-			"social_network_url": "https://pinterest.com",
-			"followers": 10000,
-			"platform_id": 2
-		}, {
-
-			"social_network_type": "YouTube",
-			"social_network_url": "https://youtube.com",
-			"followers": 10000,
-			"platform_id": 3
-
-		}, {
-
-			"social_network_type": "Vine",
-			"social_network_url": "https://vine.com",
-			"followers": 10000,
-			"platform_id": 4
-
-		}, {
-
-			"social_network_type": "Blog",
-			"social_network_url": "https://blogspot.com",
-			"followers": 10000,
-			"platform_id": 5
-
-		}],
-		"website_url": "https://myspace.com",
-		"id": 3,
-		"influencer_total_reach": 322503
-	}, {
-		"influencer_full_name": "Grady Sullivan",
-		"influencer_photo_url": "http://s3media.247sports.com/Uploads/Assets/661/280/4_1280661.jpg",
-		"influencer_title": "My Blog",
-		"influencer_twitter_followers": 9000,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://www.gettyimages.com/gi-resources/images/Embed/GettyImages-183134862.jpg",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		"platforms": [{
-
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 10000,
-			"platform_id": 0
-
-		}, {
-
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 10000,
-			"platform_id": 1
-		}],
-		"website_url": "https://myspace.com",
-		"id": 4,
-		"influencer_total_reach": 322514
-	}, {
-		"influencer_full_name": "Flora Bailey",
-		"influencer_photo_url": "http://www.yourlifemoments.ca/images/moments/2013/1/PLPR6272057.jpg",
-		"influencer_title": "My Blog",
-		"influencer_twitter_followers": 9000,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "https://www.petfinder.com/wp-content/uploads/2012/11/140272627-grooming-needs-senior-cat-632x475.jpg",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		"platforms": [{
-
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 10000,
-			"platform_id": 0
-
-		}, {
-
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 10000,
-			"platform_id": 1
-		}, {
-
-			"social_network_type": "Pinterest",
-			"social_network_url": "https://pinterest.com",
-			"followers": 10000,
-			"platform_id": 2
-		}, {
-
-			"social_network_type": "Instagram",
-			"social_network_url": "https://instagram.com",
-			"followers": 10000,
-			"platform_id": 3
-
-		}, {
-
-			"social_network_type": "Google+",
-			"social_network_url": "https://plus.google.com",
-			"followers": 10000,
-			"platform_id": 4
-
-		}, {
-
-			"social_network_type": "YouTube",
-			"social_network_url": "https://youtube.com",
-			"followers": 10000,
-			"platform_id": 5
-
-		}, {
-
-			"social_network_type": "Vine",
-			"social_network_url": "https://vine.com",
-			"followers": 10000,
-			"platform_id": 6
-
-		}, {
-
-			"social_network_type": "Blog",
-			"social_network_url": "https://blogspot.com",
-			"followers": 10000,
-			"platform_id": 7
-
-		}],
-		"website_url": "https://myspace.com",
-		"id": 5,
-		"influencer_total_reach": 322505
-	}, {
-		"influencer_full_name": "Ron Vargas",
-		"influencer_photo_url": "https://i.vimeocdn.com/portrait/992191_300x300.jpg",
-		"influencer_title": "My Blog",
-		"influencer_twitter_followers": 9000,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		"platforms": [{
-
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 10000,
-			"platform_id": 0
-
-		}, {
-
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 10000,
-			"platform_id": 1
-		}, {
-
-			"social_network_type": "Pinterest",
-			"social_network_url": "https://pinterest.com",
-			"followers": 10000,
-			"platform_id": 2
-		}, {
-
-			"social_network_type": "Instagram",
-			"social_network_url": "https://instagram.com",
-			"followers": 10000,
-			"platform_id": 3
-
-		}, {
-
-			"social_network_type": "Blog",
-			"social_network_url": "https://blogspot.com",
-			"followers": 10000,
-			"platform_id": 4
-
-		}],
-		"website_url": "https://myspace.com",
-		"id": 6,
-		"influencer_total_reach": 322516
-	}, {
-		"influencer_full_name": "Daisy Swanson",
-		"influencer_photo_url": "https://a2-images.myspacecdn.com/images03/25/1ee776f87a9c46168b4f19d06ad4de05/300x300.jpg",
-		"influencer_title": "My Blog",
-		"influencer_twitter_followers": 9000,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "http://im.rediff.com/news/2016/feb/23sony12a.jpg",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		"platforms": [{
-
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 10000,
-			"platform_id": 0
-
-		}, {
-
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 10000,
-			"platform_id": 1
-		}, {
-
-			"social_network_type": "Pinterest",
-			"social_network_url": "https://pinterest.com",
-			"followers": 10000,
-			"platform_id": 2
-		}, {
-
-			"social_network_type": "Instagram",
-			"social_network_url": "https://instagram.com",
-			"followers": 10000,
-			"platform_id": 3
-
-		}, {
-
-			"social_network_type": "YouTube",
-			"social_network_url": "https://youtube.com",
-			"followers": 10000,
-			"platform_id": 4
-
-		}, {
-
-			"social_network_type": "Blog",
-			"social_network_url": "https://blogspot.com",
-			"followers": 10000,
-			"platform_id": 5
-
-		}],
-		"website_url": "https://myspace.com",
-		"id": 7,
-		"influencer_total_reach": 322507
-	}, {
-		"influencer_full_name": "Toby Ruiz",
-		"influencer_photo_url": "https://lh3.googleusercontent.com/-56xHwXXNqO8/U8wdK1TKNpI/AAAAAAAAKx0/uf_uPyXXWUQ/s630-fcrop64=1,000017ffffffa7ff/fecc7d9d-90dc-4a54-8945-e5d1f0e4c508",
-		"influencer_title": "My Blog",
-		"influencer_twitter_followers": 9000,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		"platforms": [{
-
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 10000,
-			"platform_id": 0
-
-		}, {
-
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 10000,
-			"platform_id": 1
-		}, {
-
-			"social_network_type": "Pinterest",
-			"social_network_url": "https://pinterest.com",
-			"followers": 10000,
-			"platform_id": 2
-		}, {
-
-			"social_network_type": "Instagram",
-			"social_network_url": "https://instagram.com",
-			"followers": 10000,
-			"platform_id": 3
-
-		}, {
-
-			"social_network_type": "Google+",
-			"social_network_url": "https://plus.google.com",
-			"followers": 10000,
-			"platform_id": 4
-
-		}, {
-
-			"social_network_type": "YouTube",
-			"social_network_url": "https://youtube.com",
-			"followers": 10000,
-			"platform_id": 5
-
-		}, {
-
-			"social_network_type": "Vine",
-			"social_network_url": "https://vine.com",
-			"followers": 10000,
-			"platform_id": 6
-
-		}, {
-
-			"social_network_type": "Blog",
-			"social_network_url": "https://blogspot.com",
-			"followers": 10000,
-			"platform_id": 7
-
-		}],
-		"website_url": "https://myspace.com",
-		"id": 8,
-		"influencer_total_reach": 322518
-	}, {
-		"influencer_full_name": "Evan Howard",
-		"influencer_photo_url": "https://pbs.twimg.com/profile_images/541792304646733825/M0ZyMk9M.jpeg",
-		"influencer_title": "My Blog",
-		"influencer_twitter_followers": 9000,
-		"influencer_facebook_followers": 9000,
-		"influencer_last_post_photo_url": "https://s-media-cache-ak0.pinimg.com/736x/a5/53/92/a553925dc362367fe4b49a248480f7a9.jpg",
-		"path_name": "social-shares-by-my-blog",
-		"posted_at": "2016-05-07T21:49:38Z",
-		"assignment_name": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		"platforms": [{
-
-			"social_network_type": "Facebook",
-			"social_network_url": "https://facebook.com",
-			"followers": 10000,
-			"platform_id": 0
-
-		}, {
-
-			"social_network_type": "Twitter",
-			"social_network_url": "https://twitter.com",
-			"followers": 10000,
-			"platform_id": 1
-		}, {
-
-			"social_network_type": "Pinterest",
-			"social_network_url": "https://pinterest.com",
-			"followers": 10000,
-			"platform_id": 2
-		}, {
-
-			"social_network_type": "Instagram",
-			"social_network_url": "https://instagram.com",
-			"followers": 10000,
-			"platform_id": 3
-
-		}, {
-
-			"social_network_type": "Google+",
-			"social_network_url": "https://plus.google.com",
-			"followers": 10000,
-			"platform_id": 4
-
-		}, {
-
-			"social_network_type": "YouTube",
-			"social_network_url": "https://youtube.com",
-			"followers": 10000,
-			"platform_id": 5
-
-		}, {
-
-			"social_network_type": "Vine",
-			"social_network_url": "https://vine.com",
-			"followers": 10000,
-			"platform_id": 6
-
-		}],
-		"website_url": "https://myspace.com",
-		"id": 9,
-		"influencer_total_reach": 322509
-	}];
-
-	exports.default = influencers;
+	exports.default = Influencers;
 
 /***/ },
-/* 200 */
-/***/ function(module, exports) {
+/* 189 */,
+/* 190 */,
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var programInfo = {
-		"title": "Jimmy Dean Sausage at Meijer Tapfire #1",
-		//may not need below
-		"budget": 15000,
-		"estimated_total_reach": 3225000,
-		"photo_url": "http://divinelifestyle.com/wp-content/uploads/2014/08/Jimmy-Dean-Logo.jpg",
-		"total_program_roi": 46,
-		"spend_current": 5000,
-		//may not need above
-		"spend_projected": 50000,
-		"time_current": 14,
-		"time_projected": 30,
-		"posts_current": 6,
-		"posts_projected": 24
-	};
 
-	exports.default = programInfo;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(184);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Programs = function (_Component) {
+		_inherits(Programs, _Component);
+
+		function Programs(props, context) {
+			_classCallCheck(this, Programs);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Programs).call(this, props, context));
+
+			_this.state = {
+				sample: "sample"
+			};
+			return _this;
+		}
+
+		_createClass(Programs, [{
+			key: 'render',
+			value: function render() {
+
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h1',
+						null,
+						'PROGRAMS!!!!!'
+					)
+				);
+			}
+		}]);
+
+		return Programs;
+	}(_react.Component);
+
+	exports.default = Programs;
 
 /***/ },
-/* 201 */
-/***/ function(module, exports) {
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var roi = {
-		"custom_date_range": false,
-		"end_date": "2016-05-29",
-		"roi": {
-			"influencers": [{
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 4567890,
-				"engagement": 23200,
-				"influencer_full_name": "Yolanda Reynolds",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c666",
-				"picture_url": "http://mediad.publicbroadcasting.net/p/wclk/files/201501/YolandaReynolds1934488_111480873609_7267241_ncropped.jpg",
-				"influencer_last_post_photo_url": "https://static.pexels.com/photos/6555/nature-sunset-person-woman.jpg",
-				"post_dates": [{
-					"post_date": "2016-04-09T00:00:00Z",
-					"url": null
-				}, {
-					"post_date": "2016-04-09T00:00:00Z",
-					"url": null
-				}, {
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 5000000,
-				"roi": 47,
-				"tmv": "129061.0",
-				"transaction_rate": "1920.0",
-				"views": 4867890
-			}, {
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 5467890,
-				"engagement": 53200,
-				"influencer_full_name": "Shari Rios",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c667",
-				"picture_url": "http://teamleads.s3.amazonaws.com/avatar_1706_335/1447271019_shaririosheadshot2015.jpg",
-				"influencer_last_post_photo_url": "http://static1.squarespace.com/static/535b6e9ee4b0482b3e2815fe/535d8332e4b05d1feab61583/53706334e4b04a1fdc1e7319/1399874357965/cumberland.jpghttp://marel.com/images/products/qx-ring-sausage-product.jpg",
-				"post_dates": [{
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 6000000,
-				"roi": 25,
-				"tmv": "129061.0",
-				"transaction_rate": "2000.0",
-				"views": 5867890
-			}, {
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 67890,
-				"engagement": 3200,
-				"influencer_full_name": "Lillian Ortiz",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c668",
-				"picture_url": "http://leg.wa.gov/House/Representatives/PublishingImages/ortiz-self.jpg",
-				"influencer_last_post_photo_url": "http://static4.gamespot.com/uploads/scale_super/1179/11799911/3016941-1.jpg",
-				"post_dates": [{
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 100000,
-				"roi": 56,
-				"tmv": "129061.0",
-				"transaction_rate": "1500.0",
-				"views": 70000
-			}, {
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 2567890,
-				"engagement": 230200,
-				"influencer_full_name": "Armando Bates",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c669",
-				"picture_url": "https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/2/000/038/0f6/1c680e9.jpg",
-				"influencer_last_post_photo_url": "http://image.slidesharecdn.com/somebreathtakingimages-the2016sonyworldphotographyawards-151031032143-lva1-app6892/95/some-breathtaking-images-the-2016-sony-world-photography-awards-12-638.jpg?cb=1446484857",
-				"post_dates": [{
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 3000000,
-				"roi": 477,
-				"tmv": "129061.0",
-				"transaction_rate": "2500.0",
-				"views": 2800000
-			}, {
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 567890,
-				"engagement": 1200,
-				"influencer_full_name": "Grady Sullivan",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c670",
-				"picture_url": "http://s3media.247sports.com/Uploads/Assets/661/280/4_1280661.jpg",
-				"influencer_last_post_photo_url": "http://www.gettyimages.com/gi-resources/images/Embed/GettyImages-183134862.jpg",
-				"post_dates": [{
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 1000000,
-				"roi": 17,
-				"tmv": "129061.0",
-				"transaction_rate": "1920.0",
-				"views": 600000
-			}, {
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 6890,
-				"engagement": 5000,
-				"influencer_full_name": "Flora Bailey",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c671",
-				"picture_url": "http://www.yourlifemoments.ca/images/moments/2013/1/PLPR6272057.jpg",
-				"influencer_last_post_photo_url": "https://www.petfinder.com/wp-content/uploads/2012/11/140272627-grooming-needs-senior-cat-632x475.jpg",
-				"post_dates": [{
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 10000,
-				"roi": 65,
-				"tmv": "129061.0",
-				"transaction_rate": "100.0",
-				"views": 8000
-			}, {
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 9567890,
-				"engagement": 235200,
-				"influencer_full_name": "Ron Vargas",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c672",
-				"picture_url": "https://i.vimeocdn.com/portrait/992191_300x300.jpg",
-				"influencer_last_post_photo_url": "",
-				"post_dates": [{
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}, {
-					"post_date": "2016-04-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 10000000,
-				"roi": 43,
-				"tmv": "129061.0",
-				"transaction_rate": "1120.0",
-				"views": 4867890
-			}, {
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 4567890,
-				"engagement": 23200,
-				"influencer_full_name": "Daisy Swanson",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c673",
-				"picture_url": "https://a2-images.myspacecdn.com/images03/25/1ee776f87a9c46168b4f19d06ad4de05/300x300.jpg",
-				"influencer_last_post_photo_url": "http://im.rediff.com/news/2016/feb/23sony12a.jpg",
-				"post_dates": [{
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 5000000,
-				"roi": 49,
-				"tmv": "129061.0",
-				"transaction_rate": "1120.0",
-				"views": 4867890
-			}, {
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 77890,
-				"engagement": 23200,
-				"influencer_full_name": "Toby Ruiz",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c674",
-				"picture_url": "https://lh3.googleusercontent.com/-56xHwXXNqO8/U8wdK1TKNpI/AAAAAAAAKx0/uf_uPyXXWUQ/s630-fcrop64=1,000017ffffffa7ff/fecc7d9d-90dc-4a54-8945-e5d1f0e4c508",
-				"influencer_last_post_photo_url": "",
-				"post_dates": [{
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 100000,
-				"roi": 28,
-				"tmv": "129061.0",
-				"transaction_rate": "320.0",
-				"views": 80000
-			}, {
-				"blog_name": "mYbLOg!!",
-				"blog_url": "http://www.blogger.com",
-				"blog_visitors": 10000000,
-				"engagement": 1000000,
-				"influencer_full_name": "Evan Howard",
-				"influencer_uuid": "7d8ee5ce-8730-11e5-bd6b-22000a66c675",
-				"picture_url": "https://pbs.twimg.com/profile_images/541792304646733825/M0ZyMk9M.jpeg",
-				"influencer_last_post_photo_url": "https://s-media-cache-ak0.pinimg.com/736x/a5/53/92/a553925dc362367fe4b49a248480f7a9.jpg",
-				"post_dates": [{
-					"post_date": "2016-04-09T00:00:00Z",
-					"url": null
-				}, {
-					"post_date": "2016-04-09T00:00:00Z",
-					"url": null
-				}, {
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}, {
-					"post_date": "2016-05-09T00:00:00Z",
-					"url": null
-				}],
-				"reach": 20000000,
-				"roi": 87,
-				"tmv": "129061.0",
-				"transaction_rate": "1000.0",
-				"views": 15000000
-			}]
-		},
-		"start_date": "2016-04-19"
-	};
 
-	exports.default = roi;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(184);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Analytics = function (_Component) {
+		_inherits(Analytics, _Component);
+
+		function Analytics(props, context) {
+			_classCallCheck(this, Analytics);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Analytics).call(this, props, context));
+
+			_this.state = {
+				sample: "sample"
+			};
+			return _this;
+		}
+
+		_createClass(Analytics, [{
+			key: 'render',
+			value: function render() {
+
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h1',
+						null,
+						'ANALYTICS!!!!!'
+					)
+				);
+			}
+		}]);
+
+		return Analytics;
+	}(_react.Component);
+
+	exports.default = Analytics;
 
 /***/ }
 /******/ ]);
