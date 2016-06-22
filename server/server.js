@@ -1,3 +1,4 @@
+var bodyParser = require('body-parser')
 var express = require('express');
 var mysql = require('mysql');
 var path = require('path');
@@ -35,6 +36,9 @@ var app = express();
 
 app.use(express.static('./dist'));
 
+app.use(bodyParser.urlencoded({extended : true}))
+app.use(bodyParser.json())
+
 app.get('/', function (req, res) {
     res.sendFile(path.resolve('client/index.html'));
 });
@@ -62,33 +66,53 @@ app.get('/sampleQuery', function (req,res) {
 	})
 }) // BELOW I DESCRIBE THE PROCESS TO FOLLOW IF YOU CHOSE TO CONNECT USING OPTION B:
 
-app.get('/sampleQuery', function (req,res) {
+// app.get('/sampleQuery', function (req,res) {
+// 	// ABOUT MYSQL
+// 	sqlConnection.getConnection.query(function (error,tempCont) {
+// 		if ( error ) {
+// 			tempCont.release()
+// 			console.log('ERROR IN SQL GETCONNECTION')
+// 		} else {
+// 			console.log('CONNECTED IN SQL GETCONNECTION')
+// 			tempCont.query("SELECT * FROM mySampleTable", function (error, rows, fields) {
+// 			// CALLBACK
+// 				if ( error ) {
+// 					console.log('ERROR IN QUERY')
+// 				} else {
+// 					// PARSE WITH YOUR ROWS
+// 					console.log('SUCCESSFUL QUERY, HERE ARE THE ROWS OF YOUR QUERY:')
+// 					console.log(rows)
+// 					console.log('HERE IS THE FIRST ROW OF YOUR QUERY:')
+// 					console.log(rows[0])
+// 					console.log('HERE IS THE ID, NAME AND CITY OF THE FIRST ROW OF YOUR QUERY AND RESPECTIVE TYPES:')
+// 					console.log(rows[0].sampleColumnID)
+// 					console.log(rows[0].sampleColumnName)
+// 					console.log(rows[0].sampleCity)
+// 					console.log(typeof rows[0].sampleColumnID)
+// 					console.log(typeof rows[0].sampleColumnName)
+// 					console.log(typeof rows[0].sampleCity)
+// 				}
+// 			})
+// 		}
+// 	})
+// })
+
+app.post('/addProgram', function (req,res) {
+	console.log("REQ.BODY:")
+	console.log(req.body)
+	console.log(req.data)
 	// ABOUT MYSQL
-	sqlConnection.getConnection.query(function (error,tempCont) {
+	sqlConnection.query("INSERT INTO mySamplePrograms (program_name,program_description,program_budget) VALUES (" + req.body.program_name + "," + req.body.program_description + "," + req.body.program_budget + ");", function (error, rows, fields) {
+	// sqlConnection.query("INSERT INTO mySamplePrograms (program_name,program_description,program_budget) VALUES (" + "'req.body.program_name'" + "," + "'req.body.program_description'" + "," + '5' + ");", function (error, rows, fields) {
+		// CALLBACK
 		if ( error ) {
-			tempCont.release()
-			console.log('ERROR IN SQL GETCONNECTION')
+			console.log('ERROR IN QUERY:')
+			console.log(error)
 		} else {
-			console.log('CONNECTED IN SQL GETCONNECTION')
-			tempCont.query("SELECT * FROM mySampleTable", function (error, rows, fields) {
-			// CALLBACK
-				if ( error ) {
-					console.log('ERROR IN QUERY')
-				} else {
-					// PARSE WITH YOUR ROWS
-					console.log('SUCCESSFUL QUERY, HERE ARE THE ROWS OF YOUR QUERY:')
-					console.log(rows)
-					console.log('HERE IS THE FIRST ROW OF YOUR QUERY:')
-					console.log(rows[0])
-					console.log('HERE IS THE ID, NAME AND CITY OF THE FIRST ROW OF YOUR QUERY AND RESPECTIVE TYPES:')
-					console.log(rows[0].sampleColumnID)
-					console.log(rows[0].sampleColumnName)
-					console.log(rows[0].sampleCity)
-					console.log(typeof rows[0].sampleColumnID)
-					console.log(typeof rows[0].sampleColumnName)
-					console.log(typeof rows[0].sampleCity)
-				}
-			})
+			// PARSE WITH YOUR ROWS
+			console.log('SUCCESSFUL QUERY, HERE ARE THE ROWS AND FIELDS OF YOUR QUERY:')
+			console.log(rows)
+			console.log(fields)
 		}
 	})
 })

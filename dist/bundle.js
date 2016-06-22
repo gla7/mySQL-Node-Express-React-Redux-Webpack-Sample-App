@@ -21615,14 +21615,84 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Programs).call(this, props, context));
 
 			_this.state = {
-				sample: "sample"
+				showForm: false,
+				programName: '',
+				programDescription: '',
+				programBudget: 0
 			};
 			return _this;
 		}
 
 		_createClass(Programs, [{
+			key: 'handleNewProgram',
+			value: function handleNewProgram() {
+				this.setState({
+					showForm: !this.state.showForm
+				});
+			}
+		}, {
+			key: 'handleProgramNameChange',
+			value: function handleProgramNameChange(event) {
+				event.preventDefault();
+				this.setState({
+					programName: event.target.value
+				});
+			}
+		}, {
+			key: 'handleProgramDescriptionChange',
+			value: function handleProgramDescriptionChange(event) {
+				event.preventDefault();
+				this.setState({
+					programDescription: event.target.value
+				});
+			}
+		}, {
+			key: 'handleProgramBudgetChange',
+			value: function handleProgramBudgetChange(event) {
+				event.preventDefault();
+				this.setState({
+					programBudget: event.target.value
+				});
+			}
+		}, {
+			key: 'handleSubmit',
+			value: function handleSubmit() {
+				console.log("Program Name:", this.state.programName);
+				console.log("Program Description:", this.state.programDescription);
+				console.log("Program Budget:", this.state.programBudget);
+
+				// let payload = {
+				// 	program_name : this.state.programName,
+				// 	program_description : this.state.programDescription,
+				// 	program_budget : this.state.programBudget
+				// }
+
+				fetch("/addProgram", {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: JSON.stringify({
+						program_name: this.state.programName,
+						program_description: this.state.programDescription,
+						program_budget: this.state.programBudget
+					})
+				}).then(function (response) {
+					if (response.status === 200) {
+						return response.json().then(function (data) {
+							console.log(data);
+						});
+					} else {
+						alert("Error!");
+						console.log(response);
+					}
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+
+				var formStyle = this.state.showForm ? { display: '' } : { display: 'none' };
+
+				var createOrHideProgram = this.state.showForm ? 'Hide this form' : 'Create new Program!';
 
 				return _react2.default.createElement(
 					'div',
@@ -21636,6 +21706,25 @@
 						'p',
 						null,
 						'Here you will be able to add new programs, edit existing programs, delete programs, and more. Feel free to play around:'
+					),
+					_react2.default.createElement(
+						'button',
+						{ className: 'buttonStyle', onClick: this.handleNewProgram.bind(this) },
+						createOrHideProgram
+					),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement(
+						'form',
+						{ style: formStyle, onSubmit: this.handleSubmit.bind(this) },
+						_react2.default.createElement('input', { type: 'text', placeholder: 'Program Name', onChange: this.handleProgramNameChange.bind(this) }),
+						_react2.default.createElement('br', null),
+						_react2.default.createElement('input', { type: 'text', placeholder: 'Program Description', onChange: this.handleProgramDescriptionChange.bind(this) }),
+						_react2.default.createElement('br', null),
+						_react2.default.createElement('input', { type: 'number', placeholder: 'Program Budget', onChange: this.handleProgramBudgetChange.bind(this) }),
+						_react2.default.createElement('br', null),
+						_react2.default.createElement('br', null),
+						_react2.default.createElement('input', { className: 'buttonStyle', type: 'submit' })
 					)
 				);
 			}
