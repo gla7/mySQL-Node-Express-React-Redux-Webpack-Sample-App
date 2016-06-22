@@ -14,8 +14,8 @@ class Analytics extends Component {
 
 	render() {
 
-		return  <div>
-					<h1>ANALYTICS!!!!!</h1>
+		return  <div className='fiftyPxIndentation'>
+					<h1>Analytics is under construction...</h1>
 				</div>
 				
 	}

@@ -14,10 +14,11 @@ class Influencers extends Component {
 
 	render() {
 
-		return  <div>
-					<h1>INFLUENCERS!!!!!</h1>
+		return  <div className='fiftyPxIndentation'>
+					<h1>Welcome to the Influencers Page!</h1>
+					<p>Here you will be able to add new influencers, edit existing influencers, delete influencers, and more. Feel free to play around:</p>
 				</div>
-				
+
 	}
 }
 

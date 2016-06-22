@@ -4,3 +4,52 @@ html, body {
 	font-family      : sans-serif;
 }
 
+.fiftyPxIndentation {
+	margin-left : 50px;
+}
+
+.navbarDisplay {
+	border-bottom : solid 1px black;
+}
+
+.tapDisplay {
+	display : inline-block;
+}
+
+.ulDisplay {
+	display : inline-block;
+	list-style-type: none;
+	position : absolute;
+	right : 30%;
+}
+
+.liDisplay {
+	display : inline-block;
+	padding : 15px;
+}
+
+.activeLinkStyle {
+	text-decoration : none;
+	color : black;
+	font-weight: bold;
+}
+
+.inactiveLinkStyle {
+	text-decoration : none;
+	color : black;
+}
+
+.buttonStyle {
+	background-color: #FF002E;
+	border: none;
+	outline: none;
+	cursor:pointer;
+	color:white;
+	padding:10px;
+	border-radius:2px;
+}
+
+.linkStyleInButton {
+	text-decoration : none;
+	color:white;
+}

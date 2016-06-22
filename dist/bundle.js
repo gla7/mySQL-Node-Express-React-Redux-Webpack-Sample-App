@@ -71,6 +71,10 @@
 
 	var _reactRouter = __webpack_require__(191);
 
+	var _Home = __webpack_require__(250);
+
+	var _Home2 = _interopRequireDefault(_Home);
+
 	var _Programs = __webpack_require__(186);
 
 	var _Programs2 = _interopRequireDefault(_Programs);
@@ -101,7 +105,7 @@
 			_react2.default.createElement(
 				_reactRouter.Route,
 				{ path: '/', component: _App2.default },
-				_react2.default.createElement(_reactRouter.IndexRoute, { component: _Programs2.default }),
+				_react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '/programs', component: _Programs2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '/influencers', component: _Influencers2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '/analytics', component: _Analytics2.default })
@@ -19807,60 +19811,8 @@
 		}
 
 		_createClass(App, [{
-			key: 'handleClick',
-			value: function handleClick(event) {
-				event.preventDefault();
-				if (event.target.value === "Analytics") {
-					this.props.actions.changeTab("Analytics");
-				} else if (event.target.value === "Programs") {
-					this.props.actions.changeTab("Programs");
-				} else if (event.target.value === "Influencers") {
-					this.props.actions.changeTab("Influencers");
-				} else {
-					this.props.actions.changeTab("Something Else");
-				}
-			}
-		}, {
 			key: 'render',
 			value: function render() {
-
-				var navbarDisplay = {
-					borderBottom: "solid 1px black"
-				};
-
-				var tapDisplay = {
-					display: "inline-block"
-				};
-
-				var ulDisplay = {
-					display: "inline-block",
-					listStyleType: "none",
-					position: "absolute",
-					right: "30%"
-				};
-
-				var liDisplay = {
-					display: "inline-block",
-					padding: "15px"
-				};
-
-				var self = this;
-
-				function whatTab(state) {
-					if (state === "Influencers") {
-						return _react2.default.createElement(_Influencers2.default, { wholeState: self.props.wholeState, allActions: self.props.allActions });
-					} else if (state === "Programs") {
-						return _react2.default.createElement(_Programs2.default, { wholeState: self.props.wholeState, allActions: self.props.allActions });
-					} else if (state === "Analytics") {
-						return _react2.default.createElement(_Analytics2.default, { wholeState: self.props.wholeState, allActions: self.props.allActions });
-					} else {
-						return _react2.default.createElement(
-							'h1',
-							null,
-							'SOMETHING ELSE!!!'
-						);
-					}
-				}
 
 				var tapLogo = "http://www.tapinfluence.com/wp-content/uploads/2015/09/tapinfluence_logo.png";
 
@@ -19870,49 +19822,44 @@
 					fontWeight: 'bold'
 				};
 
-				var inactiveLinkStyle = {
-					textDecoration: 'none',
-					color: 'black'
-				};
-
 				return _react2.default.createElement(
 					'div',
 					null,
 					_react2.default.createElement(
 						'div',
-						{ style: navbarDisplay },
+						{ className: 'navbarDisplay' },
 						_react2.default.createElement(
 							_reactRouter.Link,
 							{ to: '/' },
-							_react2.default.createElement('img', { style: tapDisplay, src: tapLogo })
+							_react2.default.createElement('img', { className: 'tapDisplay', src: tapLogo })
 						),
 						_react2.default.createElement(
 							'ul',
-							{ style: ulDisplay },
+							{ className: 'ulDisplay' },
 							_react2.default.createElement(
 								'li',
-								{ style: liDisplay },
+								{ className: 'liDisplay' },
 								_react2.default.createElement(
 									_reactRouter.Link,
-									{ style: inactiveLinkStyle, activeStyle: activeLinkStyle, to: '/programs' },
+									{ className: 'inactiveLinkStyle', activeStyle: activeLinkStyle, to: '/programs' },
 									'Programs'
 								)
 							),
 							_react2.default.createElement(
 								'li',
-								{ style: liDisplay },
+								{ className: 'liDisplay' },
 								_react2.default.createElement(
 									_reactRouter.Link,
-									{ style: inactiveLinkStyle, activeStyle: activeLinkStyle, to: '/influencers' },
+									{ className: 'inactiveLinkStyle', activeStyle: activeLinkStyle, to: '/influencers' },
 									'Influencers'
 								)
 							),
 							_react2.default.createElement(
 								'li',
-								{ style: liDisplay },
+								{ className: 'liDisplay' },
 								_react2.default.createElement(
 									_reactRouter.Link,
-									{ style: inactiveLinkStyle, activeStyle: activeLinkStyle, to: '/analytics' },
+									{ className: 'inactiveLinkStyle', activeStyle: activeLinkStyle, to: '/analytics' },
 									'Analytics'
 								)
 							)
@@ -21611,11 +21558,16 @@
 
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ className: 'fiftyPxIndentation' },
 					_react2.default.createElement(
 						'h1',
 						null,
-						'INFLUENCERS!!!!!'
+						'Welcome to the Influencers Page!'
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						'Here you will be able to add new influencers, edit existing influencers, delete influencers, and more. Feel free to play around:'
 					)
 				);
 			}
@@ -21674,11 +21626,16 @@
 
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ className: 'fiftyPxIndentation' },
 					_react2.default.createElement(
 						'h1',
 						null,
-						'PROGRAMS!!!!!'
+						'Welcome to the Programs Page!'
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						'Here you will be able to add new programs, edit existing programs, delete programs, and more. Feel free to play around:'
 					)
 				);
 			}
@@ -21737,11 +21694,11 @@
 
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ className: 'fiftyPxIndentation' },
 					_react2.default.createElement(
 						'h1',
 						null,
-						'ANALYTICS!!!!!'
+						'Analytics is under construction...'
 					)
 				);
 			}
@@ -27444,6 +27401,85 @@
 
 	exports.default = (0, _createRouterHistory2.default)(_createHashHistory2.default);
 	module.exports = exports['default'];
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(184);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _reactRouter = __webpack_require__(191);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Home = function (_Component) {
+		_inherits(Home, _Component);
+
+		function Home(props, context) {
+			_classCallCheck(this, Home);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Home).call(this, props, context));
+
+			_this.state = {
+				sample: "sample"
+			};
+			return _this;
+		}
+
+		_createClass(Home, [{
+			key: 'render',
+			value: function render() {
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'fiftyPxIndentation' },
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Welcome to this Sample App!'
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						'Please navigate through the links above to add/remove/edit programs and influencers and their metrics. You can then navigate to Analytics to see a visual representation of such metrics.'
+					),
+					_react2.default.createElement(
+						'button',
+						{ className: 'buttonStyle' },
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ className: 'linkStyleInButton', to: '/programs' },
+							'Take me to Programs!'
+						)
+					)
+				);
+			}
+		}]);
+
+		return Home;
+	}(_react.Component);
+
+	exports.default = Home;
 
 /***/ }
 /******/ ]);

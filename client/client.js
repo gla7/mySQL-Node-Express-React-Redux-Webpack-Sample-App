@@ -4,6 +4,7 @@ import App from '../components/App'
 import configureStore from '../redux/store'
 import { Provider } from 'react-redux'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
+import Home from '../components/Home'
 import Programs from '../components/Programs'
 import Influencers from '../components/Influencers'
 import Analytics from '../components/Analytics'
@@ -21,7 +22,7 @@ render(
 	<Provider store={store}>
 		<Router history={hashHistory}>
 	        <Route path='/' component={App}>
-	        	<IndexRoute component={Programs}/>
+	        	<IndexRoute component={Home}/>
 	        	<Route path="/programs" component={Programs} />
 	        	<Route path="/influencers" component={Influencers} />
 	        	<Route path="/analytics" component={Analytics} />

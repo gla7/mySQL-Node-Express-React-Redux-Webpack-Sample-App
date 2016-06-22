@@ -17,55 +17,8 @@ class App extends Component {
 			sample:"sample"
 		}
 	}
-
-	handleClick(event){
-		event.preventDefault()
-		if ( event.target.value === "Analytics" ) {
-			this.props.actions.changeTab("Analytics")
-		} else if ( event.target.value === "Programs" ) {
-			this.props.actions.changeTab("Programs")
-		} else if ( event.target.value === "Influencers" ) {
-			this.props.actions.changeTab("Influencers")
-		} else {
-			this.props.actions.changeTab("Something Else")
-		}
-	}
 	
 	render () {
-
-		let navbarDisplay = {
-			borderBottom : "solid 1px black"
-		}
-
-		let tapDisplay = {
-			display : "inline-block",
-		}
-
-		let ulDisplay = {
-			display : "inline-block",
-			listStyleType: "none",
-			position : "absolute",
-    		right : "30%"
-		}
-
-		let liDisplay = {
-			display : "inline-block",
-			padding : "15px"
-		}
-
-		let self = this
-
-		function whatTab ( state ) {
-			if ( state === "Influencers" ) {
-				return (<Influencers wholeState={self.props.wholeState} allActions={self.props.allActions}/>)
-			} else if ( state === "Programs" ) {
-				return (<Programs wholeState={self.props.wholeState} allActions={self.props.allActions}/>)
-			} else if ( state === "Analytics" ) {
-				return (<Analytics wholeState={self.props.wholeState} allActions={self.props.allActions}/>)
-			} else {
-				return (<h1>SOMETHING ELSE!!!</h1>)
-			}
-		}
 
 		let tapLogo = "http://www.tapinfluence.com/wp-content/uploads/2015/09/tapinfluence_logo.png"
 
@@ -75,19 +28,14 @@ class App extends Component {
 			fontWeight: 'bold',
 		}
 
-		let inactiveLinkStyle = {
-			textDecoration : 'none',
-			color : 'black',
-		}
-
 		return (
 			<div>
-				<div style={navbarDisplay}>
-					<Link to='/'><img style={tapDisplay} src={tapLogo}/></Link>
-					<ul style={ulDisplay}>
-						<li style={liDisplay}><Link style={inactiveLinkStyle} activeStyle={activeLinkStyle} to='/programs'>Programs</Link></li>
-						<li style={liDisplay}><Link style={inactiveLinkStyle} activeStyle={activeLinkStyle} to='/influencers'>Influencers</Link></li>
-						<li style={liDisplay}><Link style={inactiveLinkStyle} activeStyle={activeLinkStyle} to='/analytics'>Analytics</Link></li>
+				<div className='navbarDisplay'>
+					<Link to='/'><img className='tapDisplay' src={tapLogo}/></Link>
+					<ul className='ulDisplay'>
+						<li className='liDisplay'><Link className='inactiveLinkStyle' activeStyle={activeLinkStyle} to='/programs'>Programs</Link></li>
+						<li className='liDisplay'><Link className='inactiveLinkStyle' activeStyle={activeLinkStyle} to='/influencers'>Influencers</Link></li>
+						<li className='liDisplay'><Link className='inactiveLinkStyle' activeStyle={activeLinkStyle} to='/analytics'>Analytics</Link></li>
 					</ul>
 				</div>
 				<br></br>

@@ -14,8 +14,9 @@ class Programs extends Component {
 
 	render() {
 
-		return  <div>
-					<h1>PROGRAMS!!!!!</h1>
+		return  <div className='fiftyPxIndentation'>
+					<h1>Welcome to the Programs Page!</h1>
+					<p>Here you will be able to add new programs, edit existing programs, delete programs, and more. Feel free to play around:</p>
 				</div>
 				
 	}
