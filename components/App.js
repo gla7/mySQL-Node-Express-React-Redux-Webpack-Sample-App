@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import Influencers from './Influencers'
 import Programs from './Programs'
 import Analytics from './Analytics'
+import { Link } from 'react-router'
 
 
 class App extends Component {
@@ -52,12 +53,6 @@ class App extends Component {
 			padding : "15px"
 		}
 
-		let tabDisplay = {
-			border: "none",
-			backgroundColor: "white",
-			display: "inline-block",
-		}
-
 		let self = this
 
 		function whatTab ( state ) {
@@ -74,20 +69,31 @@ class App extends Component {
 
 		let tapLogo = "http://www.tapinfluence.com/wp-content/uploads/2015/09/tapinfluence_logo.png"
 
+		let activeLinkStyle = {
+			textDecoration : 'none',
+			color : 'black',
+			fontWeight: 'bold',
+		}
+
+		let inactiveLinkStyle = {
+			textDecoration : 'none',
+			color : 'black',
+		}
+
 		return (
 			<div>
 				<div style={navbarDisplay}>
-					<img style={tapDisplay} src={tapLogo}/>
+					<Link to='/'><img style={tapDisplay} src={tapLogo}/></Link>
 					<ul style={ulDisplay}>
-						<li style={liDisplay}><button onClick={this.handleClick.bind(this)} value="Influencers" style={tabDisplay}>Influencers</button></li>
-						<li style={liDisplay}><button onClick={this.handleClick.bind(this)} value="Programs" style={tabDisplay}>Programs</button></li>
-						<li style={liDisplay}><button onClick={this.handleClick.bind(this)} value="Analytics" style={tabDisplay}>Analytics</button></li>
+						<li style={liDisplay}><Link style={inactiveLinkStyle} activeStyle={activeLinkStyle} to='/programs'>Programs</Link></li>
+						<li style={liDisplay}><Link style={inactiveLinkStyle} activeStyle={activeLinkStyle} to='/influencers'>Influencers</Link></li>
+						<li style={liDisplay}><Link style={inactiveLinkStyle} activeStyle={activeLinkStyle} to='/analytics'>Analytics</Link></li>
 					</ul>
 				</div>
 				<br></br>
 				<br></br>
 				<br></br>
-				{whatTab(this.props.wholeStatus.tab)}
+				{this.props.children}
 			</div>
 			)
 
