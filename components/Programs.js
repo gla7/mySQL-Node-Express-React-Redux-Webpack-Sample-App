@@ -12,6 +12,7 @@ class Programs extends Component {
 			programName : '',
 			programDescription : '',
 			programBudget : 0,
+			programs: [],
 		}
 	}
 
@@ -43,16 +44,6 @@ class Programs extends Component {
 	}
 
 	handleSubmit () {
-		console.log("Program Name:",this.state.programName)
-		console.log("Program Description:",this.state.programDescription)
-		console.log("Program Budget:",this.state.programBudget)
-
-		// let payload = {
-		// 	program_name : this.state.programName,
-		// 	program_description : this.state.programDescription,
-		// 	program_budget : this.state.programBudget
-		// }
-
 		fetch( "/addProgram", {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
@@ -72,9 +63,79 @@ class Programs extends Component {
 				console.log(response)
 			}
 		});
+
+		document.getElementById('programNameInput').value = ''
+		document.getElementById('programDescriptionInput').value = ''
+		document.getElementById('programBudgetInput').value = ''
+
+		this.handleNewProgram()
+		this.componentDidMount()
+	}
+
+	deleteProgram (item) {
+		fetch( "/deleteProgram", {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				program_name : item.program_name,
+				program_description : item.program_description,
+				program_budget : item.program_budget
+			}),
+		}).then((response) => {
+			if ( response.status === 200 ) {
+				return response.json()
+					.then((data) => {
+					console.log(data)
+				})
+			} else {
+				alert("Error!")
+				console.log(response)
+			}
+		});
+		this.componentDidMount()
+	}
+
+	componentDidMount () {
+		fetch( "/getPrograms", {
+			method: 'GET',
+		}).then((response) => {
+			if ( response.status === 200 ) {
+				response.json()
+					.then((data) => {
+					console.log("PROGRAMS:",data)
+					this.setState({
+						programs : data
+					})
+				})
+			} else {
+				alert("Error!")
+				console.log(response)
+			}
+		});
 	}
 
 	render() {
+
+		let programsDisplayed = (<div>
+									<table>
+										<tbody>
+											<tr>
+												<td>Program Name</td>
+												<td>Program Description</td>
+												<td>Program Budget</td>
+												<td>Delete Program</td>
+											</tr>
+											{this.state.programs.map(item => {
+												return (<tr key={item.program_description}>
+															<td>{item.program_name}</td>
+															<td>{item.program_description}</td>
+															<td>${item.program_budget}</td>
+															<td><button className='buttonStyle' onClick={() => this.deleteProgram(item)}>X</button></td>
+														</tr>)
+											})}
+										</tbody>
+									</table>
+								</div>)
 
 		let formStyle = this.state.showForm ? { display : ''} : {display : 'none'}
 
@@ -87,11 +148,12 @@ class Programs extends Component {
 					<br></br>
 					<br></br>
 					<form style={formStyle} onSubmit={this.handleSubmit.bind(this)}>
-						<input type='text' placeholder="Program Name" onChange={this.handleProgramNameChange.bind(this)}/><br></br>
-						<input type='text' placeholder="Program Description" onChange={this.handleProgramDescriptionChange.bind(this)}/><br></br>
-						<input type='number' placeholder="Program Budget" onChange={this.handleProgramBudgetChange.bind(this)}/><br></br><br></br>
+						<input id="programNameInput" type='text' placeholder="Program Name" onChange={this.handleProgramNameChange.bind(this)}/><br></br>
+						<input id="programDescriptionInput" type='text' placeholder="Program Description" onChange={this.handleProgramDescriptionChange.bind(this)}/><br></br>
+						<input id="programBudgetInput" type='number' placeholder="Program Budget" onChange={this.handleProgramBudgetChange.bind(this)}/><br></br><br></br>
 						<input className='buttonStyle' type='submit'/>
 					</form>
+					{programsDisplayed}
 				</div>
 				
 	}

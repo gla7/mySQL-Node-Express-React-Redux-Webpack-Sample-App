@@ -21618,7 +21618,8 @@
 				showForm: false,
 				programName: '',
 				programDescription: '',
-				programBudget: 0
+				programBudget: 0,
+				programs: []
 			};
 			return _this;
 		}
@@ -21657,16 +21658,6 @@
 		}, {
 			key: 'handleSubmit',
 			value: function handleSubmit() {
-				console.log("Program Name:", this.state.programName);
-				console.log("Program Description:", this.state.programDescription);
-				console.log("Program Budget:", this.state.programBudget);
-
-				// let payload = {
-				// 	program_name : this.state.programName,
-				// 	program_description : this.state.programDescription,
-				// 	program_budget : this.state.programBudget
-				// }
-
 				fetch("/addProgram", {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
@@ -21685,10 +21676,132 @@
 						console.log(response);
 					}
 				});
+
+				document.getElementById('programNameInput').value = '';
+				document.getElementById('programDescriptionInput').value = '';
+				document.getElementById('programBudgetInput').value = '';
+
+				this.handleNewProgram();
+				this.componentDidMount();
+			}
+		}, {
+			key: 'deleteProgram',
+			value: function deleteProgram(item) {
+				fetch("/deleteProgram", {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						program_name: item.program_name,
+						program_description: item.program_description,
+						program_budget: item.program_budget
+					})
+				}).then(function (response) {
+					if (response.status === 200) {
+						return response.json().then(function (data) {
+							console.log(data);
+						});
+					} else {
+						alert("Error!");
+						console.log(response);
+					}
+				});
+				this.componentDidMount();
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+
+				fetch("/getPrograms", {
+					method: 'GET'
+				}).then(function (response) {
+					if (response.status === 200) {
+						response.json().then(function (data) {
+							console.log("PROGRAMS:", data);
+							_this2.setState({
+								programs: data
+							});
+						});
+					} else {
+						alert("Error!");
+						console.log(response);
+					}
+				});
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var _this3 = this;
+
+				var programsDisplayed = _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'table',
+						null,
+						_react2.default.createElement(
+							'tbody',
+							null,
+							_react2.default.createElement(
+								'tr',
+								null,
+								_react2.default.createElement(
+									'td',
+									null,
+									'Program Name'
+								),
+								_react2.default.createElement(
+									'td',
+									null,
+									'Program Description'
+								),
+								_react2.default.createElement(
+									'td',
+									null,
+									'Program Budget'
+								),
+								_react2.default.createElement(
+									'td',
+									null,
+									'Delete Program'
+								)
+							),
+							this.state.programs.map(function (item) {
+								return _react2.default.createElement(
+									'tr',
+									{ key: item.program_description },
+									_react2.default.createElement(
+										'td',
+										null,
+										item.program_name
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										item.program_description
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										'$',
+										item.program_budget
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										_react2.default.createElement(
+											'button',
+											{ className: 'buttonStyle', onClick: function onClick() {
+													return _this3.deleteProgram(item);
+												} },
+											'X'
+										)
+									)
+								);
+							})
+						)
+					)
+				);
 
 				var formStyle = this.state.showForm ? { display: '' } : { display: 'none' };
 
@@ -21717,15 +21830,16 @@
 					_react2.default.createElement(
 						'form',
 						{ style: formStyle, onSubmit: this.handleSubmit.bind(this) },
-						_react2.default.createElement('input', { type: 'text', placeholder: 'Program Name', onChange: this.handleProgramNameChange.bind(this) }),
+						_react2.default.createElement('input', { id: 'programNameInput', type: 'text', placeholder: 'Program Name', onChange: this.handleProgramNameChange.bind(this) }),
 						_react2.default.createElement('br', null),
-						_react2.default.createElement('input', { type: 'text', placeholder: 'Program Description', onChange: this.handleProgramDescriptionChange.bind(this) }),
+						_react2.default.createElement('input', { id: 'programDescriptionInput', type: 'text', placeholder: 'Program Description', onChange: this.handleProgramDescriptionChange.bind(this) }),
 						_react2.default.createElement('br', null),
-						_react2.default.createElement('input', { type: 'number', placeholder: 'Program Budget', onChange: this.handleProgramBudgetChange.bind(this) }),
+						_react2.default.createElement('input', { id: 'programBudgetInput', type: 'number', placeholder: 'Program Budget', onChange: this.handleProgramBudgetChange.bind(this) }),
 						_react2.default.createElement('br', null),
 						_react2.default.createElement('br', null),
 						_react2.default.createElement('input', { className: 'buttonStyle', type: 'submit' })
-					)
+					),
+					programsDisplayed
 				);
 			}
 		}]);

@@ -39,6 +39,8 @@ app.use(express.static('./dist'));
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json())
 
+//GETS
+
 app.get('/', function (req, res) {
     res.sendFile(path.resolve('client/index.html'));
 });
@@ -97,25 +99,84 @@ app.get('/sampleQuery', function (req,res) {
 // 	})
 // })
 
+//GETS
+
+
+//POSTS
+
+app.get('/getPrograms', function (req,res) {
+	// ABOUT MYSQL
+	sqlConnection.query("SELECT * FROM mySamplePrograms", function (error, rows, fields) {
+		// CALLBACK
+		if ( error ) {
+			console.log('ERROR IN QUERY')
+		} else {
+			// PARSE WITH YOUR ROWS
+			console.log('SUCCESSFUL QUERY, YOUR RESULTS HAVE BEEN SENT TO THE FRONT END!')
+			res.send(rows)
+		}
+	})
+})
+
 app.post('/addProgram', function (req,res) {
 	console.log("REQ.BODY:")
 	console.log(req.body)
-	console.log(req.data)
 	// ABOUT MYSQL
 	sqlConnection.query("INSERT INTO mySamplePrograms (program_name,program_description,program_budget) VALUES (?,?,?);", [req.body.program_name,req.body.program_description,req.body.program_budget], function (error, rows, fields) {
-	// sqlConnection.query("INSERT INTO mySamplePrograms (program_name,program_description,program_budget) VALUES (" + "'req.body.program_name'" + "," + "'req.body.program_description'" + "," + '5' + ");", function (error, rows, fields) {
 		// CALLBACK
 		if ( error ) {
 			console.log('ERROR IN QUERY:')
 			console.log(error)
 		} else {
 			// PARSE WITH YOUR ROWS
-			console.log('SUCCESSFUL QUERY, HERE ARE THE ROWS AND FIELDS OF YOUR QUERY:')
-			console.log(rows)
-			console.log(fields)
+			console.log('SUCCESSFUL QUERY!')
+			sqlConnection.query("SELECT * FROM mySamplePrograms", function (error, rows, fields) {
+				// CALLBACK
+				if ( error ) {
+					console.log('ERROR IN RETURN QUERY')
+				} else {
+					// PARSE WITH YOUR ROWS
+					console.log('HERE ARE THE PROGRAMS SO FAR:')
+					console.log(rows)
+					console.log('HERE IS THE FIRST ROW OF PROGRAMS:')
+					console.log(rows[0])
+					res.send(rows)
+				}
+			})
 		}
 	})
 })
+
+app.post('/deleteProgram', function (req,res) {
+	console.log("REQ.BODY:")
+	console.log(req.body)
+	// ABOUT MYSQL
+	sqlConnection.query("DELETE FROM mySamplePrograms WHERE program_name = ? AND program_description = ? AND program_budget = ?;", [req.body.program_name,req.body.program_description,req.body.program_budget], function (error, rows, fields) {
+		// CALLBACK
+		if ( error ) {
+			console.log('ERROR IN QUERY:')
+			console.log(error)
+		} else {
+			// PARSE WITH YOUR ROWS
+			console.log('SUCCESSFUL QUERY!')
+			sqlConnection.query("SELECT * FROM mySamplePrograms", function (error, rows, fields) {
+				// CALLBACK
+				if ( error ) {
+					console.log('ERROR IN RETURN QUERY')
+				} else {
+					// PARSE WITH YOUR ROWS
+					console.log('HERE ARE THE PROGRAMS SO FAR:')
+					console.log(rows)
+					console.log('HERE IS THE FIRST ROW OF PROGRAMS:')
+					console.log(rows[0])
+					res.send(rows)
+				}
+			})
+		}
+	})
+})
+
+//POSTS
 
 var port = 3001;
 
