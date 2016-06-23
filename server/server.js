@@ -147,6 +147,93 @@ app.post('/addProgram', function (req,res) {
 	})
 })
 
+app.post('/editProgramName', function (req,res) {
+	console.log("REQ.BODY:")
+	console.log(req.body)
+	// ABOUT MYSQL
+	sqlConnection.query("UPDATE mySamplePrograms SET program_name = ? WHERE program_id = ?;", [req.body.program_name, req.body.program_id], function (error, rows, fields) {
+		// CALLBACK
+		if ( error ) {
+			console.log('ERROR IN QUERY:')
+			console.log(error)
+		} else {
+			// PARSE WITH YOUR ROWS
+			console.log('SUCCESSFUL QUERY!')
+			sqlConnection.query("SELECT * FROM mySamplePrograms", function (error, rows, fields) {
+				// CALLBACK
+				if ( error ) {
+					console.log('ERROR IN RETURN QUERY')
+				} else {
+					// PARSE WITH YOUR ROWS
+					console.log('HERE ARE THE PROGRAMS SO FAR:')
+					console.log(rows)
+					console.log('HERE IS THE FIRST ROW OF PROGRAMS:')
+					console.log(rows[0])
+					res.send(rows)
+				}
+			})
+		}
+	})
+})
+
+app.post('/editProgramDescription', function (req,res) {
+	console.log("REQ.BODY:")
+	console.log(req.body)
+	// ABOUT MYSQL
+	sqlConnection.query("UPDATE mySamplePrograms SET program_description = ? WHERE program_id = ?;", [req.body.program_description, req.body.program_id], function (error, rows, fields) {
+		// CALLBACK
+		if ( error ) {
+			console.log('ERROR IN QUERY:')
+			console.log(error)
+		} else {
+			// PARSE WITH YOUR ROWS
+			console.log('SUCCESSFUL QUERY!')
+			sqlConnection.query("SELECT * FROM mySamplePrograms", function (error, rows, fields) {
+				// CALLBACK
+				if ( error ) {
+					console.log('ERROR IN RETURN QUERY')
+				} else {
+					// PARSE WITH YOUR ROWS
+					console.log('HERE ARE THE PROGRAMS SO FAR:')
+					console.log(rows)
+					console.log('HERE IS THE FIRST ROW OF PROGRAMS:')
+					console.log(rows[0])
+					res.send(rows)
+				}
+			})
+		}
+	})
+})
+
+app.post('/editProgramBudget', function (req,res) {
+	console.log("REQ.BODY:")
+	console.log(req.body)
+	// ABOUT MYSQL
+	sqlConnection.query("UPDATE mySamplePrograms SET program_budget = ? WHERE program_id = ?;", [req.body.program_budget, req.body.program_id], function (error, rows, fields) {
+		// CALLBACK
+		if ( error ) {
+			console.log('ERROR IN QUERY:')
+			console.log(error)
+		} else {
+			// PARSE WITH YOUR ROWS
+			console.log('SUCCESSFUL QUERY!')
+			sqlConnection.query("SELECT * FROM mySamplePrograms", function (error, rows, fields) {
+				// CALLBACK
+				if ( error ) {
+					console.log('ERROR IN RETURN QUERY')
+				} else {
+					// PARSE WITH YOUR ROWS
+					console.log('HERE ARE THE PROGRAMS SO FAR:')
+					console.log(rows)
+					console.log('HERE IS THE FIRST ROW OF PROGRAMS:')
+					console.log(rows[0])
+					res.send(rows)
+				}
+			})
+		}
+	})
+})
+
 app.post('/deleteProgram', function (req,res) {
 	console.log("REQ.BODY:")
 	console.log(req.body)

@@ -21685,6 +21685,84 @@
 				this.componentDidMount();
 			}
 		}, {
+			key: 'editProgramName',
+			value: function editProgramName(item) {
+				var confirmChange = confirm("Are you sure you wish to change the program name of " + item.program_name + "?");
+				if (confirmChange === true) {
+					var newName = prompt("What name would you like to re-name this program to?");
+					fetch("/editProgramName", {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							program_name: newName,
+							program_id: item.program_id
+						})
+					}).then(function (response) {
+						if (response.status === 200) {
+							return response.json().then(function (data) {
+								console.log(data);
+							});
+						} else {
+							alert("Error!");
+							console.log(response);
+						}
+					});
+					this.componentDidMount();
+				}
+			}
+		}, {
+			key: 'editProgramDescription',
+			value: function editProgramDescription(item) {
+				var confirmChange = confirm("Are you sure you wish to change the program description of " + item.program_name + "?");
+				if (confirmChange === true) {
+					var newDescription = prompt("How would you like to re-describe this program?");
+					fetch("/editProgramDescription", {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							program_description: newDescription,
+							program_id: item.program_id
+						})
+					}).then(function (response) {
+						if (response.status === 200) {
+							return response.json().then(function (data) {
+								console.log(data);
+							});
+						} else {
+							alert("Error!");
+							console.log(response);
+						}
+					});
+					this.componentDidMount();
+				}
+			}
+		}, {
+			key: 'editProgramBudget',
+			value: function editProgramBudget(item) {
+				var confirmChange = confirm("Are you sure you wish to change the program budget of " + item.program_name + "?");
+				if (confirmChange === true) {
+					var newBudget = prompt("What would you like the new budget to be?");
+					fetch("/editProgramBudget", {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							program_budget: newBudget,
+							program_id: item.program_id
+						})
+					}).then(function (response) {
+						if (response.status === 200) {
+							return response.json().then(function (data) {
+								console.log(data);
+							});
+						} else {
+							alert("Error!");
+							console.log(response);
+						}
+					});
+					this.componentDidMount();
+				}
+			}
+		}, {
 			key: 'deleteProgram',
 			value: function deleteProgram(item) {
 				fetch("/deleteProgram", {
@@ -21747,22 +21825,42 @@
 								null,
 								_react2.default.createElement(
 									'td',
-									null,
-									'Program Name'
+									{ className: 'boldFace' },
+									'ID'
+								),
+								_react2.default.createElement(
+									'td',
+									{ className: 'boldFace' },
+									'Name'
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									'Program Description'
+									'Edit Name'
+								),
+								_react2.default.createElement(
+									'td',
+									{ className: 'boldFace' },
+									'Description'
 								),
 								_react2.default.createElement(
 									'td',
 									null,
-									'Program Budget'
+									'Edit Description'
+								),
+								_react2.default.createElement(
+									'td',
+									{ className: 'boldFace' },
+									'Budget'
 								),
 								_react2.default.createElement(
 									'td',
 									null,
+									'Edit Budget'
+								),
+								_react2.default.createElement(
+									'td',
+									{ className: 'boldFace' },
 									'Delete Program'
 								)
 							),
@@ -21773,7 +21871,23 @@
 									_react2.default.createElement(
 										'td',
 										null,
+										item.program_id
+									),
+									_react2.default.createElement(
+										'td',
+										null,
 										item.program_name
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										_react2.default.createElement(
+											'button',
+											{ className: 'buttonStyle', onClick: function onClick() {
+													return _this3.editProgramName(item);
+												} },
+											'E'
+										)
 									),
 									_react2.default.createElement(
 										'td',
@@ -21783,8 +21897,30 @@
 									_react2.default.createElement(
 										'td',
 										null,
+										_react2.default.createElement(
+											'button',
+											{ className: 'buttonStyle', onClick: function onClick() {
+													return _this3.editProgramDescription(item);
+												} },
+											'E'
+										)
+									),
+									_react2.default.createElement(
+										'td',
+										null,
 										'$',
 										item.program_budget
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										_react2.default.createElement(
+											'button',
+											{ className: 'buttonStyle', onClick: function onClick() {
+													return _this3.editProgramBudget(item);
+												} },
+											'E'
+										)
 									),
 									_react2.default.createElement(
 										'td',
