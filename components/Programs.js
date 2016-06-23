@@ -209,7 +209,7 @@ class Programs extends Component {
 											</tr>
 											{this.state.programs.map(item => {
 												return (<tr key={item.program_description}>
-															<td>{item.program_id}</td>
+															<td className="boldFace">{item.program_id}</td>
 															<td>{item.program_name}</td>
 															<td><button className='buttonStyle' onClick={() => this.editProgramName(item)}>E</button></td>
 															<td>{item.program_description}</td>

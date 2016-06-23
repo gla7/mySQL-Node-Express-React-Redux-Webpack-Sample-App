@@ -21870,7 +21870,7 @@
 									{ key: item.program_description },
 									_react2.default.createElement(
 										'td',
-										null,
+										{ className: 'boldFace' },
 										item.program_id
 									),
 									_react2.default.createElement(
