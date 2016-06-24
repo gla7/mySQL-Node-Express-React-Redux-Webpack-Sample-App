@@ -15,54 +15,54 @@ class Analytics extends Component {
 
 	render() {
 
-		var polarData = {
-		    datasets: [{
-		        data: [
-		            11,
-		            16,
-		            7,
-		            3,
-		            14
-		        ],
-		        backgroundColor: [
-		            "#FF6384",
-		            "#4BC0C0",
-		            "#FFCE56",
-		            "#E7E9ED",
-		            "#36A2EB"
-		        ],
-		        label: 'My dataset' // for legend
-		    }],
-		    labels: [
-		        "Red",
-		        "Green",
-		        "Yellow",
-		        "Grey",
-		        "Blue"
-		    ]
-		};
+		// var polarData = {
+		//     datasets: [{
+		//         data: [
+		//             11,
+		//             16,
+		//             7,
+		//             3,
+		//             14
+		//         ],
+		//         backgroundColor: [
+		//             "#FF6384",
+		//             "#4BC0C0",
+		//             "#FFCE56",
+		//             "#E7E9ED",
+		//             "#36A2EB"
+		//         ],
+		//         label: 'My dataset' // for legend
+		//     }],
+		//     labels: [
+		//         "Red",
+		//         "Green",
+		//         "Yellow",
+		//         "Grey",
+		//         "Blue"
+		//     ]
+		// };
 
-		var dataDoughnut = {
-		    labels: [
-		        "Red",
-		        "Blue",
-		        "Yellow"
-		    ],
-		    datasets: [
-		        {
-		            data: [300, 50, 100],
-		            backgroundColor: [
-		                "#FF6384",
-		                "#36A2EB",
-		                "#FFCE56"
-		            ],
-		            hoverBackgroundColor: [
-		                "#FF6384",
-		                "#36A2EB",
-		                "#FFCE56"
-		            ]
-		        }]
-		};
+		// var dataDoughnut = {
+		//     labels: [
+		//         "Red",
+		//         "Blue",
+		//         "Yellow"
+		//     ],
+		//     datasets: [
+		//         {
+		//             data: [300, 50, 100],
+		//             backgroundColor: [
+		//                 "#FF6384",
+		//                 "#36A2EB",
+		//                 "#FFCE56"
+		//             ],
+		//             hoverBackgroundColor: [
+		//                 "#FF6384",
+		//                 "#36A2EB",
+		//                 "#FFCE56"
+		//             ]
+		//         }]
+		// };
 
 		var dataLine = {
 		    labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -132,27 +132,105 @@ class Analytics extends Component {
 		    ]
 		};
 
-		var pieData = {
-		    labels: [
-		        "Red",
-		        "Blue",
-		        "Yellow"
-		    ],
-		    datasets: [
-		        {
-		            data: [300, 50, 100],
-		            backgroundColor: [
-		                "#FF6384",
-		                "#36A2EB",
-		                "#FFCE56"
-		            ],
-		            hoverBackgroundColor: [
-		                "#FF6384",
-		                "#36A2EB",
-		                "#FFCE56"
-		            ]
-		        }]
-		};
+		// var pieData = {
+		//     labels: [
+		//         "Red",
+		//         "Blue",
+		//         "Yellow"
+		//     ],
+		//     datasets: [
+		//         {
+		//             data: [300, 50, 100],
+		//             backgroundColor: [
+		//                 "#FF6384",
+		//                 "#36A2EB",
+		//                 "#FFCE56"
+		//             ],
+		//             hoverBackgroundColor: [
+		//                 "#FF6384",
+		//                 "#36A2EB",
+		//                 "#FFCE56"
+		//             ]
+		//         }]
+		// };
+
+		let pieData = [{
+	            value: 14,
+	            color: "#FDB45C",
+	            highlight: "#FFC870",
+	            label: "Failed"
+        	},
+        	{
+        		value: 25,
+              	color: "#FF6384",
+              	highlight: "#FFC870",
+              	label: "Failed"
+        	},
+        	{
+        		value: 44,
+              	color: "#FFCE56",
+              	highlight: "#FFC870",
+              	label: "Failed"
+        	},
+        	{
+        		value: 5,
+              	color: "#36A2EB",
+              	highlight: "#FFC870",
+              	label: "Failed"
+        	}
+        ];
+
+        let dataDoughnut = [{
+	            value: 14,
+	            color: "#FDB45C",
+	            highlight: "#FFC870",
+	            label: "Failed"
+        	},
+        	{
+        		value: 25,
+              	color: "#FF6384",
+              	highlight: "#FFC870",
+              	label: "Failed"
+        	},
+        	{
+        		value: 44,
+              	color: "#FFCE56",
+              	highlight: "#FFC870",
+              	label: "Failed"
+        	},
+        	{
+        		value: 5,
+              	color: "#36A2EB",
+              	highlight: "#FFC870",
+              	label: "Failed"
+        	}
+        ];
+
+        let polarData = [{
+	            value: 14,
+	            color: "#FDB45C",
+	            highlight: "#FFC870",
+	            label: "Failed"
+        	},
+        	{
+        		value: 25,
+              	color: "#FF6384",
+              	highlight: "#FFC870",
+              	label: "Failed"
+        	},
+        	{
+        		value: 44,
+              	color: "#FFCE56",
+              	highlight: "#FFC870",
+              	label: "Failed"
+        	},
+        	{
+        		value: 5,
+              	color: "#36A2EB",
+              	highlight: "#FFC870",
+              	label: "Failed"
+        	}
+        ];
 
 		let Linechart = ReactChart.Line
 
