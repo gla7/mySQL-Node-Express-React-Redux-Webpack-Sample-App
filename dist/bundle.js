@@ -21992,7 +21992,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-							value: true
+		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -22009,6 +22009,10 @@
 
 	var _reactChartjs2 = _interopRequireDefault(_reactChartjs);
 
+	var _HorizontalBarChart = __webpack_require__(198);
+
+	var _HorizontalBarChart2 = _interopRequireDefault(_HorizontalBarChart);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22018,252 +22022,355 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Analytics = function (_Component) {
-							_inherits(Analytics, _Component);
+		_inherits(Analytics, _Component);
 
-							function Analytics(props, context) {
-													_classCallCheck(this, Analytics);
+		function Analytics(props, context) {
+			_classCallCheck(this, Analytics);
 
-													var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Analytics).call(this, props, context));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Analytics).call(this, props, context));
 
-													_this.state = {
-																			sample: "sample"
-													};
-													return _this;
+			_this.state = {
+				sample: "sample"
+			};
+			return _this;
+		}
+
+		_createClass(Analytics, [{
+			key: 'render',
+			value: function render() {
+
+				var dataLine = {
+					labels: ["January", "February", "March", "April", "May", "June", "July"],
+					datasets: [{
+						label: "My First dataset",
+						fill: false,
+						lineTension: 0.1,
+						backgroundColor: "rgba(75,192,192,0.4)",
+						borderColor: "rgba(75,192,192,1)",
+						borderCapStyle: 'butt',
+						borderDash: [],
+						borderDashOffset: 0.0,
+						borderJoinStyle: 'miter',
+						pointBorderColor: "rgba(75,192,192,1)",
+						pointBackgroundColor: "#fff",
+						pointBorderWidth: 1,
+						pointHoverRadius: 5,
+						pointHoverBackgroundColor: "rgba(75,192,192,1)",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointHoverBorderWidth: 2,
+						pointRadius: 1,
+						pointHitRadius: 10,
+						data: [65, 59, 80, 81, 56, 55, 40]
+					}]
+				};
+
+				var barData = {
+					labels: ["January", "February", "March", "April", "May", "June", "July"],
+					datasets: [{
+						label: "My First dataset",
+						backgroundColor: "rgba(255,99,132,0.2)",
+						borderColor: "rgba(255,99,132,1)",
+						borderWidth: 1,
+						hoverBackgroundColor: "rgba(255,99,132,0.4)",
+						hoverBorderColor: "rgba(255,99,132,1)",
+						data: [65, 59, 80, 81, 56, 55, 40]
+					}]
+				};
+
+				var radarData = {
+					labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+					datasets: [{
+						label: "My First dataset",
+						backgroundColor: "rgba(179,181,198,0.2)",
+						borderColor: "rgba(179,181,198,1)",
+						pointBackgroundColor: "rgba(179,181,198,1)",
+						pointBorderColor: "#fff",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(179,181,198,1)",
+						data: [65, 59, 90, 81, 56, 55, 40]
+					}, {
+						label: "My Second dataset",
+						backgroundColor: "rgba(255,99,132,0.2)",
+						borderColor: "rgba(255,99,132,1)",
+						pointBackgroundColor: "rgba(255,99,132,1)",
+						pointBorderColor: "#fff",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(255,99,132,1)",
+						data: [28, 48, 40, 19, 96, 27, 100]
+					}]
+				};
+
+				var pieData = [{
+					value: 14,
+					color: "#FDB45C",
+					highlight: "#FFC870",
+					label: "Failed"
+				}, {
+					value: 25,
+					color: "#FF6384",
+					highlight: "#FFC870",
+					label: "Failed"
+				}, {
+					value: 44,
+					color: "#FFCE56",
+					highlight: "#FFC870",
+					label: "Failed"
+				}, {
+					value: 5,
+					color: "#36A2EB",
+					highlight: "#FFC870",
+					label: "Failed"
+				}];
+
+				var dataDoughnut = [{
+					value: 14,
+					color: "#FDB45C",
+					highlight: "#FFC870",
+					label: "Failed"
+				}, {
+					value: 25,
+					color: "#FF6384",
+					highlight: "#FFC870",
+					label: "Failed"
+				}, {
+					value: 44,
+					color: "#FFCE56",
+					highlight: "#FFC870",
+					label: "Failed"
+				}, {
+					value: 5,
+					color: "#36A2EB",
+					highlight: "#FFC870",
+					label: "Failed"
+				}];
+
+				var polarData = [{
+					value: 14,
+					color: "#FDB45C",
+					highlight: "#FFC870",
+					label: "Failed"
+				}, {
+					value: 25,
+					color: "#FF6384",
+					highlight: "#FFC870",
+					label: "Failed"
+				}, {
+					value: 44,
+					color: "#FFCE56",
+					highlight: "#FFC870",
+					label: "Failed"
+				}, {
+					value: 5,
+					color: "#36A2EB",
+					highlight: "#FFC870",
+					label: "Failed"
+				}];
+
+				var Linechart = _reactChartjs2.default.Line;
+
+				var Barchart = _reactChartjs2.default.Bar;
+
+				var Radarchart = _reactChartjs2.default.Radar;
+
+				var Polarareachart = _reactChartjs2.default.PolarArea;
+
+				var Piechart = _reactChartjs2.default.Pie;
+
+				var Doughnutchart = _reactChartjs2.default.Doughnut;
+
+				function makeHorizontalBarCharts(widthString, heightString, arrayOfArraysOfValues) {
+					var arrayOfPlots = [];
+					var cssColorsArray = ["AliceBlue", "AntiqueWhite", "Aqua", "Aquamarine", "Azure", "Beige", "Bisque", "Black", "BlanchedAlmond", "Blue", "BlueViolet", "Brown", "BurlyWood", "CadetBlue", "Chartreuse", "Chocolate", "Coral", "CornflowerBlue", "Cornsilk", "Crimson", "Cyan", "DarkBlue", "DarkCyan", "DarkGoldenRod", "DarkGray", "DarkGrey", "DarkGreen", "DarkKhaki", "DarkMagenta", "DarkOliveGreen", "Darkorange", "DarkOrchid", "DarkRed", "DarkSalmon", "DarkSeaGreen", "DarkSlateBlue", "DarkSlateGray", "DarkSlateGrey", "DarkTurquoise", "DarkViolet", "DeepPink", "DeepSkyBlue", "DimGray", "DimGrey", "DodgerBlue", "FireBrick", "FloralWhite", "ForestGreen", "Fuchsia", "Gainsboro", "GhostWhite", "Gold", "GoldenRod", "Gray", "Grey", "Green", "GreenYellow", "HoneyDew", "HotPink", "IndianRed", "Indigo", "Ivory", "Khaki", "Lavender", "LavenderBlush", "LawnGreen", "LemonChiffon", "LightBlue", "LightCoral", "LightCyan", "LightGoldenRodYellow", "LightGray", "LightGrey", "LightGreen", "LightPink", "LightSalmon", "LightSeaGreen", "LightSkyBlue", "LightSlateGray", "LightSlateGrey", "LightSteelBlue", "LightYellow", "Lime", "LimeGreen", "Linen", "Magenta", "Maroon", "MediumAquaMarine", "MediumBlue", "MediumOrchid", "MediumPurple", "MediumSeaGreen", "MediumSlateBlue", "MediumSpringGreen", "MediumTurquoise", "MediumVioletRed", "MidnightBlue", "MintCream", "MistyRose", "Moccasin", "NavajoWhite", "Navy", "OldLace", "Olive", "OliveDrab", "Orange", "OrangeRed", "Orchid", "PaleGoldenRod", "PaleGreen", "PaleTurquoise", "PaleVioletRed", "PapayaWhip", "PeachPuff", "Peru", "Pink", "Plum", "PowderBlue", "Purple", "Red", "RosyBrown", "RoyalBlue", "SaddleBrown", "Salmon", "SandyBrown", "SeaGreen", "SeaShell", "Sienna", "Silver", "SkyBlue", "SlateBlue", "SlateGray", "SlateGrey", "Snow", "SpringGreen", "SteelBlue", "Tan", "Teal", "Thistle", "Tomato", "Turquoise", "Violet", "Wheat", "White", "WhiteSmoke", "Yellow", "YellowGreen"];
+					var colorsSelected = [];
+					for (var i = 0; i < arrayOfArraysOfValues.length; i++) {
+						arrayOfPlots.push([]);
+						for (var j = 0; j < arrayOfArraysOfValues[i].values.length; j++) {
+							if (colorsSelected.length !== arrayOfArraysOfValues[i].values.length) {
+								var grandTotalAdded = arrayOfArraysOfValues[i].values.reduce(function (item, total) {
+									return total + item;
+								});
+								var colorIndexSelected = Math.round(Math.random() * (cssColorsArray.length - 1));
+								var colorSelected = cssColorsArray[colorIndexSelected];
+								var width = (arrayOfArraysOfValues[i].values[j] / grandTotalAdded * 100).toString() + "%";
+								if (j === 0) {
+									var styleChart = {
+										position: "relative",
+										borderTopLeftRadius: "3px",
+										borderBottomLeftRadius: "3px",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								} else if (j === arrayOfArraysOfValues[i].values.length - 1) {
+									var styleChart = {
+										position: "relative",
+										borderTopRightRadius: "3px",
+										borderBottomRightRadius: "3px",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								} else {
+									var styleChart = {
+										position: "relative",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								}
+								arrayOfPlots[i].push(_react2.default.createElement('div', { key: j, style: styleChart }));
+								cssColorsArray.splice(colorIndexSelected, 1);
+								colorsSelected.push(colorSelected);
+							} else {
+								var grandTotalAdded = arrayOfArraysOfValues[i].values.reduce(function (item, total) {
+									return total + item;
+								});
+								var colorSelected = colorsSelected[j];
+								var width = (arrayOfArraysOfValues[i].values[j] / grandTotalAdded * 100).toString() + "%";
+								if (j === 0) {
+									var styleChart = {
+										position: "relative",
+										borderTopLeftRadius: "3px",
+										borderBottomLeftRadius: "3px",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								} else if (j === arrayOfArraysOfValues[i].values.length - 1) {
+									var styleChart = {
+										position: "relative",
+										borderTopRightRadius: "3px",
+										borderBottomRightRadius: "3px",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								} else {
+									var styleChart = {
+										position: "relative",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								}
+								arrayOfPlots[i].push(_react2.default.createElement('div', { key: j, style: styleChart }));
 							}
+						}
+						var styleContainer = {
+							position: "relative",
+							width: widthString,
+							height: heightString,
+							display: "inline-block",
+							paddingBottom: "15px"
+						};
+						arrayOfPlots[i] = _react2.default.createElement(
+							'div',
+							{ key: i },
+							_react2.default.createElement(
+								'div',
+								{ style: { display: "inline-block" } },
+								arrayOfArraysOfValues[i].name,
+								'    '
+							),
+							_react2.default.createElement(
+								'div',
+								{ style: styleContainer },
+								arrayOfPlots[i].map(function (item) {
+									return item;
+								})
+							)
+						);
+					}
+					return arrayOfPlots.map(function (item) {
+						return item;
+					});
+				}
 
-							_createClass(Analytics, [{
-													key: 'render',
-													value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'fiftyPxIndentation' },
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Analytics is under construction- examples of graphics can be found below...'
+					),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Sample Line Chart:'
+					),
+					_react2.default.createElement(Linechart, { data: dataLine, width: '600', height: '250', redraw: true }),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Sample Bar Chart:'
+					),
+					_react2.default.createElement(Barchart, { data: barData, width: '600', height: '250', redraw: true }),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Sample Radar Chart:'
+					),
+					_react2.default.createElement(Radarchart, { data: radarData, width: '600', height: '250', redraw: true }),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Sample Polar Chart:'
+					),
+					_react2.default.createElement(Polarareachart, { data: polarData, width: '600', height: '250', redraw: true }),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Sample Pie Chart:'
+					),
+					_react2.default.createElement(Piechart, { data: pieData, width: '600', height: '250', redraw: true }),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Sample Doughnut Chart:'
+					),
+					_react2.default.createElement(Doughnutchart, { data: dataDoughnut, width: '600', height: '250', redraw: true }),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Sample Horizontal Bar Chart/s:'
+					),
+					makeHorizontalBarCharts("300px", "30px", [{ name: "yiss1", values: [12, 33, 89], valueNames: ["one", "two", "three"] }, { name: "yiss2", values: [5, 32, 9], valueNames: ["four", "five", "six"] }, { name: "yiss3", values: [9, 9, 9], valueNames: ["seven", "eight", "nine"] }]),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'More Horizontal Bar Chart/s:'
+					),
+					makeHorizontalBarCharts("500px", "50px", [{ name: "YISS", values: [12, 33], valueNames: ["one", "two"] }, { name: "NOOO", values: [5, 32, 9, 44, 22], valueNames: ["three", "four", "five", "six", "seven"] }, { name: "YAAA", values: [9, 9, 9], valueNames: ["seven", "eight", "nine"] }, { name: "OOO", values: [9], valueNames: ["yiss"] }]),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Even more Horizontal Bar Chart/s:'
+					),
+					makeHorizontalBarCharts("200px", "10px", [{ name: "POOSEY!!!", values: [12, 33, 89, 67, 2, 45, 67], valueNames: ["one", "two", "three", "four", "five", "six", "seven"] }]),
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Horizontal Bar Chart/s as its own component:'
+					),
+					_react2.default.createElement(_HorizontalBarChart2.default, { widthString: '200px', heightString: '30px', arrayOfValues: [{ name: "POOSEY!!!", values: [12, 33, 89, 67, 2, 45, 67], valueNames: ["one", "two", "three", "four", "five", "six", "seven"] }] })
+				);
+			}
+		}]);
 
-																			// var polarData = {
-																			//     datasets: [{
-																			//         data: [
-																			//             11,
-																			//             16,
-																			//             7,
-																			//             3,
-																			//             14
-																			//         ],
-																			//         backgroundColor: [
-																			//             "#FF6384",
-																			//             "#4BC0C0",
-																			//             "#FFCE56",
-																			//             "#E7E9ED",
-																			//             "#36A2EB"
-																			//         ],
-																			//         label: 'My dataset' // for legend
-																			//     }],
-																			//     labels: [
-																			//         "Red",
-																			//         "Green",
-																			//         "Yellow",
-																			//         "Grey",
-																			//         "Blue"
-																			//     ]
-																			// };
-
-																			// var dataDoughnut = {
-																			//     labels: [
-																			//         "Red",
-																			//         "Blue",
-																			//         "Yellow"
-																			//     ],
-																			//     datasets: [
-																			//         {
-																			//             data: [300, 50, 100],
-																			//             backgroundColor: [
-																			//                 "#FF6384",
-																			//                 "#36A2EB",
-																			//                 "#FFCE56"
-																			//             ],
-																			//             hoverBackgroundColor: [
-																			//                 "#FF6384",
-																			//                 "#36A2EB",
-																			//                 "#FFCE56"
-																			//             ]
-																			//         }]
-																			// };
-
-																			var dataLine = {
-																									labels: ["January", "February", "March", "April", "May", "June", "July"],
-																									datasets: [{
-																															label: "My First dataset",
-																															fill: false,
-																															lineTension: 0.1,
-																															backgroundColor: "rgba(75,192,192,0.4)",
-																															borderColor: "rgba(75,192,192,1)",
-																															borderCapStyle: 'butt',
-																															borderDash: [],
-																															borderDashOffset: 0.0,
-																															borderJoinStyle: 'miter',
-																															pointBorderColor: "rgba(75,192,192,1)",
-																															pointBackgroundColor: "#fff",
-																															pointBorderWidth: 1,
-																															pointHoverRadius: 5,
-																															pointHoverBackgroundColor: "rgba(75,192,192,1)",
-																															pointHoverBorderColor: "rgba(220,220,220,1)",
-																															pointHoverBorderWidth: 2,
-																															pointRadius: 1,
-																															pointHitRadius: 10,
-																															data: [65, 59, 80, 81, 56, 55, 40]
-																									}]
-																			};
-
-																			var barData = {
-																									labels: ["January", "February", "March", "April", "May", "June", "July"],
-																									datasets: [{
-																															label: "My First dataset",
-																															backgroundColor: "rgba(255,99,132,0.2)",
-																															borderColor: "rgba(255,99,132,1)",
-																															borderWidth: 1,
-																															hoverBackgroundColor: "rgba(255,99,132,0.4)",
-																															hoverBorderColor: "rgba(255,99,132,1)",
-																															data: [65, 59, 80, 81, 56, 55, 40]
-																									}]
-																			};
-
-																			var radarData = {
-																									labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-																									datasets: [{
-																															label: "My First dataset",
-																															backgroundColor: "rgba(179,181,198,0.2)",
-																															borderColor: "rgba(179,181,198,1)",
-																															pointBackgroundColor: "rgba(179,181,198,1)",
-																															pointBorderColor: "#fff",
-																															pointHoverBackgroundColor: "#fff",
-																															pointHoverBorderColor: "rgba(179,181,198,1)",
-																															data: [65, 59, 90, 81, 56, 55, 40]
-																									}, {
-																															label: "My Second dataset",
-																															backgroundColor: "rgba(255,99,132,0.2)",
-																															borderColor: "rgba(255,99,132,1)",
-																															pointBackgroundColor: "rgba(255,99,132,1)",
-																															pointBorderColor: "#fff",
-																															pointHoverBackgroundColor: "#fff",
-																															pointHoverBorderColor: "rgba(255,99,132,1)",
-																															data: [28, 48, 40, 19, 96, 27, 100]
-																									}]
-																			};
-
-																			// var pieData = {
-																			//     labels: [
-																			//         "Red",
-																			//         "Blue",
-																			//         "Yellow"
-																			//     ],
-																			//     datasets: [
-																			//         {
-																			//             data: [300, 50, 100],
-																			//             backgroundColor: [
-																			//                 "#FF6384",
-																			//                 "#36A2EB",
-																			//                 "#FFCE56"
-																			//             ],
-																			//             hoverBackgroundColor: [
-																			//                 "#FF6384",
-																			//                 "#36A2EB",
-																			//                 "#FFCE56"
-																			//             ]
-																			//         }]
-																			// };
-
-																			var pieData = [{
-																									value: 14,
-																									color: "#FDB45C",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}, {
-																									value: 25,
-																									color: "#FF6384",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}, {
-																									value: 44,
-																									color: "#FFCE56",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}, {
-																									value: 5,
-																									color: "#36A2EB",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}];
-
-																			var dataDoughnut = [{
-																									value: 14,
-																									color: "#FDB45C",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}, {
-																									value: 25,
-																									color: "#FF6384",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}, {
-																									value: 44,
-																									color: "#FFCE56",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}, {
-																									value: 5,
-																									color: "#36A2EB",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}];
-
-																			var polarData = [{
-																									value: 14,
-																									color: "#FDB45C",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}, {
-																									value: 25,
-																									color: "#FF6384",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}, {
-																									value: 44,
-																									color: "#FFCE56",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}, {
-																									value: 5,
-																									color: "#36A2EB",
-																									highlight: "#FFC870",
-																									label: "Failed"
-																			}];
-
-																			var Linechart = _reactChartjs2.default.Line;
-
-																			var Barchart = _reactChartjs2.default.Bar;
-
-																			var Radarchart = _reactChartjs2.default.Radar;
-
-																			var Polarareachart = _reactChartjs2.default.PolarArea;
-
-																			var Piechart = _reactChartjs2.default.Pie;
-
-																			var Doughnutchart = _reactChartjs2.default.Doughnut;
-
-																			return _react2.default.createElement(
-																									'div',
-																									{ className: 'fiftyPxIndentation' },
-																									_react2.default.createElement(
-																															'h1',
-																															null,
-																															'Analytics is under construction- examples of graphics can be found below...'
-																									),
-																									_react2.default.createElement(Linechart, { data: dataLine, width: '600', height: '250', redraw: true }),
-																									_react2.default.createElement(Barchart, { data: barData, width: '600', height: '250', redraw: true }),
-																									_react2.default.createElement(Radarchart, { data: radarData, width: '600', height: '250', redraw: true }),
-																									_react2.default.createElement(Polarareachart, { data: polarData, width: '600', height: '250', redraw: true }),
-																									_react2.default.createElement(Piechart, { data: pieData, width: '600', height: '250', redraw: true }),
-																									_react2.default.createElement(Doughnutchart, { data: dataDoughnut, width: '600', height: '250', redraw: true })
-																			);
-													}
-							}]);
-
-							return Analytics;
+		return Analytics;
 	}(_react.Component);
 
 	exports.default = Analytics;
@@ -26223,7 +26330,205 @@
 
 
 /***/ },
-/* 198 */,
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(184);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _reactChartjs = __webpack_require__(188);
+
+	var _reactChartjs2 = _interopRequireDefault(_reactChartjs);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HorizontalBarChart = function (_Component) {
+		_inherits(HorizontalBarChart, _Component);
+
+		function HorizontalBarChart() {
+			_classCallCheck(this, HorizontalBarChart);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalBarChart).apply(this, arguments));
+		}
+
+		_createClass(HorizontalBarChart, [{
+			key: 'mouseIn',
+
+
+			// constructor(props, context) {
+			// 	super(props, context)
+			// 	this.state = {
+			// 		isHover : "sample"
+			// 	}
+			// }
+
+			value: function mouseIn() {
+				console.log("mouse in");
+			}
+		}, {
+			key: 'mouseOut',
+			value: function mouseOut() {
+				console.log("mouse out");
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+
+				var self = this;
+
+				function makeHorizontalBarCharts(widthString, heightString, arrayOfArraysOfValues) {
+					var arrayOfPlots = [];
+					var cssColorsArray = ["AliceBlue", "AntiqueWhite", "Aqua", "Aquamarine", "Azure", "Beige", "Bisque", "Black", "BlanchedAlmond", "Blue", "BlueViolet", "Brown", "BurlyWood", "CadetBlue", "Chartreuse", "Chocolate", "Coral", "CornflowerBlue", "Cornsilk", "Crimson", "Cyan", "DarkBlue", "DarkCyan", "DarkGoldenRod", "DarkGray", "DarkGrey", "DarkGreen", "DarkKhaki", "DarkMagenta", "DarkOliveGreen", "Darkorange", "DarkOrchid", "DarkRed", "DarkSalmon", "DarkSeaGreen", "DarkSlateBlue", "DarkSlateGray", "DarkSlateGrey", "DarkTurquoise", "DarkViolet", "DeepPink", "DeepSkyBlue", "DimGray", "DimGrey", "DodgerBlue", "FireBrick", "FloralWhite", "ForestGreen", "Fuchsia", "Gainsboro", "GhostWhite", "Gold", "GoldenRod", "Gray", "Grey", "Green", "GreenYellow", "HoneyDew", "HotPink", "IndianRed", "Indigo", "Ivory", "Khaki", "Lavender", "LavenderBlush", "LawnGreen", "LemonChiffon", "LightBlue", "LightCoral", "LightCyan", "LightGoldenRodYellow", "LightGray", "LightGrey", "LightGreen", "LightPink", "LightSalmon", "LightSeaGreen", "LightSkyBlue", "LightSlateGray", "LightSlateGrey", "LightSteelBlue", "LightYellow", "Lime", "LimeGreen", "Linen", "Magenta", "Maroon", "MediumAquaMarine", "MediumBlue", "MediumOrchid", "MediumPurple", "MediumSeaGreen", "MediumSlateBlue", "MediumSpringGreen", "MediumTurquoise", "MediumVioletRed", "MidnightBlue", "MintCream", "MistyRose", "Moccasin", "NavajoWhite", "Navy", "OldLace", "Olive", "OliveDrab", "Orange", "OrangeRed", "Orchid", "PaleGoldenRod", "PaleGreen", "PaleTurquoise", "PaleVioletRed", "PapayaWhip", "PeachPuff", "Peru", "Pink", "Plum", "PowderBlue", "Purple", "Red", "RosyBrown", "RoyalBlue", "SaddleBrown", "Salmon", "SandyBrown", "SeaGreen", "SeaShell", "Sienna", "Silver", "SkyBlue", "SlateBlue", "SlateGray", "SlateGrey", "Snow", "SpringGreen", "SteelBlue", "Tan", "Teal", "Thistle", "Tomato", "Turquoise", "Violet", "Wheat", "White", "WhiteSmoke", "Yellow", "YellowGreen"];
+					var colorsSelected = [];
+					for (var i = 0; i < arrayOfArraysOfValues.length; i++) {
+						arrayOfPlots.push([]);
+						for (var j = 0; j < arrayOfArraysOfValues[i].values.length; j++) {
+							if (colorsSelected.length !== arrayOfArraysOfValues[i].values.length) {
+								var grandTotalAdded = arrayOfArraysOfValues[i].values.reduce(function (item, total) {
+									return total + item;
+								});
+								var colorIndexSelected = Math.round(Math.random() * (cssColorsArray.length - 1));
+								var colorSelected = cssColorsArray[colorIndexSelected];
+								var width = (arrayOfArraysOfValues[i].values[j] / grandTotalAdded * 100).toString() + "%";
+								if (j === 0) {
+									var styleChart = {
+										position: "relative",
+										borderTopLeftRadius: "3px",
+										borderBottomLeftRadius: "3px",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								} else if (j === arrayOfArraysOfValues[i].values.length - 1) {
+									var styleChart = {
+										position: "relative",
+										borderTopRightRadius: "3px",
+										borderBottomRightRadius: "3px",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								} else {
+									var styleChart = {
+										position: "relative",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								}
+								arrayOfPlots[i].push(_react2.default.createElement('div', { key: j, onMouseEnter: self.mouseIn, onMouseLeave: self.mouseOut, style: styleChart }));
+								cssColorsArray.splice(colorIndexSelected, 1);
+								colorsSelected.push(colorSelected);
+							} else {
+								var grandTotalAdded = arrayOfArraysOfValues[i].values.reduce(function (item, total) {
+									return total + item;
+								});
+								var colorSelected = colorsSelected[j];
+								var width = (arrayOfArraysOfValues[i].values[j] / grandTotalAdded * 100).toString() + "%";
+								if (j === 0) {
+									var styleChart = {
+										position: "relative",
+										borderTopLeftRadius: "3px",
+										borderBottomLeftRadius: "3px",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								} else if (j === arrayOfArraysOfValues[i].values.length - 1) {
+									var styleChart = {
+										position: "relative",
+										borderTopRightRadius: "3px",
+										borderBottomRightRadius: "3px",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								} else {
+									var styleChart = {
+										position: "relative",
+										backgroundColor: colorSelected,
+										width: width,
+										height: "100%",
+										display: "inline-block",
+										padding: "0"
+									};
+								}
+								arrayOfPlots[i].push(_react2.default.createElement('div', { key: j, onMouseEnter: self.mouseIn, onMouseLeave: self.mouseOut, style: styleChart }));
+							}
+						}
+						var styleContainer = {
+							position: "relative",
+							width: widthString,
+							height: heightString,
+							display: "inline-block",
+							paddingBottom: "15px"
+						};
+						arrayOfPlots[i] = _react2.default.createElement(
+							'div',
+							{ key: i },
+							_react2.default.createElement(
+								'div',
+								{ style: { display: "inline-block" } },
+								arrayOfArraysOfValues[i].name,
+								'    '
+							),
+							_react2.default.createElement(
+								'div',
+								{ style: styleContainer },
+								arrayOfPlots[i].map(function (item) {
+									return item;
+								})
+							)
+						);
+					}
+					return arrayOfPlots.map(function (item) {
+						return item;
+					});
+				}
+
+				return _react2.default.createElement(
+					'div',
+					null,
+					makeHorizontalBarCharts(this.props.widthString, this.props.heightString, this.props.arrayOfValues)
+				);
+			}
+		}]);
+
+		return HorizontalBarChart;
+	}(_react.Component);
+
+	exports.default = HorizontalBarChart;
+
+/***/ },
 /* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
